@@ -1,7 +1,9 @@
 package BloodBankPOJOs;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class Stock implements Serializable {
@@ -14,11 +16,27 @@ public class Stock implements Serializable {
 	private Integer id;
 	private Date date;
 	private Float liters;
+	private List<Blood> bloods;
 	
-	public Stock(Date date, Float liters) {
+	public Stock() {
+		super();
+		this.bloods = new ArrayList<Blood>();
+	}
+
+	public Stock(Date date, Float liters, List<Blood> bloods) {
 		super();
 		this.date = date;
 		this.liters = liters;
+		this.bloods = bloods;
+	}
+	
+
+	public Stock(Integer id, Date date, Float liters, List<Blood> bloods) {
+		super();
+		this.id = id;
+		this.date = date;
+		this.liters = liters;
+		this.bloods = bloods;
 	}
 
 	public Integer getId() {
@@ -45,9 +63,17 @@ public class Stock implements Serializable {
 		this.liters = liters;
 	}
 
+	public List<Blood> getBloods() {
+		return bloods;
+	}
+
+	public void setBloods(List<Blood> bloods) {
+		this.bloods = bloods;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(date, id, liters);
+		return Objects.hash(bloods, date, id, liters);
 	}
 
 	@Override
@@ -59,10 +85,15 @@ public class Stock implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Stock other = (Stock) obj;
-		return Objects.equals(date, other.date) && Objects.equals(id, other.id) && Objects.equals(liters, other.liters);
+		return Objects.equals(bloods, other.bloods) && Objects.equals(date, other.date) && Objects.equals(id, other.id)
+				&& Objects.equals(liters, other.liters);
+	}
+
+	@Override
+	public String toString() {
+		return "Stock [id=" + id + ", date=" + date + ", liters=" + liters + "]";
 	}
 	
 	
-	
-	
 }
+	

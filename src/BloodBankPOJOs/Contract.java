@@ -13,7 +13,7 @@ public class Contract implements Serializable {
 	private static final long serialVersionUID = -7520806989904275224L;
 	
 	private Integer id;
-	private Integer salary;
+	private Float salary;
 	private Integer hours;
 	private String typeofwork;
 	private List<Personal> personals;
@@ -23,7 +23,7 @@ public class Contract implements Serializable {
 		this.personals = new ArrayList<Personal>();
 	}
 
-	public Contract(Integer salary, Integer hours, String typeofwork, List<Personal> personals) {
+	public Contract(Float salary, Integer hours, String typeofwork, List<Personal> personals) {
 		super();
 		this.salary = salary;
 		this.hours = hours;
@@ -31,7 +31,7 @@ public class Contract implements Serializable {
 		this.personals = new ArrayList<Personal>();
 	}
 
-	public Contract(Integer id, Integer salary, Integer hours, String typeofwork, List<Personal> personals) {
+	public Contract(Integer id, Float salary, Integer hours, String typeofwork, List<Personal> personals) {
 		super();
 		this.id = id;
 		this.salary = salary;
@@ -48,11 +48,11 @@ public class Contract implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getSalary() {
+	public Float getSalary() {
 		return salary;
 	}
 
-	public void setSalary(Integer salary) {
+	public void setSalary(Float salary) {
 		this.salary = salary;
 	}
 
