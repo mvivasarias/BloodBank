@@ -1,7 +1,11 @@
 package BloodBankPOJOs;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+
 
 public class Personal implements Serializable {
 	
@@ -10,19 +14,41 @@ public class Personal implements Serializable {
 	 */
 	private static final long serialVersionUID = 6714833338820944413L;
 	
-	
 	private Integer id;
 	private String name;
 	private String surname;
 	private Integer phone;
+	private List<Donation> donations;
+	
+	private Contract contract;
+	private Byte[] foto;
+	
+	public Personal() {
+		super();
+		donations = new ArrayList<Donation>();
+	}
 	
 	//constructor sin el id
-	public Personal(String name, String surname, Integer phone) {
+	public Personal(String name, String surname, Integer phone, Contract contract, List<Donation> donations) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.phone = phone;
+		this.contract = contract;
+		this.donations = new ArrayList<Donation>();
 	}
+		
+	public Personal(Integer id, String name, String surname, Integer phone, Contract contract,
+			List<Donation> donations) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.phone = phone;
+		this.contract = contract;
+		this.donations = donations;
+	}
+
 
 	public Integer getId() {
 		return id;
@@ -56,9 +82,38 @@ public class Personal implements Serializable {
 		this.phone = phone;
 	}
 
+	public Contract getContract() {
+		return contract;
+	}
+
+	public void setContract(Contract contract) {
+		this.contract = contract;
+	}
+	
+
+	public Byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(Byte[] foto) {
+		this.foto = foto;
+	}
+	
+	public List<Donation> getDonations() {
+		return donations;
+	}
+
+	public void setDonations(List<Donation> donations) {
+		this.donations = donations;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, phone, surname);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(foto);
+		result = prime * result + Objects.hash(contract, donations, id, name, phone, surname);
+		return result;
 	}
 
 	@Override
@@ -70,10 +125,16 @@ public class Personal implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Personal other = (Personal) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(phone, other.phone)
-				&& Objects.equals(surname, other.surname);
+		return Objects.equals(contract, other.contract) && Objects.equals(donations, other.donations)
+				&& Arrays.equals(foto, other.foto) && Objects.equals(id, other.id) && Objects.equals(name, other.name)
+				&& Objects.equals(phone, other.phone) && Objects.equals(surname, other.surname);
 	}
-	
-	
 
+	@Override
+	public String toString() {
+		return "Personal [id=" + id + ", name=" + name + ", surname=" + surname + ", phone=" + phone + ", contract="
+				+ contract + ", foto=" + Arrays.toString(foto) + "]";
+	}
+
+	
 }
