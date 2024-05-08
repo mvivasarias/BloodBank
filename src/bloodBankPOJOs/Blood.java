@@ -92,5 +92,3 @@ public class Blood implements Serializable{
 
 	
 }
-
-
