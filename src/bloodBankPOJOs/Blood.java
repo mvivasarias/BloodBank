@@ -14,7 +14,7 @@ public class Blood implements Serializable{
 	private static final long serialVersionUID = 3464987077094646032L;
 	
 	private String id;
-	private String blood;
+	private String type;
 	private Hospital hospital;
 	private Stock stock;
 	private List<Donation> donations;
@@ -32,12 +32,12 @@ public class Blood implements Serializable{
 		this.id = id;
 	}
 
-	public String getBlood() {
-		return blood;
+	public String getType() {
+		return type;
 	}
 
-	public void setBlood(String blood) {
-		this.blood = blood;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public List<Donation> getDonations() {
@@ -67,7 +67,7 @@ public class Blood implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(blood, donations, hospital, id, stock);
+		return Objects.hash(type, donations, hospital, id, stock);
 	}
 
 	@Override
@@ -79,14 +79,14 @@ public class Blood implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Blood other = (Blood) obj;
-		return Objects.equals(blood, other.blood) && Objects.equals(donations, other.donations)
+		return Objects.equals(type, other.type) && Objects.equals(donations, other.donations)
 				&& Objects.equals(hospital, other.hospital) && Objects.equals(id, other.id)
 				&& Objects.equals(stock, other.stock);
 	}
 
 	@Override
 	public String toString() {
-		return "Blood [id=" + id + ", blood=" + blood + ", hospital=" + hospital + ", stock=" + stock + "]";
+		return "Blood [id=" + id + ", type=" + type + ", hospital=" + hospital + ", stock=" + stock + "]";
 	}
 
 
