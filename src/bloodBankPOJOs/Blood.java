@@ -15,15 +15,33 @@ public class Blood implements Serializable{
 	
 	private String id;
 	private String type;
-	private Hospital hospital;
 	private Stock stock;
 	private List<Donation> donations;
+	private List<Hospital> hospitals;
 	
 	public Blood() {
 		super();
 		donations = new ArrayList<Donation>();
+		hospitals = new ArrayList<Hospital>();
 	}
 	
+	public Blood(String type, Stock stock, List<Donation> donations, List<Hospital> hospitals) {
+		super();
+		this.type = type;
+		this.stock = stock;
+		this.donations = donations;
+		this.hospitals = hospitals;
+	}
+
+	public Blood(String id, String type, Stock stock, List<Donation> donations, List<Hospital> hospitals) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.stock = stock;
+		this.donations = donations;
+		this.hospitals = hospitals;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -44,15 +62,6 @@ public class Blood implements Serializable{
 		return donations;
 	}
 	
-
-	public Hospital getHospital() {
-		return hospital;
-	}
-
-	public void setHospital(Hospital hospital) {
-		this.hospital = hospital;
-	}
-
 	public Stock getStock() {
 		return stock;
 	}
@@ -64,10 +73,19 @@ public class Blood implements Serializable{
 	public void setDonations(List<Donation> donations) {
 		this.donations = donations;
 	}
+	
+
+	public List<Hospital> getHospitals() {
+		return hospitals;
+	}
+
+	public void setHospitals(List<Hospital> hospitals) {
+		this.hospitals = hospitals;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(type, donations, hospital, id, stock);
+		return Objects.hash(donations, hospitals, id, stock, type);
 	}
 
 	@Override
@@ -79,16 +97,19 @@ public class Blood implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Blood other = (Blood) obj;
-		return Objects.equals(type, other.type) && Objects.equals(donations, other.donations)
-				&& Objects.equals(hospital, other.hospital) && Objects.equals(id, other.id)
-				&& Objects.equals(stock, other.stock);
+		return Objects.equals(donations, other.donations) && Objects.equals(hospitals, other.hospitals)
+				&& Objects.equals(id, other.id) && Objects.equals(stock, other.stock)
+				&& Objects.equals(type, other.type);
 	}
 
 	@Override
 	public String toString() {
-		return "Blood [id=" + id + ", type=" + type + ", hospital=" + hospital + ", stock=" + stock + "]";
+		return "Blood [id=" + id + ", type=" + type + ", stock=" + stock + "]";
 	}
 
+	
 
 	
 }
+
+
