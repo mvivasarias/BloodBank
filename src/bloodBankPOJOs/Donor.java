@@ -16,37 +16,41 @@ public class Donor implements Serializable{
 	private Integer id;
 	private String name;
 	private String surname;
-	private Date date;
-	private String type;
+	private Date dob;
+	private String bloodtype;
 	private Integer times;
-	private List<Donation> donations;
+	private List<Personal> personals;
 	
 	public Donor() {
 		super();
-		this.donations = new ArrayList<Donation>();
+		personals = new ArrayList<Personal>();
 	}
 	
 
-	public Donor(String name, String surname, Date date, String type, Integer times, List<Donation> donations) {
+	
+
+	public Donor(String name, String surname, Date dob, String bloodtype, Integer times, List<Personal> personals) {
 		super();
 		this.name = name;
 		this.surname = surname;
-		this.date = date;
-		this.type = type;
+		this.dob = dob;
+		this.bloodtype = bloodtype;
 		this.times = times;
-		this.donations = donations;
+		this.personals = personals;
 	}
 
-	public Donor(Integer id, String name, String surname, Date date, String type, Integer times,
-			List<Donation> donations) {
+
+
+	public Donor(Integer id, String name, String surname, Date dob, String bloodtype, Integer times,
+			List<Personal> personals) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
-		this.date = date;
-		this.type = type;
+		this.dob = dob;
+		this.bloodtype = bloodtype;
 		this.times = times;
-		this.donations = donations;
+		this.personals = personals;
 	}
 
 
@@ -80,24 +84,48 @@ public class Donor implements Serializable{
 	}
 
 
-	public Date getDate() {
-		return date;
+
+
+	public Date getDob() {
+		return dob;
 	}
 
 
-	public void setDate(Date date) {
-		this.date = date;
+
+
+	public void setDob(Date dob) {
+		this.dob = dob;
 	}
 
 
-	public String getType() {
-		return type;
+
+
+	public String getBloodtype() {
+		return bloodtype;
 	}
 
 
-	public void setType(String type) {
-		this.type = type;
+
+
+	public void setBloodtype(String bloodtype) {
+		this.bloodtype = bloodtype;
 	}
+
+
+
+
+	public List<Personal> getPersonals() {
+		return personals;
+	}
+
+
+
+
+	public void setPersonals(List<Personal> personals) {
+		this.personals = personals;
+	}
+
+
 
 
 	public Integer getTimes() {
