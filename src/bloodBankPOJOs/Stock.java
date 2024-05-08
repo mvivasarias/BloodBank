@@ -1,4 +1,4 @@
-package BloodBankPOJOs;
+package bloodBankPOJOs;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,36 +6,36 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+public class Stock implements Serializable {
 
-public class Donation implements Serializable {
-	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4804176946955355846L;
+	private static final long serialVersionUID = -6379275603644441738L;
 	
 	private Integer id;
 	private Date date;
-	private Donor donor;
+	private Float liters;
 	private List<Blood> bloods;
 	
-	public Donation() {
+	public Stock() {
 		super();
-		bloods = new ArrayList<Blood>();
+		this.bloods = new ArrayList<Blood>();
 	}
 
-	public Donation(Date date, Donor donor, List<Blood> bloods) {
+	public Stock(Date date, Float liters, List<Blood> bloods) {
 		super();
 		this.date = date;
-		this.donor = donor;
+		this.liters = liters;
 		this.bloods = bloods;
 	}
+	
 
-	public Donation(Integer id, Date date, Donor donor, List<Blood> bloods) {
+	public Stock(Integer id, Date date, Float liters, List<Blood> bloods) {
 		super();
 		this.id = id;
 		this.date = date;
-		this.donor = donor;
+		this.liters = liters;
 		this.bloods = bloods;
 	}
 
@@ -55,12 +55,12 @@ public class Donation implements Serializable {
 		this.date = date;
 	}
 
-	public Donor getDonor() {
-		return donor;
+	public Float getLiters() {
+		return liters;
 	}
 
-	public void setDonor(Donor donor) {
-		this.donor = donor;
+	public void setLiters(Float liters) {
+		this.liters = liters;
 	}
 
 	public List<Blood> getBloods() {
@@ -73,7 +73,7 @@ public class Donation implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(bloods, date, donor, id);
+		return Objects.hash(bloods, date, id, liters);
 	}
 
 	@Override
@@ -84,16 +84,16 @@ public class Donation implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Donation other = (Donation) obj;
-		return Objects.equals(bloods, other.bloods) && Objects.equals(date, other.date)
-				&& Objects.equals(donor, other.donor) && Objects.equals(id, other.id);
+		Stock other = (Stock) obj;
+		return Objects.equals(bloods, other.bloods) && Objects.equals(date, other.date) && Objects.equals(id, other.id)
+				&& Objects.equals(liters, other.liters);
 	}
 
 	@Override
 	public String toString() {
-		return "Donation [id=" + id + ", date=" + date + ", donor=" + donor + "]";
+		return "Stock [id=" + id + ", date=" + date + ", liters=" + liters + "]";
 	}
-
+	
 	
 }
-
+	
