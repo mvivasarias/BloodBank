@@ -54,16 +54,16 @@ public class Menu {
 				switch(choice)
 				{
 				case 1: 
-					login();					
+					//login();					
 				case 2:
 					System.out.println("Add info of new user.");
-					signUpUser();
+					//signUpUser();
 				case 3: 
 					System.out.println("Udpate the password of an exissting user.");
-					updatePassword();
+					//updatePassword();
 				case 0:
 					System.out.println("Exiting application.");
-					jdbcmanager.disconnect();
+					//jdbcmanager.disconnect();
 				}
 				
 			}while(choice!=0);
