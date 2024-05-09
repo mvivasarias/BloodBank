@@ -5,29 +5,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
-public class Blood implements Serializable{
+public class Blood implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3464987077094646032L;
-	
+
 	private Integer id;
-	private String type;
+	private String bloodType;
 	private Stock stock;
 	private List<Donation> donations;
 	private List<Hospital> hospitals;
-	
+
 	public Blood() {
 		super();
 		donations = new ArrayList<Donation>();
 		hospitals = new ArrayList<Hospital>();
 	}
-	
+
 	public Blood(String type, Stock stock, List<Donation> donations, List<Hospital> hospitals) {
 		super();
-		this.type = type;
+		this.bloodType = type;
 		this.stock = stock;
 		this.donations = donations;
 		this.hospitals = hospitals;
@@ -36,7 +35,7 @@ public class Blood implements Serializable{
 	public Blood(Integer id, String type, Stock stock, List<Donation> donations, List<Hospital> hospitals) {
 		super();
 		this.id = id;
-		this.type = type;
+		this.bloodType = type;
 		this.stock = stock;
 		this.donations = donations;
 		this.hospitals = hospitals;
@@ -51,17 +50,17 @@ public class Blood implements Serializable{
 	}
 
 	public String getType() {
-		return type;
+		return bloodType;
 	}
 
 	public void setType(String type) {
-		this.type = type;
+		this.bloodType = type;
 	}
 
 	public List<Donation> getDonations() {
 		return donations;
 	}
-	
+
 	public Stock getStock() {
 		return stock;
 	}
@@ -73,7 +72,6 @@ public class Blood implements Serializable{
 	public void setDonations(List<Donation> donations) {
 		this.donations = donations;
 	}
-	
 
 	public List<Hospital> getHospitals() {
 		return hospitals;
@@ -85,7 +83,7 @@ public class Blood implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(donations, hospitals, id, stock, type);
+		return Objects.hash(donations, hospitals, id, stock, bloodType);
 	}
 
 	@Override
@@ -99,17 +97,12 @@ public class Blood implements Serializable{
 		Blood other = (Blood) obj;
 		return Objects.equals(donations, other.donations) && Objects.equals(hospitals, other.hospitals)
 				&& Objects.equals(id, other.id) && Objects.equals(stock, other.stock)
-				&& Objects.equals(type, other.type);
+				&& Objects.equals(bloodType, other.bloodType);
 	}
 
 	@Override
 	public String toString() {
-		return "Blood [id=" + id + ", type=" + type + ", stock=" + stock + "]";
+		return "Blood [id=" + id + ", type=" + bloodType + ", stock=" + stock + "]";
 	}
 
-	
-
-	
 }
-
-
