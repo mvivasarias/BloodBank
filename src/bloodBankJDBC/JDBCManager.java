@@ -1,10 +1,9 @@
 package bloodBankJDBC;
 
-	import java.beans.Statement;
+	import java.sql.Statement;
 	import java.sql.Connection;
 	import java.sql.DriverManager;
 	import java.sql.SQLException;
-
 
 public class JDBCManager {
 	
@@ -35,26 +34,45 @@ public class JDBCManager {
 			
 			Statement stmt = c.createStatement();
 			
-			String sql = "CREATE TABLE owners ("
+			String sql = "CREATE TABLE contract ("
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "name text NOT NULL, phone INTEGER, "
-					+ "cardnumber TEXT, email TEXT NOT NULL);";
+					+ "salary INTEGER, hours INTEGER, "
+					+ "typeofwork TEXT NOT NULL);";
 			stmt.executeUpdate(sql);
 			
-			sql = "CREATE TABLE pets ("
+			sql = "CREATE TABLE personal ("
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "name TEXT NOT NULL, cured BOOLEAN, "
-					+ "typeOfAnimal TEXT CHECK (typeOfAnimal in (dog, cat, bird, hamster)),"
-					+ "coat TEXT, dob DATE NOT NULL, onwer_id INTEGER REFERENCES owners(id));";
+					+ "name TEXT NOT NULL, surname  TEXT NOT NULL"
+					+ "phone INETGER, work_type TEXT NOT NULL"
+					+ "contract_id INTEGER REFERENCES contract(id) );";
 			stmt.executeUpdate(sql);
 			
-			sql = "CREATE TABLE vets(id INTEGER PRIMARY KEY  AUTOINCREMENT,"
-					+"name TEXT NOT NULL, specialty TEXT, phone INTEGER,"
-					+ "email TEXT NOT NULL, licence TEXT);";
+			sql =  "CREATE TABLE blood ("
+					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ "type TEXT NOT NULL"
+					+ "stock_id INTEGER REFERENCES stock(id) );";
 			stmt.executeUpdate(sql);
 			
-			sql = "CREATE TABLE treats (vet_id INTEGER REFERENCES vets(id),"
-					+ "pet_id REFERENCES pets(id), PRIMARY KEY(vet_id,pet_id) );";
+			sql = "CREATE TABLE donation ("
+					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ "date DATE, amount INTEGER"
+					+ "donor_id INTEGER REFERENCES donor(id) );";
+			stmt.executeUpdate(sql);
+			
+			sql = "CREATE TABLE donor ("
+					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ "name TEXT NOT NULL,surname TEXT NOT NULL "
+					+ "dob DATE, bloodtype TEXT NOR NULL, times INTEGER";
+			stmt.executeUpdate(sql);
+			
+			sql = "CREATE TABLE hospital ("
+					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ "name TEXT NOT NULL,address TEXT NOT NULL ";
+			stmt.executeUpdate(sql);
+			
+			sql = "CREATE TABLE stock ("
+					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ "date DATE, liters TEXT NOT NULL" ;
 			stmt.executeUpdate(sql);
 			
 			
