@@ -13,7 +13,7 @@
 		<class>bloodBankPOJOs.User</class>
 		<class>bloodBankPOJOs.Role</class>   
  
-		<properties>	
+		<properties>	  
 			<!-- Connection properties -->
 			<property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC" />
 		    <property name="javax.persistence.jdbc.url"	value="jdbc:sqlite:./db/DataBase.db" />
