@@ -16,7 +16,7 @@ public class Contract implements Serializable {
 	private Integer salary;
 	private Integer hours;
 	private String typeofwork;
-	private List<Personal> personals;
+	private List<Personal> personals;   
 	
 	public Contract() {
 		super();
