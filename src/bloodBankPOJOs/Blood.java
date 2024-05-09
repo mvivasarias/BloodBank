@@ -33,7 +33,7 @@ public class Blood implements Serializable{
 		this.hospitals = hospitals;
 	}
 
-	public Blood(String id, String type, Stock stock, List<Donation> donations, List<Hospital> hospitals) {
+	public Blood(Integer id, String type, Stock stock, List<Donation> donations, List<Hospital> hospitals) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -42,11 +42,11 @@ public class Blood implements Serializable{
 		this.hospitals = hospitals;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
