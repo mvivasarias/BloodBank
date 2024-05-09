@@ -11,7 +11,7 @@
  
 		<!-- Entity Class -->
 		<class>bloodBankPOJOs.User</class>
-		<class>bloodBankPOJOs.Role</class>
+		<class>bloodBankPOJOs.Role</class>   
  
 		<properties>	
 			<!-- Connection properties -->
