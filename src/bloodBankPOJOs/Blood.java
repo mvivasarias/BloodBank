@@ -13,7 +13,7 @@ public class Blood implements Serializable{
 	 */
 	private static final long serialVersionUID = 3464987077094646032L;
 	
-	private String id;
+	private Integer id;
 	private String type;
 	private Stock stock;
 	private List<Donation> donations;
