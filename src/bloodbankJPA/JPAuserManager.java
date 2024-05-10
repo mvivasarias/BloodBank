@@ -55,10 +55,10 @@ public class JPAuserManager implements UserManager {
 		
 		if(this.getRoles().isEmpty())
 		{
-			Role owner = new Role("owner");
-			Role vet = new Role("vet");
-			this.newRole(owner);
-			this.newRole(vet);
+			Role personal = new Role("personal");
+			Role hospital = new Role("hospital");
+			this.newRole(personal);
+			this.newRole(hospital);
 		}
 		
 	}
