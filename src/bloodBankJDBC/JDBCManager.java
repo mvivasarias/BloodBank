@@ -40,10 +40,11 @@ public class JDBCManager {
 
 			sql = "CREATE TABLE personal (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "name TEXT NOT NULL, surname  TEXT NOT NULL" 
-					+ "phone INETGER, work_type TEXT NOT NULL"
-					+ "contract_id INTEGER"
-					+ "FOREREFERENCES contract(id) );";
+					+ "name TEXT NOT NULL, surname  TEXT NOT NULL," 
+					+ "phone INETGER, work_type TEXT NOT NULL,"
+					+ "foto BLOB,"
+					+ "contract_id INTEGER,"
+					+ "REFERENCES contract(id) );";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE blood (" 

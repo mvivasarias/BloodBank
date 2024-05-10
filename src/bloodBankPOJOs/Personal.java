@@ -21,7 +21,7 @@ public class Personal implements Serializable {
 	private List<Donation> donations;
 
 	private Contract contract;
-	private Byte[] foto;
+	private byte[] foto;
 	
 	public Personal() {
 		super();

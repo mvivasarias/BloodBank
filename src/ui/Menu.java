@@ -41,6 +41,7 @@ public class Menu {
 		hospitalManager = new JDBCHospitalManager(jdbcManager);
 		personalManager = new JDBCPersonalManager(jdbcManager);
 		stockManager = new JDBCStockManager(jdbcManager);
+		
 		usermanager = new JPAuserManager();
 
 		try {
