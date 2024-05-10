@@ -2,13 +2,16 @@ package bloodbankJPA;
 
 import java.security.MessageDigest;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 import bloodBankIfaces.UserManager;
 import bloodBankPOJOs.Role;
 import bloodBankPOJOs.User;
 
 public class JPAuserManager implements UserManager {
-	// private EntityManager em;
+	private EntityManager em;
 
 	@Override
 	public void connect() {
@@ -53,8 +56,31 @@ public class JPAuserManager implements UserManager {
 
 	@Override
 	public User checkPassword(String email, String pass) {
-		// TODO Auto-generated method stub
-		return null;
+			// TODO Auto-generated method stub
+			User u = null;
+			
+			Query q = em.createNativeQuery("SELECT * from users where email =? and password=?", User.class);
+			q.setParameter(1, email);
+			
+			try {
+				
+				MessageDigest md = MessageDigest.getInstance("MD5");
+				md.update(pass.getBytes());
+				byte[] pw = md.digest();
+				
+				q.setParameter(2, pw);
+				
+			}catch(Exception e)
+			{e.printStackTrace();}
+				
+			
+			try {
+				u = (User) q.getSingleResult();
+				
+			}catch(NoResultException e) {}
+			
+			return u;
+		}
 	}
 
 	@Override
