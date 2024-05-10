@@ -2,7 +2,9 @@ package ui;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.security.MessageDigest;
 
+import bloodBankPOJOs.Role;
 import bloodBankPOJOs.User;
 import bloodBankIfaces.UserManager;
 import bloodBankJDBC.JDBCBloodManager;
@@ -56,7 +58,6 @@ public class Menu {
 				switch (choice) {
 				case 1:
 					login();
-					// login (identifies hospital manager automatically by credentials)
 				case 2:
 					System.out.println("Add info of new user.");
 					signUpUser();
@@ -106,11 +107,41 @@ public class Menu {
 		User u= usermanager.checkPassword(email, password);
 
 		
-		if(u!=null & u.getRole().getName().equals(null))//Hospital manager role)
+		if(u!=null & u.getRole().getName().equals("hospitalManager"))//Hospital manager role)
 		{
-			System.out.println("Hospital login");
+			System.out.println("Hospital login: ");
+			
+			
 			hospitalManagerMenu(email);
+		} else {
+			//se logea el personalManagerMenu();
 		}
+	}
+	private static void signUpUser() {
+		// TODO Auto-generated method stub
+		try {
+			System.out.println("Introduce email: ");
+			String email = reader.readLine();
+			System.out.println("Introduce the password");
+			String password = reader.readLine();
+			
+			MessageDigest md= MessageDigest.getInstance("MD5");
+			md.update(password.getBytes());
+			byte[] pass = md.digest();
+			
+			System.out.println("Introduce the role of the user. 1: owner, 2: vet");
+			Integer rol = Integer.parseInt(reader.readLine());
+			Role r = usermanager.getRole(rol);
+			
+			User u = new User(email, pass, r);
+			
+			usermanager.newUser(u);
+		
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			}
 	}
 
 	private static void hospitalManagerMenu(String email) {
@@ -149,25 +180,5 @@ public class Menu {
 		}
 	}
 
-	/*
-	 * private static void signUpUser() {
-	 * 
-	 * try { System.out.println("Introduce email: "); String email =
-	 * reader.readLine(); System.out.println("Introduce the password"); String
-	 * password = reader.readLine(); //We could implement a simple method to make
-	 * the new passwords fit certain parameters
-	 * 
-	 * MessageDigest md= MessageDigest.getInstance("MD5");
-	 * md.update(password.getBytes()); byte[] pass = md.digest();
-	 * 
-	 * System.out.println("Introduce the role of the user. 1: , 2: "); //User roles
-	 * Integer rol = Integer.parseInt(reader.readLine()); Role r =
-	 * usermanager.getRole(rol);
-	 * 
-	 * User u = new User(email, pass, r);
-	 * 
-	 * usermanager.newUser(u);
-	 * 
-	 * } catch(Exception e) { e.printStackTrace(); } }
-	 */
+
 }
