@@ -17,7 +17,7 @@ public class Personal implements Serializable {
 	private Integer id;
 	private String name;
 	private String surname;
-	private Integer phone;
+	private Integer email;
 	private List<Donation> donations;
 
 	private Contract contract;
@@ -31,18 +31,18 @@ public class Personal implements Serializable {
 	
 	//constructor sin el id
 	public Personal(String name, String surname, Integer phone, List<Donation> donations, Contract contract,
-			Byte[] foto) {
+			byte[] foto) {
 		super();
 		this.name = name;
 		this.surname = surname;
-		this.phone = phone;
+		this.email = email;
 		this.donations = donations;
 		this.contract = contract;
 		this.foto = foto;
 	}
 
 	public Personal(Integer id, String name, String surname, Integer phone, List<Donation> donations, Contract contract,
-			Byte[] foto) {
+			byte[] foto) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -94,11 +94,11 @@ public class Personal implements Serializable {
 	}
 	
 
-	public Byte[] getFoto() {
+	public byte[] getFoto() {
 		return foto;
 	}
 
-	public void setFoto(Byte[] foto) {
+	public void setFoto(byte[] foto) {
 		this.foto = foto;
 	}
 
