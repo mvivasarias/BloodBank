@@ -13,7 +13,7 @@ public class JDBCManager {
 
 		try {
 
-			Class.forName("org.sqlite.JDBC");
+			Class.forName("org.sqlite.JDBC"); // establish a connection with the database
 			c = DriverManager.getConnection("jdbc:sqlite:./db/DataBase.db");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 
@@ -42,7 +42,8 @@ public class JDBCManager {
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "name TEXT NOT NULL, surname  TEXT NOT NULL" 
 					+ "phone INETGER, work_type TEXT NOT NULL"
-					+ "contract_id INTEGER REFERENCES contract(id) );";
+					+ "contract_id INTEGER"
+					+ "FOREREFERENCES contract(id) );";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE blood (" 
@@ -71,6 +72,7 @@ public class JDBCManager {
 			sql = "CREATE TABLE stock (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
 					+ "date DATE, liters TEXT NOT NULL); ";
+			
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE donation_blood (" 
@@ -90,7 +92,9 @@ public class JDBCManager {
 					+ "donation_id INTEGER REFERENCES donation(id)"
 					+ "personal_id INTEGER REFERENCES personal(id));";
 			stmt.executeUpdate(sql);
-
+			
+			stmt.close();
+			
 		} catch (SQLException e) {
 			if (!e.getMessage().contains("already exists")) {
 				e.printStackTrace();
