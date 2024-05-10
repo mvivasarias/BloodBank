@@ -20,6 +20,12 @@ public class User implements Serializable {
 	public User() {
 		super();
 	}
+	public User(String email, byte[] password, Role role) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.role = role;
+	}
 	public Integer getId() {
 		return id;
 	}
