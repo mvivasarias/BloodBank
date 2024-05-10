@@ -104,12 +104,11 @@ public class Menu {
 		String password = reader.readLine();
 		
 		User u= usermanager.checkPassword(email, password);
-		//Falta crear método checkPassword() en JPAuserManager.java
+
 		
-		if(u!=null & u.getRole().getName().equals(//Hospital manager role))
+		if(u!=null & u.getRole().getName().equals(null))//Hospital manager role)
 		{
 			System.out.println("Hospital login");
-			//call for owner submenu;
 			hospitalManagerMenu(email);
 		}
 	}
