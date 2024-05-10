@@ -15,7 +15,7 @@ public class Stock implements Serializable{
 	
 	private Integer id;
 	private Date date;
-	private Integer litters;
+	private float litters;
 	private List<Blood> bloods;
 	
 	public Stock() {
@@ -23,14 +23,14 @@ public class Stock implements Serializable{
 		bloods = new ArrayList<Blood>();
 	}
 
-	public Stock(Date date, Integer litters, List<Blood> bloods) {
+	public Stock(Date date, float litters, List<Blood> bloods) {
 		super();
 		this.date = date;
 		this.litters = litters;
 		this.bloods = bloods;
 	}
 
-	public Stock(Integer id, Date date, Integer litters, List<Blood> bloods) {
+	public Stock(Integer id, Date date, float litters, List<Blood> bloods) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -54,7 +54,7 @@ public class Stock implements Serializable{
 		this.date = date;
 	}
 
-	public Integer getLitters() {
+	public float getLitters() {
 		return litters;
 	}
 
