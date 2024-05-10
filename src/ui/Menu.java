@@ -15,6 +15,7 @@ import bloodBankJDBC.JDBCStockManager;
 import bloodbankJPA.JPAuserManager;
 
 public class Menu {
+	
 	private static JDBCManager jdbcManager;
 	private static JDBCBloodManager bloodManager;
 	private static JDBCContractManager contractManager;
