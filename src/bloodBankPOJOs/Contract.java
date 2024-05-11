@@ -15,7 +15,6 @@ public class Contract implements Serializable {
 	private Integer id;
 	private Integer salary;
 	private Integer hours;
-	private String typeofwork;
 	private List<Personal> personals;   
 	
 	public Contract() {
@@ -23,20 +22,18 @@ public class Contract implements Serializable {
 		this.personals = new ArrayList<Personal>();
 	}
 
-	public Contract(Integer salary, Integer hours, String typeofwork, List<Personal> personals) {
+	public Contract(Integer salary, Integer hours, List<Personal> personals) {
 		super();
 		this.salary = salary;
 		this.hours = hours;
-		this.typeofwork = typeofwork;
 		this.personals = new ArrayList<Personal>();
 	}
 
-	public Contract(Integer id, Integer salary, Integer hours, String typeofwork, List<Personal> personals) {
+	public Contract(Integer id, Integer salary, Integer hours, List<Personal> personals) {
 		super();
 		this.id = id;
 		this.salary = salary;
 		this.hours = hours;
-		this.typeofwork = typeofwork;
 		this.personals = personals;
 	}
 
@@ -64,14 +61,6 @@ public class Contract implements Serializable {
 		this.hours = hours;
 	}
 
-	public String getTypeofwork() {
-		return typeofwork;
-	}
-
-	public void setTypeofwork(String typeofwork) {
-		this.typeofwork = typeofwork;
-	}
-
 	public List<Personal> getPersonals() {
 		return personals;
 	}
@@ -82,7 +71,7 @@ public class Contract implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(hours, id, personals, salary, typeofwork);
+		return Objects.hash(hours, id, personals, salary);
 	}
 
 	@Override
@@ -95,13 +84,12 @@ public class Contract implements Serializable {
 			return false;
 		Contract other = (Contract) obj;
 		return Objects.equals(hours, other.hours) && Objects.equals(id, other.id)
-				&& Objects.equals(personals, other.personals) && Objects.equals(salary, other.salary)
-				&& Objects.equals(typeofwork, other.typeofwork);
+				&& Objects.equals(personals, other.personals) && Objects.equals(salary, other.salary);
 	}
 
 	@Override
 	public String toString() {
-		return "Contract [id=" + id + ", salary=" + salary + ", hours=" + hours + ", typeofwork=" + typeofwork + "]";
+		return "Contract [id=" + id + ", salary=" + salary + ", hours=" + hours + ", typeofwork=" +  "]";
 	}
 
 }
