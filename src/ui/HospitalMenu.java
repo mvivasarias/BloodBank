@@ -8,7 +8,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import VetClinicPOJOs.Pet;
 import utilities.Utilities;
 import bloodBankJDBC.JDBCBloodManager;
 import bloodBankJDBC.JDBCContractManager;
