@@ -24,4 +24,10 @@ public class JDBCBloodManager implements BloodManager {
 		return null;
 	}
 
+	@Override
+	public void deleteBlood(Blood bloodToDelete) {
+		// TODO Auto-generated method stub
+		//DELETE BLOOD FROM TABLE
+	}
+
 }

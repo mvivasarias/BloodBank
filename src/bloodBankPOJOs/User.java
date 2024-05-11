@@ -4,52 +4,73 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.TableGenerator;
+
 public class User implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 746547546967803353L;
-	
+	@Id
+	@GeneratedValue(generator = "users")
+	@TableGenerator(name = "users", table = "sqite_sequence", pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "users")
 	private Integer id;
 	private String email;
-	private byte[] password;  // lo ponemos omo byte[] para la encriptacion 
+	@Lob
+	private byte[] password; // lo ponemos omo byte[] para la encriptacion
+	@ManyToOne
+	@JoinColumn(name = "role_id")
 	private Role role;
-	
-	
+
 	public User() {
 		super();
 	}
+
 	public User(String email, byte[] password, Role role) {
 		super();
 		this.email = email;
 		this.password = password;
 		this.role = role;
 	}
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public byte[] getPassword() {
 		return password;
 	}
+
 	public Role getRole() {
 		return role;
 	}
+
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
 	public void setPassword(byte[] password) {
 		this.password = password;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -58,6 +79,7 @@ public class User implements Serializable {
 		result = prime * result + Objects.hash(email, id);
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -70,11 +92,11 @@ public class User implements Serializable {
 		return Objects.equals(email, other.email) && Objects.equals(id, other.id)
 				&& Arrays.equals(password, other.password);
 	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", password=" + Arrays.toString(password) + ", role=" + role
 				+ "]";
 	}
-	
 
 }

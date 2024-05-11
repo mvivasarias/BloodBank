@@ -14,19 +14,17 @@ public class Request implements Serializable{
 	private Integer id;
 	private float liters;
 	private Date date;
-	private Hospital hospital;
-	private Blood blood;
+	private String bloodType;
 	
 	public Request() {
 		super();
 	}
 	
-	public Request(float liters, Date date, Hospital hospital, Blood blood) {
+	public Request(float liters, Date date, String bloodType) {
 		super();
 		this.liters = liters;
 		this.date = date;
-		this.hospital = hospital;
-		this.blood = blood;
+		this.bloodType = bloodType;
 		
 	}
 
@@ -54,25 +52,18 @@ public class Request implements Serializable{
 		this.date = date;
 	}
 
-	public Hospital getHospital() {
-		return hospital;
+	
+	public String getBloodType() {
+		return bloodType;
 	}
 
-	public void setHospital(Hospital hospital) {
-		this.hospital = hospital;
-	}
-
-	public Blood getBlood() {
-		return blood;
-	}
-
-	public void setBlood(Blood blood) {
-		this.blood = blood;
+	public void setBloodType(String bloodType) {
+		this.bloodType = bloodType;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(blood, date, hospital, id, liters);
+		return Objects.hash(bloodType, date,id, liters);
 	}
 
 	@Override
@@ -84,14 +75,14 @@ public class Request implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Request other = (Request) obj;
-		return Objects.equals(blood, other.blood) && Objects.equals(date, other.date)
-				&& Objects.equals(hospital, other.hospital) && Objects.equals(id, other.id)
+		return Objects.equals(bloodType, other.bloodType) && Objects.equals(date, other.date)
+				&& Objects.equals(id, other.id)
 				&& Float.floatToIntBits(liters) == Float.floatToIntBits(other.liters);
 	}
 
 	@Override
 	public String toString() {
-		return "Request [liters=" + liters + ", date=" + date + ", hospital=" + hospital + ", blood=" + blood + "]";
+		return "Request [liters=" + liters + ", date=" + date + ", bloodType=" + bloodType + "]";
 	}
 
 	

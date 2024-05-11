@@ -1,7 +1,6 @@
 package bloodBankJDBC;
 
 import bloodBankIfaces.DonorManager;
-import bloodBankPOJOs.Donor;
 
 public class JDBCDonorManager implements DonorManager {
 
@@ -29,10 +28,6 @@ public class JDBCDonorManager implements DonorManager {
 
 	}
 
-	@Override
-	public Donor getDonorByID(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }

@@ -17,7 +17,7 @@ public class Personal implements Serializable {
 	private Integer id;
 	private String name;
 	private String surname;
-	private Integer email;
+	private String email;
 	private List<Donation> donations;
 
 	private Contract contract;
@@ -30,7 +30,7 @@ public class Personal implements Serializable {
 	}
 	
 	//constructor sin el id
-	public Personal(String name, String surname, Integer phone, List<Donation> donations, Contract contract,
+	public Personal(String name, String surname, String email, List<Donation> donations, Contract contract,
 			byte[] foto) {
 		super();
 		this.name = name;
@@ -41,13 +41,13 @@ public class Personal implements Serializable {
 		this.foto = foto;
 	}
 
-	public Personal(Integer id, String name, String surname, Integer phone, List<Donation> donations, Contract contract,
+	public Personal(Integer id, String name, String surname, String email, List<Donation> donations, Contract contract,
 			byte[] foto) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
-		this.phone = phone;
+		this.email = email;
 		this.donations = donations;
 		this.contract = contract;
 		this.foto = foto;
@@ -77,12 +77,14 @@ public class Personal implements Serializable {
 		this.surname = surname;
 	}
 
-	public Integer getPhone() {
-		return phone;
+	
+
+	public String getEmail() {
+		return email;
 	}
 
-	public void setPhone(Integer phone) {
-		this.phone = phone;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Contract getContract() {
@@ -116,7 +118,7 @@ public class Personal implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(foto);
-		result = prime * result + Objects.hash(contract, donations, id, name, phone, surname);
+		result = prime * result + Objects.hash(contract, donations, id, name, email, surname);
 		return result;
 	}
 
@@ -131,12 +133,12 @@ public class Personal implements Serializable {
 		Personal other = (Personal) obj;
 		return Objects.equals(contract, other.contract) && Objects.equals(donations, other.donations)
 				&& Arrays.equals(foto, other.foto) && Objects.equals(id, other.id) && Objects.equals(name, other.name)
-				&& Objects.equals(phone, other.phone) && Objects.equals(surname, other.surname);
+				&& Objects.equals(email, other.email) && Objects.equals(surname, other.surname);
 	}
 
 	@Override
 	public String toString() {
-		return "Personal [id=" + id + ", name=" + name + ", surname=" + surname + ", phone=" + phone + ", contract="
+		return "Personal [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", contract="
 				+ contract + ", foto=" + Arrays.toString(foto) + "]";
 	}
 

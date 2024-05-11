@@ -41,7 +41,7 @@ public class Menu {
 		hospitalManager = new JDBCHospitalManager(jdbcManager);
 		personalManager = new JDBCPersonalManager(jdbcManager);
 		stockManager = new JDBCStockManager(jdbcManager);
-		
+
 		usermanager = new JPAuserManager();
 
 		try {
@@ -98,25 +98,26 @@ public class Menu {
 
 	}
 
-	private static void login()throws Exception{
+	private static void login() throws Exception {
 		System.out.println("Email: ");
 		String email = reader.readLine();
-		
+
 		System.out.println("Password: ");
 		String password = reader.readLine();
-		
-		User u= usermanager.checkPassword(email, password);
 
-		
-		if(u!=null & u.getRole().getName().equals("hospital"))//Hospital manager role)
-		{
-			System.out.println("Hospital login: ");
-			HospitalMenu hm=null;
-			hm.hospitalManagerMenu(email);
+		User u = usermanager.checkPassword(email, password);
+
+		if (u != null & u.getRole().getName().equals("personal")) {
+			System.out.println("Personal login: ");
+			PersonalMenu personalMenu = new PersonalMenu(email, password);
+			personalMenu.personalMenuOptions(email, password);
+
 		} else {
-			//se logea el personalManagerMenu();
+			HospitalMenu hospitalMenu = new HospitalMenu(email, password);
+			hospitalMenu.hospitalMenuOptions(email, password);
 		}
 	}
+
 	private static void signUpUser() {
 		// TODO Auto-generated method stub
 		try {
@@ -124,26 +125,22 @@ public class Menu {
 			String email = reader.readLine();
 			System.out.println("Introduce the password");
 			String password = reader.readLine();
-			
-			MessageDigest md= MessageDigest.getInstance("MD5");
+
+			MessageDigest md = MessageDigest.getInstance("MD5");
 			md.update(password.getBytes());
 			byte[] pass = md.digest();
-			
-			System.out.println("Introduce the role of the user. 1: owner, 2: vet");
+
+			System.out.println("Introduce the role of the user. 1: personal, 2: hospital");
 			Integer rol = Integer.parseInt(reader.readLine());
 			Role r = usermanager.getRole(rol);
-			
+
 			User u = new User(email, pass, r);
-			
+
 			usermanager.newUser(u);
-		
-		}
-		catch(Exception e)
-		{
+
+		} catch (Exception e) {
 			e.printStackTrace();
-			}
+		}
 	}
-
-
 
 }

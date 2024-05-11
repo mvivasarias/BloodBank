@@ -19,48 +19,47 @@ public class JPAuserManager implements UserManager {
 	public User checkPassword(String email, String pass) {
 		// TODO Auto-generated method stub
 		User u = null;
-		
+
 		Query q = em.createNativeQuery("SELECT * from users where email =? and password=?", User.class);
 		q.setParameter(1, email);
-		
+
 		try {
-			
+
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			md.update(pass.getBytes());
 			byte[] pw = md.digest();
-			
+
 			q.setParameter(2, pw);
-			
-		}catch(Exception e)
-		{e.printStackTrace();}
-			
-		
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		try {
 			u = (User) q.getSingleResult();
-			
-		}catch(NoResultException e) {}
-		
+
+		} catch (NoResultException e) {
+		}
+
 		return u;
 	}
 
 	@Override
 	public void connect() {
-		// TODO Auto-generated method stub
-		
-		em = Persistence.createEntityManagerFactory("vetclinic-provider").createEntityManager();
-	
+
+		em = Persistence.createEntityManagerFactory("bloodBank-provider").createEntityManager();
+
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys = ON").executeUpdate();
 		em.getTransaction().commit();
-		
-		if(this.getRoles().isEmpty())
-		{
+
+		if (this.getRoles().isEmpty()) {
 			Role personal = new Role("personal");
 			Role hospital = new Role("hospital");
 			this.newRole(personal);
 			this.newRole(hospital);
 		}
-		
+
 	}
 
 	@Override
@@ -68,7 +67,7 @@ public class JPAuserManager implements UserManager {
 		// TODO Auto-generated method stub
 		Query q = em.createNativeQuery("SELECT * FROM roles", Role.class);
 		List<Role> roles = (List<Role>) q.getResultList();
-		
+
 		return roles;
 	}
 
@@ -78,7 +77,7 @@ public class JPAuserManager implements UserManager {
 		em.getTransaction().begin();
 		em.persist(r);
 		em.getTransaction().commit();
-		
+
 	}
 
 	@Override
@@ -98,24 +97,24 @@ public class JPAuserManager implements UserManager {
 	@Override
 	public Role getRole(Integer id) {
 		// TODO Auto-generated method stub
-		Query q = em.createNativeQuery("SELECT * FROM roles where id="+id, Role.class);
+		Query q = em.createNativeQuery("SELECT * FROM roles where id=" + id, Role.class);
 		Role r = (Role) q.getSingleResult();
-		
+
 		return r;
 	}
 
 	@Override
 	public User getUser(String email) {
 		// TODO Auto-generated method stub
-		Query q = em.createNativeQuery("SELECT * FROM users where email="+email, User.class);
+		Query q = em.createNativeQuery("SELECT * FROM users where email=" + email, User.class);
 		User u = (User) q.getSingleResult();
-		
+
 		return u;
 	}
 
 	@Override
 	public void changePassword(User u, String new_passwd) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

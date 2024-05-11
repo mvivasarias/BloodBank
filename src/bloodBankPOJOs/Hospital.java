@@ -15,6 +15,7 @@ public class Hospital implements Serializable {
 	private Integer id;
 	private String name;
 	private String address;
+	private String email;
 	private List<Blood> bloods;
 	
 	public Hospital() {
@@ -22,19 +23,29 @@ public class Hospital implements Serializable {
 		this.bloods = new ArrayList<Blood>();	
 	}
 
-	public Hospital(String name, String address, List<Blood> bloods) {
+	public Hospital(String name, String address, String email,List<Blood> bloods) {
 		super();
 		this.name = name;
 		this.address = address;
+		this.email=email;
 		this.bloods = bloods;
 	}
 
-	public Hospital(Integer id, String name, String address, List<Blood> bloods) {
+	public Hospital(Integer id, String name, String address,String email, List<Blood> bloods) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.address = address;
+		this.email=email;
 		this.bloods = bloods;
+	}
+	
+
+	public Hospital(String name, String address, String email) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.email = email;
 	}
 
 	public Integer getId() {
@@ -60,6 +71,15 @@ public class Hospital implements Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public List<Blood> getBloods() {
 		return bloods;
@@ -83,14 +103,16 @@ public class Hospital implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Hospital other = (Hospital) obj;
-		return Objects.equals(address, other.address) && Objects.equals(bloods, other.bloods)
+		return Objects.equals(address, other.address) &&Objects.equals(email, other.email) && Objects.equals(bloods, other.bloods)
 				&& Objects.equals(id, other.id) && Objects.equals(name, other.name);
 	}
 
 	@Override
 	public String toString() {
-		return "Hospital [id=" + id + ", name=" + name + ", address=" + address + "]";
+		return "Hospital [id=" + id + ", name=" + name + ", address=" + address + ", email=" + email + ", bloods="
+				+ bloods + "]";
 	}
+	
 	
 	
 }

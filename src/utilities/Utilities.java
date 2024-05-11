@@ -40,26 +40,6 @@ public class Utilities {
 	    }
 
 
-	    public static int readIntegerWithinRanges(int begin, int end) {
-	        while (true) {
-	            try {
-	                String stringLeido;
-	                BufferedReader consola = new BufferedReader(new InputStreamReader(System.in));
-	                stringLeido = consola.readLine();
-	                int ent = Integer.parseInt(stringLeido);
-	                if (ent >= begin || ent <= end) {
-	                    return ent;
-	                } else {
-	                    System.out.println("Not between ranges");
-
-	                }
-
-	            } catch (IOException ex) {
-	                System.out.println("ERROR" + ex);
-	            }
-	        }
-	    }
-
 	    public static float readfloat() {
 
 	        while (true) {
