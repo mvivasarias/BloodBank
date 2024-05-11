@@ -34,64 +34,64 @@ public class JDBCManager {
 
 			String sql = "CREATE TABLE contract (" 
 						+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-						+ "salary INTEGER, hours INTEGER, " 
-						+ "typeofwork TEXT NOT NULL);";
+						+ "salary INTEGER, hours INTEGER);";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE personal (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "name TEXT NOT NULL, surname  TEXT NOT NULL," 
-					+ "phone INETGER, work_type TEXT NOT NULL,"
+					+ "email TEXT NOT NULL,"
 					+ "foto BLOB,"
 					+ "contract_id INTEGER,"
-					+ "REFERENCES contract(id) );";
+					+ "FOREIGN KEY(contract_id) REFERENCES contract(id)ON DELETE SET NULL);";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE blood (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
-					+ "type TEXT NOT NULL"
-					+ "stock_id INTEGER REFERENCES stock(id) );";
+					+ "type TEXT NOT NULL,"
+					+ "stock_id INTEGER REFERENCES stock(id),"
+					+ "FOREIGN KEY(stock_id) REFERENCES stock(id)ON DELETE SET NULL);";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE donation (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
-					+ "date DATE, amount INTEGER"
-					+ "donor_id INTEGER REFERENCES donor(id) );";
+					+ "date DATE NOT NULL, amount INTEGER,"
+					+ "donor_id INTEGER REFERENCES donor(id),"
+					+ "FOREIGN KEY(donor_id) REFERENCES donor(id)ON DELETE SET NULL);";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE donor (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "name TEXT NOT NULL,surname TEXT NOT NULL " 
-					+ "dob DATE, bloodtype TEXT NOR NULL, times INTEGER);";
+					+ "dob DATE NOT NULL, bloodtype TEXT NOR NULL, times INTEGER);";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE hospital (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "name TEXT NOT NULL,address TEXT NOT NULL); ";
+					+ "name TEXT NOT NULL,address TEXT NOT NULL, email TEXT NOT NULL); ";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE stock (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
-					+ "date DATE, liters TEXT NOT NULL); ";
+					+ "date DATE NOT NULL, liters TEXT NOT NULL); ";
 			
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE donation_blood (" 
-					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
-					+ "donation_id INTEGER REFERENCES donation(id)"
-					+ "blood_id INTEGER REFERENCES blood(id));";
+					+ "donation_id INTEGER,"
+					+ "blood_id INTEGER,"
+					+ "FOREIGN KEY(donation_id) REFERENCES donation(id)ON DELETE CASCADE,"
+					+ "FOREIGN KEY(blood_id) REFERENCES blood(id)ON DELETE CASCADE,"
+					+ "PRIMARY KEY(donation_id, blood_id));";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE hospital_blood (" 
-					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
-					+ "hospital_id INTEGER REFERENCES hospital(id)"
-					+ "blood_id INTEGER REFERENCES blood(id));";
-			stmt.executeUpdate(sql);
-			
-			sql = "CREATE TABLE donation_personal(" 
-					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
-					+ "donation_id INTEGER REFERENCES donation(id)"
-					+ "personal_id INTEGER REFERENCES personal(id));";
+					+ "hospital_id INTEGER,"
+					+ "blood_id INTEGER,"
+					+ "FOREIGN KEY(hospital_id) REFERENCES hospital(id)ON DELETE CASCADE,"
+					+ "FOREIGN KEY(blood_id) REFERENCES blood(id)ON DELETE CASCADE,"
+					+ "PRIMARY KEY(hospital_id, blood_id));";
+					
 			stmt.executeUpdate(sql);
 			
 			stmt.close();

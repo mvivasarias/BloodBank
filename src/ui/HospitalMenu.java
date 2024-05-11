@@ -98,8 +98,13 @@ public class HospitalMenu {
 		System.out.println("Type the blood type needed");
 		String bloodType = Utilities.askBloodType("Introduce blood type:");
 
-		Blood bloodRequested = new Blood(bloodType, stockRequested, donation, hospitalRequestingBlood);
-		Stock stockRequested = new Stock(date, liters, bloodRequested);
+		Blood bloodRequested = new Blood(bloodType, donation, hospitalRequestingBlood);
+		private Integer id;
+		private String bloodType;
+		private Stock stock;
+		private List<Donation> donations;
+		private List<Hospital> hospitals;
+		
 
 		Request request = new Request(liters, date, bloodType);
 		hospitalManager.addHospital(hospitalRequestingBlood);
