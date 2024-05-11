@@ -36,6 +36,13 @@ public class Contract implements Serializable {
 		this.hours = hours;
 		this.personals = personals;
 	}
+	
+
+	public Contract(Integer salary, Integer hours) {
+		super();
+		this.salary = salary;
+		this.hours = hours;
+	}
 
 	public Integer getId() {
 		return id;

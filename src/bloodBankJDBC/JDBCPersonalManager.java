@@ -11,7 +11,7 @@ public class JDBCPersonalManager implements PersonalManager {
 	}
 
 	@Override
-	public void registerPersonal(Personal personalToRegister) {
+	public void addPersonal(Personal personalToADD) {
 		// TODO Auto-generated method stub
 
 	}
@@ -26,6 +26,13 @@ public class JDBCPersonalManager implements PersonalManager {
 	public void deletePersonal(Personal personalToDelete) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Personal searchPersonalBySurname(String PersonsurnameToDelete) { //TODO search person by surname to delete it
+		// TODO Auto-generated method stub
+		Personal personDeleted= null;
+		return personDeleted;
 	}
 
 }

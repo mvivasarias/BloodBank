@@ -1,6 +1,7 @@
 package bloodBankJDBC;
 
 import bloodBankIfaces.ContractManager;
+import bloodBankPOJOs.Contract;
 
 public class JDBCContractManager implements ContractManager {
 
@@ -9,6 +10,12 @@ public class JDBCContractManager implements ContractManager {
 	public JDBCContractManager(JDBCManager m) {
 		this.manager = m;
 	}
-	// metodos
+	
+
+	@Override
+	public void addContract(Contract addContract) { //ADD A CONTRACT TO THE TABLE CONTRACT
+		// TODO Auto-generated method stub
+		
+	}
 
 }

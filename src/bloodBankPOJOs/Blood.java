@@ -40,6 +40,12 @@ public class Blood implements Serializable {
 		this.donations = donations;
 		this.hospitals = hospitals;
 	}
+	
+
+	public Blood(String bloodType) {
+		super();
+		this.bloodType = bloodType;
+	}
 
 	public Integer getId() {
 		return id;

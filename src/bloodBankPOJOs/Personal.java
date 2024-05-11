@@ -52,6 +52,16 @@ public class Personal implements Serializable {
 		this.contract = contract;
 		this.foto = foto;
 	}
+	
+
+	public Personal( String name, String surname, String email, Contract contract, byte[] foto) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.contract = contract;
+		this.foto = foto;
+	}
 
 	public Integer getId() {
 		return id;

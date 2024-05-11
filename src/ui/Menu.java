@@ -92,13 +92,14 @@ public class Menu {
 		User u = usermanager.checkPassword(email, passwd);
 
 		if (u != null) {
-			System.out.println("Login of owner successful!");
+			System.out.println("Login of user successful!");
 			usermanager.changePassword(u, new_passwd);
 		}
 
 	}
 
 	private static void login() throws Exception {
+		
 		System.out.println("Email: ");
 		String email = reader.readLine();
 
@@ -108,13 +109,14 @@ public class Menu {
 		User u = usermanager.checkPassword(email, password);
 
 		if (u != null & u.getRole().getName().equals("personal")) {
-			System.out.println("Personal login: ");
-			PersonalMenu personalMenu = new PersonalMenu(email, password);
-			personalMenu.personalMenuOptions(email, password);
+			System.out.println("Login of personal successful!");
+			PersonalMenu personalMenu = new PersonalMenu(email);
+			personalMenu.personalMenuOptions(email,bloodManager,contractManager,donationManager,donorManager,personalManager,stockManager);
 
 		} else {
-			HospitalMenu hospitalMenu = new HospitalMenu(email, password);
-			hospitalMenu.hospitalMenuOptions(email, password);
+			System.out.println("Login of hospital successful!");
+			HospitalMenu hospitalMenu = new HospitalMenu(email);
+			hospitalMenu.hospitalMenuOptions(email,hospitalManager,bloodManager);
 		}
 	}
 

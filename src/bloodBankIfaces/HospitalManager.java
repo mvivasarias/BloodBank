@@ -14,5 +14,5 @@ public interface HospitalManager {
 
 	public void requestForBlood(Request bloodRequest);
 
-	public List <Request> getRequestsOfHospital(String name);
+	public List<Request> getRequestsOfHospital(String name);
 }
