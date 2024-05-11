@@ -99,11 +99,11 @@ public class HospitalMenu {
 		String bloodType = Utilities.askBloodType("Introduce blood type:");
 
 		Blood bloodRequested = new Blood(bloodType, donation, hospitalRequestingBlood);
-		private Integer id;
-		private String bloodType;
-		private Stock stock;
-		private List<Donation> donations;
-		private List<Hospital> hospitals;
+		//private Integer id;
+		//private String bloodType;
+		//private Stock stock;
+		//private List<Donation> donations;
+		//private List<Hospital> hospitals;
 		
 
 		Request request = new Request(liters, date, bloodType);
