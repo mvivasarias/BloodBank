@@ -29,12 +29,12 @@ public class Contract implements Serializable {
 		this.personals = new ArrayList<Personal>();
 	}
 
-	public Contract(Integer id, Integer salary, Integer hours, List<Personal> personals) {
+	public Contract(Integer id, Integer salary, Integer hours) {
 		super();
 		this.id = id;
 		this.salary = salary;
 		this.hours = hours;
-		this.personals = personals;
+		this.personals = new ArrayList<Personal>();
 	}
 	
 
@@ -42,6 +42,7 @@ public class Contract implements Serializable {
 		super();
 		this.salary = salary;
 		this.hours = hours;
+		this.personals = new ArrayList<Personal>();
 	}
 
 	public Integer getId() {

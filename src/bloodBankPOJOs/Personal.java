@@ -18,10 +18,10 @@ public class Personal implements Serializable {
 	private String name;
 	private String surname;
 	private String email;
-	private List<Donation> donations;
-
 	private Contract contract;
 	private byte[] foto;
+	private List<Donation> donations;
+	
 	
 	public Personal() {
 		super();
@@ -61,6 +61,18 @@ public class Personal implements Serializable {
 		this.email = email;
 		this.contract = contract;
 		this.foto = foto;
+	}
+	
+
+	public Personal(Integer id, String name, String surname, String email, Contract contract, byte[] foto) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.contract = contract;
+		this.foto = foto;
+		this.donations= new ArrayList<Donation>();
 	}
 
 	public Integer getId() {
