@@ -116,7 +116,7 @@ public class Menu {
 		} else {
 			System.out.println("Login of hospital successful!");
 			HospitalMenu hospitalMenu = new HospitalMenu(email);
-			hospitalMenu.hospitalMenuOptions(email,hospitalManager,bloodManager);
+			hospitalMenu.hospitalMenuOptions(email,hospitalManager,bloodManager,stockManager);
 		}
 	}
 

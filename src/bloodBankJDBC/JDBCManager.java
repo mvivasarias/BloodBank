@@ -57,7 +57,9 @@ public class JDBCManager {
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
 					+ "date DATE NOT NULL, amount INTEGER,"
 					+ "donor_id INTEGER REFERENCES donor(id),"
-					+ "FOREIGN KEY(donor_id) REFERENCES donor(id)ON DELETE SET NULL);";
+					+ "personal_id INTEGER REFERENCES personal(id),"
+					+ "FOREIGN KEY(donor_id) REFERENCES donor(id)ON DELETE SET NULL);"
+					+ "FOREIGN KEY(personal_id) REFERENCES personal(id) ON DELETE SET NULL);";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE donor (" 
@@ -77,7 +79,7 @@ public class JDBCManager {
 			
 			stmt.executeUpdate(sql);
 			
-			sql = "CREATE TABLE donation_blood (" 
+			sql = "CREATE TABLE donation_blood (" // DONATION GETS BLOOD N-N
 					+ "donation_id INTEGER,"
 					+ "blood_id INTEGER,"
 					+ "FOREIGN KEY(donation_id) REFERENCES donation(id)ON DELETE CASCADE,"
@@ -85,15 +87,16 @@ public class JDBCManager {
 					+ "PRIMARY KEY(donation_id, blood_id));";
 			stmt.executeUpdate(sql);
 			
-			sql = "CREATE TABLE hospital_blood (" 
+			sql = "CREATE TABLE hospital_blood (" //REQUEST TABLE N-N
 					+ "hospital_id INTEGER,"
 					+ "blood_id INTEGER,"
+					+ "liters FLOAT,"
+					+ "date_id INTEGER,"
 					+ "FOREIGN KEY(hospital_id) REFERENCES hospital(id)ON DELETE CASCADE,"
 					+ "FOREIGN KEY(blood_id) REFERENCES blood(id)ON DELETE CASCADE,"
-					+ "PRIMARY KEY(hospital_id, blood_id));";
+					+ "PRIMARY KEY(hospital_id, blood_id, date_id));";
 					
 			stmt.executeUpdate(sql);
-			
 			stmt.close();
 			
 		} catch (SQLException e) {

@@ -41,6 +41,17 @@ public class Blood implements Serializable {
 		this.hospitals = hospitals;
 	}
 	
+	
+
+	public Blood(Integer id, String bloodType, Stock stock) {
+		super();
+		this.id = id;
+		this.bloodType = bloodType;
+		this.stock = stock;
+		this.donations = new ArrayList<Donation>();
+		this.hospitals = new ArrayList<Hospital>();
+	}
+
 
 	public Blood(String bloodType) {
 		super();

@@ -6,35 +6,32 @@ import java.util.Objects;
 
 public class Request implements Serializable{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	
-	private Integer id;
+	private static final long serialVersionUID = 6714833338820944413L;
+	
+	//combinacionb de date hospital blood
 	private float liters;
 	private Date date;
-	private String bloodType;
+	private Hospital hospital;
+	private Blood blood;
 	
 	public Request() {
 		super();
 	}
 	
-	public Request(float liters, Date date, String bloodType) {
+	
+
+
+	public Request(float liters, Date date, Hospital hospital, Blood blood) {
 		super();
 		this.liters = liters;
 		this.date = date;
-		this.bloodType = bloodType;
-		
+		this.hospital = hospital;
+		this.blood = blood;
 	}
 
-	public Integer getId() {
-		return id;
-	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+
 
 	public float getLiters() {
 		return liters;
@@ -53,17 +50,28 @@ public class Request implements Serializable{
 	}
 
 	
-	public String getBloodType() {
-		return bloodType;
+
+	public Blood getBlood() {
+		return blood;
 	}
 
-	public void setBloodType(String bloodType) {
-		this.bloodType = bloodType;
+	public void setBlood(Blood blood) {
+		this.blood = blood;
 	}
+	
+
+	public Hospital getHospital() {
+		return hospital;
+	}
+
+	public void setHospital(Hospital hospital) {
+		this.hospital = hospital;
+	}
+
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(bloodType, date,id, liters);
+		return Objects.hash(blood, date, hospital, liters);
 	}
 
 	@Override
@@ -75,16 +83,18 @@ public class Request implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Request other = (Request) obj;
-		return Objects.equals(bloodType, other.bloodType) && Objects.equals(date, other.date)
-				&& Objects.equals(id, other.id)
+		return Objects.equals(blood, other.blood) && Objects.equals(date, other.date)
+				&& Objects.equals(hospital, other.hospital)
 				&& Float.floatToIntBits(liters) == Float.floatToIntBits(other.liters);
 	}
 
 	@Override
 	public String toString() {
-		return "Request [liters=" + liters + ", date=" + date + ", bloodType=" + bloodType + "]";
+		return "Request [liters=" + liters + ", date=" + date + ", hospital=" + hospital + ", blood=" + blood + "]";
 	}
 
+	
+	
 	
 	
 	

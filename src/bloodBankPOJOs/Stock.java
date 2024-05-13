@@ -22,6 +22,16 @@ public class Stock implements Serializable{
 		super();
 		bloods = new ArrayList<Blood>();
 	}
+	
+
+	public Stock(Integer id, Date date, float litters) {
+		super();
+		this.id = id;
+		this.date = date;
+		this.litters = litters;
+		bloods = new ArrayList<Blood>();
+	}
+
 
 	public Stock(Date date, float litters, List<Blood> bloods) {
 		super();

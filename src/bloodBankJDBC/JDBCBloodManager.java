@@ -1,12 +1,18 @@
 package bloodBankJDBC;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import bloodBankIfaces.BloodManager;
 import bloodBankPOJOs.Blood;
+import bloodBankPOJOs.Stock;
 
 public class JDBCBloodManager implements BloodManager {
 
 	private JDBCManager manager;
+	private JDBCStockManager stockManager;
 
 	public JDBCBloodManager(JDBCManager m) {
 		this.manager = m;
@@ -27,7 +33,91 @@ public class JDBCBloodManager implements BloodManager {
 	@Override
 	public void deleteBlood(Blood bloodToDelete) {
 		// TODO Auto-generated method stub
-		//DELETE BLOOD FROM TABLE
+		// DELETE BLOOD FROM TABLE
+	}
+
+	@Override
+	public Blood searchBloodById(Integer bloodId) {
+		Blood blood = null;
+
+		try {
+			String sql = "SELECT id, type, stock_id FROM blood WHERE id = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, bloodId);
+
+			ResultSet rs = prep.executeQuery();
+
+			if (rs.next()) {
+				String type = rs.getString("type");
+				int stock_id = rs.getInt("stock_id");
+
+				Stock stock = stockManager.searchStockByID(stock_id);
+
+				blood = new Blood(bloodId, type, stock);
+			}
+
+			rs.close();
+			prep.close();
+		} catch (SQLException e) {
+			System.err.println("Error searching blood by ID: " + e.getMessage());
+		}
+
+		return blood;
+	}
+
+	@Override
+	public List<Blood> searchBloodType(String bloodType) {
+		List<Blood> bloodList = new ArrayList<>();
+
+		try {
+			String sql = "SELECT id, type, stock_id FROM blood WHERE type = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, bloodType);
+
+			ResultSet rs = prep.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				int stock_id = rs.getInt("stock_id");
+				Stock stock = stockManager.searchStockByID(stock_id);
+
+				Blood blood = new Blood(id, bloodType, stock);
+				bloodList.add(blood);
+			}
+
+			rs.close();
+			prep.close();
+		} catch (SQLException e) {
+			System.err.println("Error searching blood by type: " + e.getMessage());
+		}
+
+
+
+		return bloodList;
+
+	}
+
+	@Override
+	public void updateBloodLiters(String bloodType, float liters) {
+		 try {
+		       
+		        String updateSql = "UPDATE blood SET liters = liters - ? WHERE type = ?";
+		        PreparedStatement updatePrep =  manager.getConnection().prepareStatement(updateSql);
+		        updatePrep.setFloat(1, liters);
+		        updatePrep.setString(2, bloodType);
+		        int rowsAffected = updatePrep.executeUpdate();
+
+		        if (rowsAffected > 0) {
+		            System.out.println("Liters for blood type " + bloodType + " updated successfully.");
+		        } else {
+		            System.out.println("Failed to update liters for blood type " + bloodType );
+		        }
+
+		        updatePrep.close();
+		    } catch (SQLException e) {
+		        System.err.println("Error updating blood liters: " + e.getMessage());
+		    }
+		
 	}
 
 }

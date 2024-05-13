@@ -47,6 +47,16 @@ public class Hospital implements Serializable {
 		this.address = address;
 		this.email = email;
 	}
+	
+
+	public Hospital(Integer id, String name, String address, String email) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.email = email;
+		this.bloods= new ArrayList<Blood>();
+	}
 
 	public Integer getId() {
 		return id;

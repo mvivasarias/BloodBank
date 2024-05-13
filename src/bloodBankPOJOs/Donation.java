@@ -17,31 +17,30 @@ public class Donation  implements Serializable {
 	private Date date;
 	private Integer amount;
 	private Donor donor;
-	private List<Personal> personals;
+	private Personal personal;
 	private List<Blood> bloods;
 	
 	public Donation() {
 		super();
-		personals = new ArrayList<Personal>();
 		bloods = new ArrayList<Blood>();
 	}
 	
-	public Donation(Date date, Integer amount, Donor donor, List<Personal> personals, List<Blood> bloods) {
+	public Donation(Date date, Integer amount, Donor donor, Personal personal, List<Blood> bloods) {
 		super();
 		this.date = date;
 		this.amount = amount;
 		this.donor = donor;
-		this.personals = personals;
+		this.personal = personal;
 		this.bloods = bloods;
 	}
 
-	public Donation(Integer id, Date date, Integer amount, Donor donor, List<Personal> personals, List<Blood> bloods) {
+	public Donation(Integer id, Date date, Integer amount, Donor donor, Personal personal, List<Blood> bloods) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.amount = amount;
 		this.donor = donor;
-		this.personals = personals;
+		this.personal = personal;
 		this.bloods = bloods;
 	}
 
@@ -81,16 +80,13 @@ public class Donation  implements Serializable {
 	}
 
 
-
-	public List<Personal> getPersonals() {
-		return personals;
+	public Personal getPersonal() {
+		return personal;
 	}
 
-	public void setPersonals(List<Personal> personals) {
-		this.personals = personals;
+	public void setPersonal(Personal personal) {
+		this.personal = personal;
 	}
-
-
 
 	public List<Blood> getBloods() {
 		return bloods;
@@ -103,7 +99,7 @@ public class Donation  implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(amount, bloods, date, donor, id, personals);
+		return Objects.hash(amount, bloods, date, donor, id, personal);
 	}
 
 	@Override
@@ -117,15 +113,16 @@ public class Donation  implements Serializable {
 		Donation other = (Donation) obj;
 		return Objects.equals(amount, other.amount) && Objects.equals(bloods, other.bloods)
 				&& Objects.equals(date, other.date) && Objects.equals(donor, other.donor)
-				&& Objects.equals(id, other.id) && Objects.equals(personals, other.personals);
+				&& Objects.equals(id, other.id) && Objects.equals(personal, other.personal);
 	}
 
 	@Override
 	public String toString() {
-		return "Donation [id=" + id + ", date=" + date + ", amount=" + amount + ", donor=" + donor + "]";
+		return "Donation [id=" + id + ", date=" + date + ", amount=" + amount + ", donor=" + donor + ", personal="
+				+ personal + ", bloods=" + bloods + "]";
 	}
 
-
+	
 
 	
 }
