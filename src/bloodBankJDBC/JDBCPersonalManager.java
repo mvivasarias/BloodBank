@@ -43,13 +43,13 @@ public class JDBCPersonalManager implements PersonalManager {
 	}
 
 	@Override
-	public Personal searchPersonalBySurname(String surname) { // SHOULD I ADD CO
+	public Personal searchPersonalByEmail(String emailSearch) { // SHOULD I ADD CO
 
 		Personal person = null;
 
 		try {
 			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM personal WHERE surname = ?";
+			String sql = "SELECT * FROM personal WHERE email = ?";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -72,7 +72,7 @@ public class JDBCPersonalManager implements PersonalManager {
 		return person;
 	}
 
-	private Contract retrieveContract(int contractId) throws SQLException {
+	private Contract retrieveContract(int contractId) {
 
 		Contract contract = null;
 
@@ -125,7 +125,7 @@ public class JDBCPersonalManager implements PersonalManager {
 			if (rowsUpdated > 0) {
 				System.out.println("Nurse modified successfully.");
 			} else {
-				System.out.println("ERROR updating personal.");
+				System.out.println("ERROR updating nurse.");
 			}
 
 			prep.close();

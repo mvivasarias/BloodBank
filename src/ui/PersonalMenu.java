@@ -65,28 +65,28 @@ public class PersonalMenu {
 					deleteNurse(personalManager);
 					break;
 				case 4:
-					//registerDonor();
+					// registerDonor();
 					break;
 				case 5:
-					//deleteDonor();
+					// deleteDonor();
 					break;
 				case 6:
-					//listDonors();
+					// listDonors();
 					break;
 				case 7:
-					//addDonation();
+					// addDonation();
 					break;
 				case 8:
-					//deleteDonation();
+					// deleteDonation();
 					break;
 				case 9:
-					//listDonations();
+					// listDonations();
 					break;
 				case 10:
-					//listOfBloodExtractions();
+					// listOfBloodExtractions();
 					break;
 				case 11:
-					//stockOrderedByBloodType();
+					// stockOrderedByBloodType();
 					break;
 				case 0:
 					System.out.println("Back to main menu");
@@ -111,52 +111,49 @@ public class PersonalMenu {
 		Contract contract = makeAContract();
 		System.out.println("Please introduce a photo");
 		byte[] photo = null; // TODO como guardar la foto
-		contractManager.addContract(contract); //SQL DONE
-		
+		contractManager.addContract(contract); // SQL DONE
+
 		Personal nurse = new Personal(name, surname, email, contract, photo);
 		personalManager.addPersonal(nurse);// SQL DONE
 		System.out.println("Please introduce a photo");
-		
 
 	}
 
 	private void modifyNurse(JDBCPersonalManager personalManager) {
-		System.out.println("Type the surname of the nurse you want to modify information from ");
-		String surname = Utilities.readString();
-		Personal nurseModifying=personalManager.searchPersonalBySurname(surname); //sql done
-		
-		if(nurseModifying!=null) {
-			
-			 System.out.println("Enter new name :");
-		        String newName = Utilities.readString();
-		        
-		        System.out.println("Enter new surname :");
-		        String newSurname = Utilities.readString();
-		        
-		        System.out.println("Enter new email :");
-		        String newEmail = Utilities.readString();
-		        
-		        System.out.println("Enter new photo :");
-		        String newPhoto = Utilities.readString(); 
-		        personalManager.modifyPersonal(nurseModifying, newName,newSurname,newEmail,newPhoto);
-		       
-		        }
-			else {
-			 System.out.println("Nurse with surname " + surname + " not found.");
+		System.out.println("Type the email of the nurse you want to modify information from ");
+		String email = Utilities.readString();
+		Personal nurseModifying = personalManager.searchPersonalByEmail(email); // sql done
+
+		if (nurseModifying != null) {
+
+			System.out.println("Enter new name :");
+			String newName = Utilities.readString();
+
+			System.out.println("Enter new surname :");
+			String newSurname = Utilities.readString();
+
+			System.out.println("Enter new email :");
+			String newEmail = Utilities.readString();
+
+			System.out.println("Enter new photo :");
+			String newPhoto = Utilities.readString();
+			personalManager.modifyPersonal(nurseModifying, newName, newSurname, newEmail, newPhoto);
+
+		} else {
+			System.out.println("Nurse with email " + email + " not found.");
 		}
-}
-	
+	}
 
 	private void deleteNurse(JDBCPersonalManager personalManager) {
 		Integer id_nurse_deleted = Utilities.readInteger("Introduce the id of the nurse you want to delete");
-		personalManager.deletePersonalByID(id_nurse_deleted); //SQL DONE
+		personalManager.deletePersonalByID(id_nurse_deleted); // SQL DONE
 
 	}
 
 	private static Contract makeAContract() {
 		Integer hoursToWork = Utilities.askHoursWanted("How many hours do you want to work?");
 		Integer salaryDependingOnHoursWorked = Utilities.salaryCalculator(hoursToWork);
-	
+
 		return new Contract(hoursToWork, salaryDependingOnHoursWorked);
 
 	}

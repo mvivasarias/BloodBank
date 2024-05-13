@@ -10,7 +10,7 @@ public interface PersonalManager {
 
 	public void deletePersonal(Personal personalToDelete);
 
-	public Personal searchPersonalBySurname(String surname);
+	public Personal searchPersonalByEmail(String emailSearch);
 
 	public void deletePersonalByID(Integer id);
 
