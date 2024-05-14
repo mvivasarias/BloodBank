@@ -8,13 +8,11 @@ import bloodBankPOJOs.Stock;
 
 public interface HospitalManager {
 
-	public void addHospital(Hospital hospitalToAdd);
+	public void addHospital(Hospital hospitalToAdd); //sql done
 
-	public void deleteHospital(String name);
+	public void deleteHospital(String name); //sql done
 
-	public void requestForBlood(Request bloodRequest);
+	public List<Request> getRequestsOfHospital(String name); //sql done
 
-	public List<Request> getRequestsOfHospital(String name);
-
-	public Hospital searchHospitalById(Integer id);
+	public Hospital searchHospitalById(Integer id); //sql done
 }

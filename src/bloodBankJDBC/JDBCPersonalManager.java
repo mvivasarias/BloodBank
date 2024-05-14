@@ -10,6 +10,7 @@ import bloodBankPOJOs.Personal;
 
 public class JDBCPersonalManager implements PersonalManager {
 	private JDBCManager manager;
+	private JDBCContractManager contractManager;
 
 	public JDBCPersonalManager(JDBCManager m) {
 		this.manager = m;
@@ -36,11 +37,8 @@ public class JDBCPersonalManager implements PersonalManager {
 		}
 	}
 
-	@Override
-	public void deletePersonal(Personal personalToDelete) {
-		// TODO Auto-generated method stub
-
-	}
+	
+	
 
 	@Override
 	public Personal searchPersonalByEmail(String emailSearch) { // SHOULD I ADD CO
@@ -59,8 +57,9 @@ public class JDBCPersonalManager implements PersonalManager {
 			String email = rs.getString("email");
 			byte[] photo = rs.getBytes("photo");
 			Integer contract_id = rs.getInt("contract_id");
+			
 
-			Contract contract = retrieveContract(contract_id);
+			Contract contract = contractManager.searchContractById(contract_id);
 
 			person = new Personal(person_id, name, surname1, email, contract, photo);
 			rs.close();
@@ -72,25 +71,7 @@ public class JDBCPersonalManager implements PersonalManager {
 		return person;
 	}
 
-	private Contract retrieveContract(int contractId) {
-
-		Contract contract = null;
-
-		try {
-			String sql = "SELECT * FROM contract WHERE id = ?";
-			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, contractId);
-			ResultSet rs = prep.executeQuery();
-
-			if (rs.next()) {
-				contract = new Contract(rs.getInt("id"), rs.getInt("salary"), rs.getInt("hours"));
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return contract;
-	}
+	
 
 	@Override
 	public void modifyPersonal(Personal personalToModify, String newName, String newSurname, String newEmail,

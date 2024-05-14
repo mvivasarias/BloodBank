@@ -2,6 +2,7 @@ package bloodBankJDBC;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import bloodBankIfaces.ContractManager;
 import bloodBankPOJOs.Contract;
@@ -30,6 +31,25 @@ public class JDBCContractManager implements ContractManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	public Contract searchContractById(int contractId) {
+
+		Contract contract = null;
+
+		try {
+			String sql = "SELECT * FROM contract WHERE id = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, contractId);
+			ResultSet rs = prep.executeQuery();
+
+			if (rs.next()) {
+				contract = new Contract(rs.getInt("id"), rs.getInt("salary"), rs.getInt("hours"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return contract;
 	}
 
 }

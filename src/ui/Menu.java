@@ -78,25 +78,6 @@ public class Menu {
 		}
 	}
 
-	private static void updatePassword() throws Exception {
-
-		System.out.println("Email: ");
-		String email = reader.readLine();
-
-		System.out.println("Enter current Password");
-		String passwd = reader.readLine();
-
-		System.out.println("Enter new Password");
-		String new_passwd = reader.readLine();
-
-		User u = usermanager.checkPassword(email, passwd);
-
-		if (u != null) {
-			System.out.println("Login of user successful!");
-			usermanager.changePassword(u, new_passwd);
-		}
-
-	}
 
 	private static void login() throws Exception {
 		
@@ -121,7 +102,7 @@ public class Menu {
 	}
 
 	private static void signUpUser() {
-		// TODO Auto-generated method stub
+		
 		try {
 			System.out.println("Introduce email: ");
 			String email = reader.readLine();
@@ -143,6 +124,25 @@ public class Menu {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	private static void updatePassword() throws Exception {
+
+		System.out.println("Email: ");
+		String email = reader.readLine();
+
+		System.out.println("Enter current Password");
+		String passwd = reader.readLine();
+
+		System.out.println("Enter new Password");
+		String new_passwd = reader.readLine();
+
+		User u = usermanager.checkPassword(email, passwd);
+
+		if (u != null) {
+			System.out.println("Login of user successful!");
+			usermanager.changePassword(u, new_passwd);
+		}
+
 	}
 
 }

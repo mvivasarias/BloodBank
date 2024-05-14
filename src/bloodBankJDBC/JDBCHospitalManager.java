@@ -22,16 +22,6 @@ public class JDBCHospitalManager implements HospitalManager {
 		this.manager = m;
 	}
 
-
-	@Override
-	public void requestForBlood(Request bloodRequest) { //add to the table request this request
-		// TODO Auto-generated method stub
-		
-
-		
-	}
-
-
 	@Override
 	public void addHospital(Hospital hospitalToAdd) { //ADD TO THE TABLE THE HOSPITAL WITH ALL THAT VALUES
 		 try {
