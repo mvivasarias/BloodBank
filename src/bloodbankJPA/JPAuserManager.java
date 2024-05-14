@@ -16,8 +16,76 @@ public class JPAuserManager implements UserManager {
 	private EntityManager em;
 
 	@Override
+	public void connect() {
+
+		em = Persistence.createEntityManagerFactory("bloodBank-provider").createEntityManager();
+
+		em.getTransaction().begin();
+		em.createNativeQuery("PRAGMA foreign_keys = ON").executeUpdate();
+		em.getTransaction().commit();
+
+		if (this.getRoles().isEmpty()) {
+			Role personal = new Role("personal");
+			Role hospital = new Role("hospital");
+			this.newRole(personal);
+			this.newRole(hospital);
+		}
+
+	}
+
+	@Override
+	public List<Role> getRoles() {
+		
+		Query q = em.createNativeQuery("SELECT * FROM roles", Role.class);
+		List<Role> roles = (List<Role>) q.getResultList();
+
+		return roles;
+	}
+
+	@Override
+	public void newRole(Role r) {
+		
+		em.getTransaction().begin();
+		em.persist(r);
+		em.getTransaction().commit();
+
+	}
+
+	@Override
+	public void newUser(User u) {
+		
+		em.getTransaction().begin();
+		em.persist(u);
+		em.getTransaction().commit();
+	}
+
+	@Override
+	public void disconnect() {
+		
+		em.close();
+	}
+
+	@Override
+	public Role getRole(Integer id) {
+		
+		Query q = em.createNativeQuery("SELECT * FROM roles where id=" + id, Role.class);
+		Role r = (Role) q.getSingleResult();
+
+		return r;
+	}
+
+	@Override
+	public User getUser(String email) {
+		
+		Query q = em.createNativeQuery("SELECT * FROM users where email=" + email, User.class);
+		User u = (User) q.getSingleResult();
+
+		return u;
+	}
+
+	@Override
 	public User checkPassword(String email, String pass) {
-		// TODO Auto-generated method stub
+		
 		User u = null;
 
 		Query q = em.createNativeQuery("SELECT * from users where email =? and password=?", User.class);
@@ -44,73 +112,6 @@ public class JPAuserManager implements UserManager {
 		return u;
 	}
 
-	@Override
-	public void connect() {
-
-		em = Persistence.createEntityManagerFactory("bloodBank-provider").createEntityManager();
-
-		em.getTransaction().begin();
-		em.createNativeQuery("PRAGMA foreign_keys = ON").executeUpdate();
-		em.getTransaction().commit();
-
-		if (this.getRoles().isEmpty()) {
-			Role personal = new Role("personal");
-			Role hospital = new Role("hospital");
-			this.newRole(personal);
-			this.newRole(hospital);
-		}
-
-	}
-
-	@Override
-	public List<Role> getRoles() {
-		// TODO Auto-generated method stub
-		Query q = em.createNativeQuery("SELECT * FROM roles", Role.class);
-		List<Role> roles = (List<Role>) q.getResultList();
-
-		return roles;
-	}
-
-	@Override
-	public void newRole(Role r) {
-		// TODO Auto-generated method stub
-		em.getTransaction().begin();
-		em.persist(r);
-		em.getTransaction().commit();
-
-	}
-
-	@Override
-	public void newUser(User u) {
-		// TODO Auto-generated method stub
-		em.getTransaction().begin();
-		em.persist(u);
-		em.getTransaction().commit();
-	}
-
-	@Override
-	public void disconnect() {
-		// TODO Auto-generated method stub
-		em.close();
-	}
-
-	@Override
-	public Role getRole(Integer id) {
-		// TODO Auto-generated method stub
-		Query q = em.createNativeQuery("SELECT * FROM roles where id=" + id, Role.class);
-		Role r = (Role) q.getSingleResult();
-
-		return r;
-	}
-
-	@Override
-	public User getUser(String email) {
-		// TODO Auto-generated method stub
-		Query q = em.createNativeQuery("SELECT * FROM users where email=" + email, User.class);
-		User u = (User) q.getSingleResult();
-
-		return u;
-	}
 
 	@Override
 	public void changePassword(User u, String new_passwd) {

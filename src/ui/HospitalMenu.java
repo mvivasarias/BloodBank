@@ -69,8 +69,7 @@ public class HospitalMenu {
 	}
 
 	private void requestBlood(JDBCHospitalManager hospitalManager, JDBCBloodManager bloodManager,
-			JDBCStockManager stockManager) throws Exception { 
-																
+			JDBCStockManager stockManager) throws Exception {
 
 		Integer id = Utilities.readInteger("Type the id of the Hospital making the request");
 		Hospital hospitalRequesting = hospitalManager.searchHospitalById(id);
