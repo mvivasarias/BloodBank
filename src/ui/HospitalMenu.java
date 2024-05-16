@@ -7,7 +7,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import utilities.Utilities;
 import bloodBankJDBC.JDBCBloodManager;
 import bloodBankJDBC.JDBCHospitalManager;
 import bloodBankJDBC.JDBCStockManager;
@@ -19,6 +18,7 @@ public class HospitalMenu {
 
 	private String email;
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+	private Hospital hospital;
 
 	public HospitalMenu(String email) {
 		super();
@@ -27,6 +27,7 @@ public class HospitalMenu {
 
 	public void hospitalMenuOptions(String email, JDBCHospitalManager hospitalManager, JDBCBloodManager bloodManager,
 			JDBCStockManager stockManager) {
+		hospital=hospitalManager.searchHospitalByEmail(email);
 		try {
 			int choice;
 			do {
@@ -71,17 +72,17 @@ public class HospitalMenu {
 	private void requestBlood(JDBCHospitalManager hospitalManager, JDBCBloodManager bloodManager,
 			JDBCStockManager stockManager) throws Exception {
 
-		Integer id = Utilities.readInteger("Type the id of the Hospital making the request");
-		Hospital hospitalRequesting = hospitalManager.searchHospitalById(id);
 
-		if (hospitalRequesting != null) {
+		if (hospital != null) {
 
 			System.out.println("Type the liters needed");
 			float liters = Utilities.readfloat();
 			System.out.println("Type the date of the request yyyy/mm/dd");
+			
 			String dateOfRequest = reader.readLine();
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 			Date date = (Date) df.parse(dateOfRequest);
+			
 			System.out.println("Type the blood type needed");
 			String bloodType = Utilities.askBloodType("Introduce blood type:");
 
@@ -97,7 +98,7 @@ public class HospitalMenu {
 					System.out.println("Sufficient blood of type " + bloodType + " is available for the request.");
 					 stockManager.updateStockLiters(bloodType, liters);
 					
-					hospitalManager.addRequest(hospitalRequesting.getId(), bloodRecords.getId(), liters,date); //arreglar
+					hospitalManager.addRequest(hospital.getId(), bloodRecords.getId(), liters,date); //arreglar
 
 				} else {
 					System.out.println("Insufficient blood of type " + bloodType + " available. Available liters: "

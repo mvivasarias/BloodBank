@@ -15,7 +15,7 @@ public class Donation  implements Serializable {
 	
 	private Integer id;
 	private Date date;
-	private Integer amount;
+	private float amount;
 	private Donor donor;
 	private Personal personal;
 	private List<Blood> bloods;
@@ -34,7 +34,7 @@ public class Donation  implements Serializable {
 		this.bloods = bloods;
 	}
 
-	public Donation(Integer id, Date date, Integer amount, Donor donor, Personal personal, List<Blood> bloods) {
+	public Donation(Integer id, Date date, float amount, Donor donor, Personal personal, List<Blood> bloods) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -45,7 +45,7 @@ public class Donation  implements Serializable {
 	}
 	
 
-	public Donation( Date date, Integer amount, Donor donor, Personal personal) {
+	public Donation( Date date, float amount, Donor donor, Personal personal) {
 		super();
 		this.date = date;
 		this.amount = amount;
@@ -70,14 +70,16 @@ public class Donation  implements Serializable {
 		this.date = date;
 	}
 
-	public Integer getAmount() {
+	
+	
+
+	public float getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Integer amount) {
+	public void setAmount(float amount) {
 		this.amount = amount;
 	}
-	
 
 	public Donor getDonor() {
 		return donor;

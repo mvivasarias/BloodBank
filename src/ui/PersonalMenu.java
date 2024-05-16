@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 import bloodBankJDBC.JDBCBloodManager;
 import bloodBankJDBC.JDBCContractManager;
@@ -19,7 +20,6 @@ import bloodBankPOJOs.Donation;
 import bloodBankPOJOs.Donor;
 import bloodBankPOJOs.Personal;
 import bloodBankPOJOs.Stock;
-import utilities.Utilities;
 
 public class PersonalMenu {
 
@@ -247,17 +247,19 @@ public class PersonalMenu {
 		Donor donorDonating=donorManager.searchDonorByNameAndSurname(nameDonor,surname);
 		
 		System.out.println("How many liters is the donor donating ");
-		Integer amountDonating=Utilities.readInteger("Amount donating");
+		float amountDonating=Utilities.readfloat();
 		
-		java.util.Date currentDate= new java.util.Date();
+		LocalDate localDate = LocalDate.now();
+		Date currentDate = Date.valueOf(localDate);
+				
 		Donation newDonation= new Donation(currentDate,amountDonating,donorDonating,nurseAttending);
 		donationManager.addDonation(newDonation);
 		donorManager.incrementDonorTimes(donorDonating);
 		
-		Blood newBlood= new Blood(donorDonating.getBloodtype());
-		Stock stock= new Stock(currentDate,amountDonating);
 		
-		bloodManager.addBloodAndStock(newBlood,stock);
+		Blood newBlood= new Blood(donorDonating.getBloodtype(),amountDonating,currentDate);
+		
+		bloodManager.addBlood(newBlood);
 		
 		donationManager.addDonationBlood(newDonation.getId(), newBlood.getId());
 		

@@ -1,4 +1,4 @@
-package utilities;
+package ui;
 
 import java.io.BufferedReader;
 import java.io.IOException;

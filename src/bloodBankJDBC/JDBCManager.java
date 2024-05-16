@@ -49,13 +49,13 @@ public class JDBCManager {
 			sql = "CREATE TABLE blood (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
 					+ "type TEXT NOT NULL,"
-					+ "stock_id INTEGER REFERENCES stock(id),"
-					+ "FOREIGN KEY(stock_id) REFERENCES stock(id)ON DELETE SET NULL);";
+					+ "liters NUMERICAL NOT NULL"
+					+ "date DATE NOT NULL";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE donation (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
-					+ "date DATE NOT NULL, amount INTEGER,"
+					+ "date DATE NOT NULL, amount NUMERIC,"
 					+ "donor_id INTEGER REFERENCES donor(id),"
 					+ "personal_id INTEGER REFERENCES personal(id),"
 					+ "FOREIGN KEY(donor_id) REFERENCES donor(id)ON DELETE SET NULL);"
@@ -71,12 +71,6 @@ public class JDBCManager {
 			sql = "CREATE TABLE hospital (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "name TEXT NOT NULL,address TEXT NOT NULL, email TEXT NOT NULL); ";
-			stmt.executeUpdate(sql);
-
-			sql = "CREATE TABLE stock (" 
-					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
-					+ "date DATE NOT NULL, liters REAL NOT NULL); ";
-			
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE donation_blood (" // DONATION GETS BLOOD N-N

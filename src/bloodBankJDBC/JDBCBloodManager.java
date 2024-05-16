@@ -1,5 +1,6 @@
 package bloodBankJDBC;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,11 +25,7 @@ public class JDBCBloodManager implements BloodManager {
 		return null;
 	}
 
-	@Override
-	public String getBloodtype() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public void deleteBlood(Blood bloodToDelete) {
@@ -41,19 +38,21 @@ public class JDBCBloodManager implements BloodManager {
 		Blood blood = null;
 
 		try {
-			String sql = "SELECT id, type, stock_id FROM blood WHERE id = ?";
+			String sql = "SELECT * FROM blood WHERE id = ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, bloodId);
-
 			ResultSet rs = prep.executeQuery();
 
 			if (rs.next()) {
 				String type = rs.getString("type");
-				int stock_id = rs.getInt("stock_id");
+				float liters = rs.getFloat("liters");
+				Date date = rs.getDate("date");
 
-				Stock stock = stockManager.searchStockByID(stock_id);
-
-				blood = new Blood(bloodId, type, stock);
+				blood = new Blood();
+				blood.setId(bloodId);
+				blood.setBloodType(type);
+				blood.setLiters(liters);
+				blood.setDate(date);
 			}
 
 			rs.close();
@@ -70,18 +69,22 @@ public class JDBCBloodManager implements BloodManager {
 		List<Blood> bloodList = new ArrayList<>();
 
 		try {
-			String sql = "SELECT id, type, stock_id FROM blood WHERE type = ?";
+			String sql = "SELECT * FROM blood WHERE type = ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, bloodType);
-
 			ResultSet rs = prep.executeQuery();
 
 			while (rs.next()) {
-				int id = rs.getInt("id");
-				int stock_id = rs.getInt("stock_id");
-				Stock stock = stockManager.searchStockByID(stock_id);
+				Integer id = rs.getInt("id");
+				float liters = rs.getFloat("liters");
+				Date date = rs.getDate("date");
 
-				Blood blood = new Blood(id, bloodType, stock);
+				Blood blood = new Blood();
+				blood.setId(id);
+				blood.setBloodType(bloodType);
+				blood.setLiters(liters);
+				blood.setDate(date);
+
 				bloodList.add(blood);
 			}
 
@@ -92,34 +95,22 @@ public class JDBCBloodManager implements BloodManager {
 		}
 
 		return bloodList;
-
 	}
 
-
-
 	@Override
-	public void addBloodAndStock(Blood newBlood, Stock stock) {
+	public void addBlood(Blood newBlood) {
 
 		try {
-			stockManager.addStock(stock);
-			int stockId = stockManager.getLastInsertedStockId();
-
-			Stock stockToAdd = stockManager.searchStockByID(stockId);
-
-			// If the retrievedStock is not null, proceed to add the blood record
-			if (stockToAdd != null) {
-				// Add the blood record with the retrieved stock ID
-				String insertBloodSql = "INSERT INTO blood (type, stock_id) VALUES (?, ?)";
-				PreparedStatement prep = manager.getConnection().prepareStatement(insertBloodSql);
-				prep.setString(1, newBlood.getType());
-				prep.setInt(2, stockId);
-				prep.executeUpdate();
-				prep.close();
-			} else {
-				System.out.println("Stock can´t be found");
-			}
+			String sql = "INSERT INTO blood (type, liters, date) VALUES (?, ?, ?)";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, newBlood.getBloodType());
+			prep.setFloat(2, newBlood.getLiters());
+			prep.setDate(3, new java.sql.Date(newBlood.getDate().getTime()));
+			prep.executeUpdate();
+			prep.close();
+			System.out.println("Blood record added successfully.");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("Error adding blood record: " + e.getMessage());
 		}
 
 	}

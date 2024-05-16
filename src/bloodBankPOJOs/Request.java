@@ -20,8 +20,6 @@ public class Request implements Serializable{
 	}
 	
 	
-
-
 	public Request(float liters, Date date, Hospital hospital, Blood blood) {
 		super();
 		this.liters = liters;

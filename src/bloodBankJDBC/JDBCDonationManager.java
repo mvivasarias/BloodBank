@@ -41,7 +41,7 @@ public class JDBCDonationManager implements DonationManager {
 
 			prep.setDate(1, new java.sql.Date(donation.getDate().getTime())); // Assuming donation.getDate() returns a
 																				// java.util.Date
-			prep.setInt(2, donation.getAmount());
+			prep.setFloat(2, donation.getAmount());
 			prep.setInt(3, donation.getDonor().getId());
 			prep.setInt(4, donation.getPersonal().getId());
 
