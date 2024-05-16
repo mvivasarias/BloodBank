@@ -95,28 +95,7 @@ public class JDBCBloodManager implements BloodManager {
 
 	}
 
-	@Override
-	public void updateBloodLiters(String bloodType, float liters) {
-		try {
 
-			String updateSql = "UPDATE blood SET liters = liters - ? WHERE type = ?";
-			PreparedStatement updatePrep = manager.getConnection().prepareStatement(updateSql);
-			updatePrep.setFloat(1, liters);
-			updatePrep.setString(2, bloodType);
-			int rowsAffected = updatePrep.executeUpdate();
-
-			if (rowsAffected > 0) {
-				System.out.println("Liters for blood type " + bloodType + " updated successfully.");
-			} else {
-				System.out.println("Failed to update liters for blood type " + bloodType);
-			}
-
-			updatePrep.close();
-		} catch (SQLException e) {
-			System.err.println("Error updating blood liters: " + e.getMessage());
-		}
-
-	}
 
 	@Override
 	public void addBloodAndStock(Blood newBlood, Stock stock) {

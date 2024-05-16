@@ -11,6 +11,7 @@ public interface StockManager {
 	public float getTotalLitersAvailable(String bloodType);
 	public void addStock(Stock stock);
 	public int getLastInsertedStockId();
+	public void updateStockLiters(String bloodType, float liters);
 
 
 }

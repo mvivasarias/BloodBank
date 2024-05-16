@@ -120,4 +120,40 @@ public class JDBCStockManager implements StockManager {
 	        return lastInsertedId;
 	    }
 
+	@Override
+	public void updateStockLiters(String bloodType, float liters) {
+		try {
+	        //find the stock ID associated with the given blood type
+	        String sqlFindStockID = "SELECT stock.id FROM stock JOIN blood ON stock.id = blood.stock_id WHERE blood.type = ?";
+	        PreparedStatement prep = manager.getConnection().prepareStatement(sqlFindStockID);
+	        prep.setString(1, bloodType);
+	        ResultSet rs = prep.executeQuery();
+	        
+	        if (rs.next()) {
+	            int stockId = rs.getInt("id");
+	            
+	            String updateStock = "UPDATE stock SET liters = liters - ? WHERE id = ?";
+	            PreparedStatement prepStock = manager.getConnection().prepareStatement(updateStock);
+	            prepStock.setFloat(1, liters);
+	            prepStock.setInt(2, stockId);
+	            int rowsAffected = prepStock.executeUpdate();
+
+	            if (rowsAffected > 0) {
+	                System.out.println("Liters for blood type " + bloodType + " updated successfully.");
+	            } else {
+	                System.out.println("Failed to update liters for blood type " + bloodType);
+	            }
+
+	            prepStock.close();
+	        } else {
+	            System.out.println("No stock found for blood type " + bloodType);
+	        }
+
+	        prep.close();
+	    } catch (SQLException e) {
+	        System.err.println("Error updating blood liters: " + e.getMessage());
+	    }
+		
+	}
+
 }

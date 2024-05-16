@@ -95,9 +95,9 @@ public class HospitalMenu {
 				if (totalLitersAvailable >= liters) {
 
 					System.out.println("Sufficient blood of type " + bloodType + " is available for the request.");
-					bloodManager.updateBloodLiters(bloodType, liters);
+					 stockManager.updateStockLiters(bloodType, liters);
 					
-					//hospitalManager.addRequest(hospitalRequesting.getId(),blood.getId();
+					hospitalManager.addRequest(hospitalRequesting.getId(), bloodRecords.getId(), liters,date); //arreglar
 
 				} else {
 					System.out.println("Insufficient blood of type " + bloodType + " available. Available liters: "
