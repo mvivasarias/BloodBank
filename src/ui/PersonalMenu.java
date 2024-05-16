@@ -119,7 +119,7 @@ public class PersonalMenu {
 
 		Personal nurse = new Personal(name, surname, email, contract, photo);
 		personalManager.addPersonal(nurse);// SQL DONE
-		System.out.println("Please introduce a photo");
+		
 
 	}
 
