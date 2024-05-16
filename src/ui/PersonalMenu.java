@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import bloodBankJDBC.JDBCBloodManager;
@@ -12,9 +13,12 @@ import bloodBankJDBC.JDBCDonationManager;
 import bloodBankJDBC.JDBCDonorManager;
 import bloodBankJDBC.JDBCPersonalManager;
 import bloodBankJDBC.JDBCStockManager;
+import bloodBankPOJOs.Blood;
 import bloodBankPOJOs.Contract;
 import bloodBankPOJOs.Donation;
+import bloodBankPOJOs.Donor;
 import bloodBankPOJOs.Personal;
+import bloodBankPOJOs.Stock;
 import utilities.Utilities;
 
 public class PersonalMenu {
@@ -47,7 +51,7 @@ public class PersonalMenu {
 				System.out.println("8. Add donation");
 				System.out.println("9. Delete donation");
 				System.out.println("10. List donations");
-				System.out.println("11. Get list of blood extractions ordered by id");
+				System.out.println("11. Get list of blood extractions");
 				System.out.println("12. Get stock ordered by blood type");
 
 				System.out.println("0. Return.");
@@ -65,16 +69,16 @@ public class PersonalMenu {
 					deleteNurse(personalManager);
 					break;
 				case 4:
-					// registerDonor();
+					registerDonor(personalManager, donorManager);
 					break;
 				case 5:
-					// deleteDonor();
+					modifyDonor(donorManager);
 					break;
 				case 6:
-					// listDonors();
+					deleteDonor(donorManager);
 					break;
 				case 7:
-					// addDonation();
+					addDonation(personalManager, donorManager,donationManager, bloodManager, stockManager);
 					break;
 				case 8:
 					// deleteDonation();
@@ -157,4 +161,108 @@ public class PersonalMenu {
 		return new Contract(hoursToWork, salaryDependingOnHoursWorked);
 
 	}
+
+	private void registerDonor(JDBCPersonalManager personalManager, JDBCDonorManager donorManager)
+			throws ParseException {
+		if (personalManager.isPersonalTableNotEmpty()) { // if there is some nurse the registration can be done
+			System.out.println("Donor´s name :");
+			String name = Utilities.readString();
+
+			System.out.println("Donor´s surname :");
+			String surname = Utilities.readString();
+
+			System.out.println("Donor´s dob in formal yyyy/mm/dd");
+			String dob_str = Utilities.readString();
+			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+			Date dob = (Date) df.parse(dob_str);
+
+			String bloodType = Utilities.askBloodType("Donor´s blood type");
+
+			Integer timesDonated = 0;
+			Donor donorRegistered = new Donor(name, surname, dob, bloodType, timesDonated);
+
+			donorManager.addDonor(donorRegistered);
+
+		} else {
+			System.out.println("No personal for registering a donor");
+
+		}
+	}
+
+	private void modifyDonor(JDBCDonorManager donorManager) throws ParseException {
+
+		Integer idDonor = Utilities.readInteger("Enter the donor ID you want to modify :");
+
+		Donor donorExisting = donorManager.getDonorByID(idDonor);
+
+		if (donorExisting != null) {
+
+			System.out.println("Donor´s name modification:");
+			String name = Utilities.readString();
+
+			System.out.println("Donor´s surname modification :");
+			String surname = Utilities.readString();
+
+			System.out.println("Donor´s dob in formal yyyy/mm/dd modification ");
+			String dob_str = Utilities.readString();
+			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+			Date dob = (Date) df.parse(dob_str);
+
+			String bloodType = Utilities.askBloodType("Donor´s blood type modification");
+			int times = donorExisting.getTimes(); // not modified
+
+			Donor donorModified = new Donor(idDonor, name, surname, dob, bloodType, times);
+			donorManager.modifyDonor(donorModified);
+
+			System.out.println("Donor modified successfully.");
+
+		} else {
+			System.out.println("No donor existing with that id ");
+		}
+
+	}
+
+	private void deleteDonor(JDBCDonorManager donorManager) {
+		Integer idDonor= Utilities.readInteger("Enter the donor ID you want to delete :");
+		
+		Donor donorExisting= donorManager.getDonorByID(idDonor);
+		
+		if(donorExisting!=null) {
+			donorManager.deleteDonor(donorExisting.getId());
+		} else {
+			System.out.println("No donor existing with that id ");
+		}
+		
+	}
+	private void addDonation(JDBCPersonalManager personalManager, JDBCDonorManager donorManager,JDBCDonationManager donationManager, 
+			JDBCBloodManager bloodManager, JDBCStockManager stockManager) {
+		System.out.println("Type the email of the nurse attending ");
+		String email= Utilities.readString();
+		
+		Personal nurseAttending=personalManager.searchPersonalByEmail(email);
+		System.out.println("Type the name of the donor ");
+		String nameDonor=Utilities.readString();
+		System.out.println("Type the surname of the donor ");
+		String surname=Utilities.readString(); 
+		Donor donorDonating=donorManager.searchDonorByNameAndSurname(nameDonor,surname);
+		
+		System.out.println("How many liters is the donor donating ");
+		Integer amountDonating=Utilities.readInteger("Amount donating");
+		
+		java.util.Date currentDate= new java.util.Date();
+		Donation newDonation= new Donation(currentDate,amountDonating,donorDonating,nurseAttending);
+		donationManager.addDonation(newDonation);
+		donorManager.incrementDonorTimes(donorDonating);
+		
+		Blood newBlood= new Blood(donorDonating.getBloodtype());
+		Stock stock= new Stock(currentDate,amountDonating);
+		
+		bloodManager.addBloodAndStock(newBlood,stock);
+		
+		donationManager.addDonationBlood(newDonation.getId(), newBlood.getId());
+		
+		
+		
+	}
+	
 }

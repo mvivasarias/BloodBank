@@ -37,9 +37,6 @@ public class JDBCPersonalManager implements PersonalManager {
 		}
 	}
 
-	
-	
-
 	@Override
 	public Personal searchPersonalByEmail(String emailSearch) { // SHOULD I ADD CO
 
@@ -57,7 +54,6 @@ public class JDBCPersonalManager implements PersonalManager {
 			String email = rs.getString("email");
 			byte[] photo = rs.getBytes("photo");
 			Integer contract_id = rs.getInt("contract_id");
-			
 
 			Contract contract = contractManager.searchContractById(contract_id);
 
@@ -70,8 +66,6 @@ public class JDBCPersonalManager implements PersonalManager {
 		}
 		return person;
 	}
-
-	
 
 	@Override
 	public void modifyPersonal(Personal personalToModify, String newName, String newSurname, String newEmail,
@@ -129,5 +123,25 @@ public class JDBCPersonalManager implements PersonalManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public boolean isPersonalTableNotEmpty() { //check if there is some personal that can do a donation
+		boolean isNotEmpty = false;
+
+		String sql = "SELECT COUNT(*) FROM personal";
+		try {
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			ResultSet rs = prep.executeQuery(sql);
+			if (rs.next()) {
+				int count = rs.getInt(1);
+				isNotEmpty = count > 0; //if count is higher than 0 it returns TRUE
+			}
+			rs.close();
+			prep.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isNotEmpty;
 	}
 }

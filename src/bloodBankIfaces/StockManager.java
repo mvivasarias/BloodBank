@@ -9,6 +9,8 @@ public interface StockManager {
 	// we could get the stock regarding the type of blood needed
 	public Stock searchStockByID(Integer stock_id);
 	public float getTotalLitersAvailable(String bloodType);
+	public void addStock(Stock stock);
+	public int getLastInsertedStockId();
 
 
 }

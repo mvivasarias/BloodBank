@@ -43,6 +43,16 @@ public class Donation  implements Serializable {
 		this.personal = personal;
 		this.bloods = bloods;
 	}
+	
+
+	public Donation( Date date, Integer amount, Donor donor, Personal personal) {
+		super();
+		this.date = date;
+		this.amount = amount;
+		this.donor = donor;
+		this.personal = personal;
+		bloods = new ArrayList<Blood>();
+	}
 
 	public Integer getId() {
 		return id;

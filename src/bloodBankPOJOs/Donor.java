@@ -36,8 +36,7 @@ public class Donor implements Serializable{
 		this.donations = donations;
 	}
 
-	public Donor(Integer id, String name, String surname, Date dob, String bloodtype, Integer times,
-			List<Donation> donations) {
+	public Donor(Integer id, String name, String surname, Date dob, String bloodtype, Integer times) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -45,9 +44,32 @@ public class Donor implements Serializable{
 		this.dob = dob;
 		this.bloodtype = bloodtype;
 		this.times = times;
-		this.donations = donations;
+		this.donations = new ArrayList<Donation>();
+
+	}
+	
+	
+
+	public Donor(String name, String surname, Date dob, String bloodtype) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.dob = dob;
+		this.bloodtype = bloodtype;
+		this.donations=new ArrayList<Donation>();
 	}
 
+	public Donor(String name, String surname, Date dob, String bloodtype, Integer times) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.dob = dob;
+		this.bloodtype = bloodtype;
+		this.times = times;
+		this.donations=new ArrayList<Donation>();
+	}
+
+	
 	public Integer getId() {
 		return id;
 	}

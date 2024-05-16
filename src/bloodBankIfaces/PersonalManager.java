@@ -11,5 +11,7 @@ public interface PersonalManager {
 	public Personal searchPersonalByEmail(String emailSearch); //sql done
 
 	public void deletePersonalByID(Integer id); //sql done
+	
+	public boolean isPersonalTableNotEmpty();
 
 }

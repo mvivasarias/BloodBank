@@ -65,7 +65,7 @@ public class JDBCManager {
 			sql = "CREATE TABLE donor (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "name TEXT NOT NULL,surname TEXT NOT NULL " 
-					+ "dob DATE NOT NULL, bloodtype TEXT NOR NULL, times INTEGER);";
+					+ "dob DATE NOT NULL, bloodtype TEXT NOT NULL, times INTEGER);";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE hospital (" 
@@ -75,7 +75,7 @@ public class JDBCManager {
 
 			sql = "CREATE TABLE stock (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
-					+ "date DATE NOT NULL, liters TEXT NOT NULL); ";
+					+ "date DATE NOT NULL, liters REAL NOT NULL); ";
 			
 			stmt.executeUpdate(sql);
 			

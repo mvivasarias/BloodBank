@@ -91,33 +91,58 @@ public class JDBCBloodManager implements BloodManager {
 			System.err.println("Error searching blood by type: " + e.getMessage());
 		}
 
-
-
 		return bloodList;
 
 	}
 
 	@Override
 	public void updateBloodLiters(String bloodType, float liters) {
-		 try {
-		       
-		        String updateSql = "UPDATE blood SET liters = liters - ? WHERE type = ?";
-		        PreparedStatement updatePrep =  manager.getConnection().prepareStatement(updateSql);
-		        updatePrep.setFloat(1, liters);
-		        updatePrep.setString(2, bloodType);
-		        int rowsAffected = updatePrep.executeUpdate();
+		try {
 
-		        if (rowsAffected > 0) {
-		            System.out.println("Liters for blood type " + bloodType + " updated successfully.");
-		        } else {
-		            System.out.println("Failed to update liters for blood type " + bloodType );
-		        }
+			String updateSql = "UPDATE blood SET liters = liters - ? WHERE type = ?";
+			PreparedStatement updatePrep = manager.getConnection().prepareStatement(updateSql);
+			updatePrep.setFloat(1, liters);
+			updatePrep.setString(2, bloodType);
+			int rowsAffected = updatePrep.executeUpdate();
 
-		        updatePrep.close();
-		    } catch (SQLException e) {
-		        System.err.println("Error updating blood liters: " + e.getMessage());
-		    }
-		
+			if (rowsAffected > 0) {
+				System.out.println("Liters for blood type " + bloodType + " updated successfully.");
+			} else {
+				System.out.println("Failed to update liters for blood type " + bloodType);
+			}
+
+			updatePrep.close();
+		} catch (SQLException e) {
+			System.err.println("Error updating blood liters: " + e.getMessage());
+		}
+
+	}
+
+	@Override
+	public void addBloodAndStock(Blood newBlood, Stock stock) {
+
+		try {
+			stockManager.addStock(stock);
+			int stockId = stockManager.getLastInsertedStockId();
+
+			Stock stockToAdd = stockManager.searchStockByID(stockId);
+
+			// If the retrievedStock is not null, proceed to add the blood record
+			if (stockToAdd != null) {
+				// Add the blood record with the retrieved stock ID
+				String insertBloodSql = "INSERT INTO blood (type, stock_id) VALUES (?, ?)";
+				PreparedStatement prep = manager.getConnection().prepareStatement(insertBloodSql);
+				prep.setString(1, newBlood.getType());
+				prep.setInt(2, stockId);
+				prep.executeUpdate();
+				prep.close();
+			} else {
+				System.out.println("Stock can´t be found");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

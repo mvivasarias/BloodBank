@@ -15,7 +15,7 @@ public class Stock implements Serializable{
 	
 	private Integer id;
 	private Date date;
-	private float litters;
+	private float liters;
 	private List<Blood> bloods;
 	
 	public Stock() {
@@ -28,7 +28,7 @@ public class Stock implements Serializable{
 		super();
 		this.id = id;
 		this.date = date;
-		this.litters = litters;
+		this.liters = litters;
 		bloods = new ArrayList<Blood>();
 	}
 
@@ -36,7 +36,7 @@ public class Stock implements Serializable{
 	public Stock(Date date, float litters, List<Blood> bloods) {
 		super();
 		this.date = date;
-		this.litters = litters;
+		this.liters = litters;
 		this.bloods = bloods;
 	}
 
@@ -44,9 +44,18 @@ public class Stock implements Serializable{
 		super();
 		this.id = id;
 		this.date = date;
-		this.litters = litters;
+		this.liters = litters;
 		this.bloods = bloods;
 	}
+	
+
+	public Stock(Date date, float liters) {
+		super();
+		this.date = date;
+		this.liters = liters;
+		this.bloods = new ArrayList<Blood>();
+	}
+
 
 	public Integer getId() {
 		return id;
@@ -64,12 +73,12 @@ public class Stock implements Serializable{
 		this.date = date;
 	}
 
-	public float getLitters() {
-		return litters;
+	public float getLiters() {
+		return liters;
 	}
 
-	public void setLitters(Integer litters) {
-		this.litters = litters;
+	public void setLiters(Integer liters) {
+		this.liters = liters;
 	}
 
 	public List<Blood> getBloods() {
@@ -82,7 +91,7 @@ public class Stock implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(bloods, date, id, litters);
+		return Objects.hash(bloods, date, id, liters);
 	}
 
 	@Override
@@ -95,12 +104,12 @@ public class Stock implements Serializable{
 			return false;
 		Stock other = (Stock) obj;
 		return Objects.equals(bloods, other.bloods) && Objects.equals(date, other.date) && Objects.equals(id, other.id)
-				&& Objects.equals(litters, other.litters);
+				&& Objects.equals(liters, other.liters);
 	}
 
 	@Override
 	public String toString() {
-		return "Stock [id=" + id + ", date=" + date + ", litters=" + litters + "]";
+		return "Stock [id=" + id + ", date=" + date + ", litters=" + liters + "]";
 	}
 
 }

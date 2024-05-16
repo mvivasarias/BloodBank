@@ -96,6 +96,8 @@ public class HospitalMenu {
 
 					System.out.println("Sufficient blood of type " + bloodType + " is available for the request.");
 					bloodManager.updateBloodLiters(bloodType, liters);
+					
+					//hospitalManager.addRequest(hospitalRequesting.getId(),blood.getId();
 
 				} else {
 					System.out.println("Insufficient blood of type " + bloodType + " available. Available liters: "

@@ -2,6 +2,7 @@ package bloodBankIfaces;
 import java.util.List;
 
 import bloodBankPOJOs.Blood;
+import bloodBankPOJOs.Stock;
 
 
 public interface BloodManager {
@@ -11,5 +12,6 @@ public interface BloodManager {
 	public Blood searchBloodById(Integer bloodId); //sql done
 	public List<Blood> searchBloodType(String bloodType);//sql done
 	public void updateBloodLiters(String bloodType,float liters);// sql done
+	public void addBloodAndStock(Blood newBlood,Stock stock);
 
 }

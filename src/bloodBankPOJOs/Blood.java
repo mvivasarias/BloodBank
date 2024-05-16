@@ -51,12 +51,14 @@ public class Blood implements Serializable {
 		this.donations = new ArrayList<Donation>();
 		this.hospitals = new ArrayList<Hospital>();
 	}
-
+	
 
 	public Blood(String bloodType) {
 		super();
 		this.bloodType = bloodType;
 	}
+
+
 
 	public Integer getId() {
 		return id;
