@@ -59,7 +59,7 @@ public class Blood implements Serializable {
 	}
 
 
-
+//
 	public Integer getId() {
 		return id;
 	}
