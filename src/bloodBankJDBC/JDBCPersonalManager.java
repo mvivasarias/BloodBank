@@ -39,6 +39,7 @@ public class JDBCPersonalManager implements PersonalManager {
 			prep.executeUpdate();
 			
 			prep.close();
+			
 
 			System.out.println("Nurse added successfully to the blood bank database");
 		} catch (SQLException e) {
@@ -89,6 +90,7 @@ public class JDBCPersonalManager implements PersonalManager {
 	public void modifyPersonal(Personal personalToModify, String newName, String newSurname, String newEmail,
 			String newPhoto) {
 		// not modifying neither the id nor the contract
+		System.out.println("modifying...");
 		try {
 
 			if (newName != null && !newName.isEmpty()) {
@@ -114,14 +116,13 @@ public class JDBCPersonalManager implements PersonalManager {
 			prep.setBytes(4, personalToModify.getPhoto());
 
 			int rowsUpdated = prep.executeUpdate();
-
+			prep.close();
 			if (rowsUpdated > 0) {
 				System.out.println("Nurse modified successfully.");
 			} else {
 				System.out.println("ERROR updating nurse.");
 			}
 
-			prep.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

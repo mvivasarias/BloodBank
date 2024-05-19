@@ -145,6 +145,8 @@ public class PersonalMenu {
 
 			System.out.println("Enter new photo :");
 			String newPhoto = Utilities.readString();
+			
+			System.out.println("proceeding to modify :");
 			personalManager.modifyPersonal(nurseModifying, newName, newSurname, this.email, newPhoto);
 
 		} else {
