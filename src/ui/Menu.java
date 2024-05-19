@@ -36,9 +36,13 @@ public class Menu {
 		bloodManager = new JDBCBloodManager(jdbcManager);
 		contractManager = new JDBCContractManager(jdbcManager);
 		donationManager = new JDBCDonationManager(jdbcManager);
+		donationManager = new JDBCDonationManager(jdbcManager,donorManager,personalManager);
 		donorManager = new JDBCDonorManager(jdbcManager);
 		hospitalManager = new JDBCHospitalManager(jdbcManager);
+		hospitalManager = new JDBCHospitalManager(jdbcManager,bloodManager);
 		personalManager = new JDBCPersonalManager(jdbcManager);
+		personalManager = new JDBCPersonalManager(jdbcManager, contractManager);
+		
 
 		usermanager = new JPAuserManager();
 		usermanager.connect();

@@ -20,6 +20,11 @@ public class JDBCPersonalManager implements PersonalManager {
 		this.manager = m;
 	}
 
+	public JDBCPersonalManager(JDBCManager m, JDBCContractManager contractManager) {
+		this.manager = m;
+		this.contractManager = contractManager;
+	}
+
 	@Override
 	public void addPersonal(Personal personalToADD) {
 
@@ -59,7 +64,7 @@ public class JDBCPersonalManager implements PersonalManager {
 				String name = rs.getString("name");
 				String surname = rs.getString("surname");
 				String email = rs.getString("email");
-				byte[] photo = rs.getBytes("photo");
+				byte[] photo = rs.getBytes("foto");
 				Integer contract_id = rs.getInt("contract_id");
 
 				Contract contract = contractManager.searchContractById(contract_id);

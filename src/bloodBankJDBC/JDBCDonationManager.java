@@ -21,6 +21,13 @@ public class JDBCDonationManager implements DonationManager {
 		this.manager = m;
 	}
 
+	public JDBCDonationManager(JDBCManager manager, JDBCDonorManager donorManager,
+			JDBCPersonalManager personalManager) {
+
+		this.manager = manager;
+		this.donorManager = donorManager;
+		this.personalManager = personalManager;
+	}
 
 	@Override
 	public void addDonation(Donation donation) {

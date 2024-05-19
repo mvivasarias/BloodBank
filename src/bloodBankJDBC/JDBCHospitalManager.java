@@ -20,6 +20,14 @@ public class JDBCHospitalManager implements HospitalManager {
 	public JDBCHospitalManager(JDBCManager m) {
 		this.manager = m;
 	}
+	
+
+	public JDBCHospitalManager(JDBCManager manager, JDBCBloodManager bloodManager) {
+		super();
+		this.manager = manager;
+		this.bloodManager = bloodManager;
+	}
+
 
 	@Override
 	public void addHospital(Hospital hospitalToAdd) { // ADD TO THE TABLE THE HOSPITAL WITH ALL THAT VALUES
