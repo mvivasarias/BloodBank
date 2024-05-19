@@ -1,5 +1,7 @@
 package bloodBankIfaces;
 
+import java.util.List;
+
 import bloodBankPOJOs.Personal;
 
 public interface PersonalManager {
@@ -14,5 +16,7 @@ public interface PersonalManager {
 	public void deletePersonalByID(Integer id); //sql done
 	
 	public boolean isPersonalTableNotEmpty();
+	
+	public List <Personal> listPersonal();
 
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import bloodBankPOJOs.Hospital;
 import bloodBankPOJOs.Request;
-import bloodBankPOJOs.Stock;
 
 public interface HospitalManager {
 

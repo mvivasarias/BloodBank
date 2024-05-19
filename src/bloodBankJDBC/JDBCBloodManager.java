@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import bloodBankIfaces.BloodManager;
 import bloodBankPOJOs.Blood;
-import bloodBankPOJOs.Stock;
 
 public class JDBCBloodManager implements BloodManager {
 
@@ -18,14 +17,9 @@ public class JDBCBloodManager implements BloodManager {
 		this.manager = m;
 	}
 
+	
 	@Override
-	public List<Blood> getBloodList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteBloodById(int bloodId) {
+	public void deleteBloodById(Integer bloodId) {
 		try {
 			String sql = "DELETE FROM blood WHERE id = ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
@@ -144,7 +138,7 @@ public class JDBCBloodManager implements BloodManager {
 
 	}
 
-	public void updateStockLitersById(int blood_id, float newLiters) {
+	public void updateStockLitersById(Integer blood_id, float newLiters) {
 
 		try {
 			String sql = "UPDATE blood SET liters = ? WHERE id = ?";
@@ -161,4 +155,31 @@ public class JDBCBloodManager implements BloodManager {
 
 	}
 
+	@Override
+	public List<Blood> getBloodListByType() {
+		 List<Blood> bloods = new ArrayList<>();
+	        try {
+	            String sql = "SELECT * FROM blood ORDER BY bloodType ASC";
+	            PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+	            ResultSet rs = prep.executeQuery();
+
+	            while (rs.next()) {
+	                Integer id = rs.getInt("id");
+	                String bloodType = rs.getString("bloodType");
+	                float liters=rs.getFloat("liters");
+	                Date dob=rs.getDate("dob");
+
+	                Blood blood = new Blood(id, bloodType, liters, dob);
+	                bloods.add(blood);
+	            }
+
+	            rs.close();
+	            prep.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return bloods;
+	}
 }
+	
+

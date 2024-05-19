@@ -10,11 +10,8 @@ import java.util.List;
 
 import bloodBankIfaces.HospitalManager;
 import bloodBankPOJOs.Blood;
-import bloodBankPOJOs.Contract;
 import bloodBankPOJOs.Hospital;
-import bloodBankPOJOs.Personal;
 import bloodBankPOJOs.Request;
-import bloodBankPOJOs.Stock;
 
 public class JDBCHospitalManager implements HospitalManager {
 	private JDBCManager manager;
@@ -62,7 +59,7 @@ public class JDBCHospitalManager implements HospitalManager {
 	}
 
 	@Override
-	public List<Request> getRequestsOfHospitalByName (String hospitalName) {
+	public List<Request> getRequestsOfHospitalByName(String hospitalName) {
 		List<Request> requests = new ArrayList<>();
 		try {
 			String sql = "SELECT hb.hospital_id, hb.blood_id, hb.date, hb.liters " + "FROM hospital_blood hb "

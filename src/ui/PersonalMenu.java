@@ -19,7 +19,6 @@ import bloodBankPOJOs.Contract;
 import bloodBankPOJOs.Donation;
 import bloodBankPOJOs.Donor;
 import bloodBankPOJOs.Personal;
-import bloodBankPOJOs.Stock;
 
 public class PersonalMenu {
 
@@ -40,17 +39,18 @@ public class PersonalMenu {
 			int choice;
 			do {
 				System.out.println("Choose an option");
-				System.out.println("1. Register a nurse");
-				System.out.println("2. Modify information of nurse");
-				System.out.println("3. Delete nurse");
-				System.out.println("4. Register a donor ");
-				System.out.println("5. Modify information of a donor.");
-				System.out.println("6. Delete donor");
-				System.out.println("7. List donors");
-				System.out.println("8. Add donation");
-				System.out.println("9. Delete donation");
-				System.out.println("10. List donations");
-				System.out.println("11. Get list of blood extractions");
+				System.out.println("1. Register in the  blood bank database");
+				System.out.println("2. Modify your information ");
+				System.out.println("3. Delete personal");
+				System.out.println("4. List personal");
+				System.out.println("5. Register a donor ");
+				System.out.println("6. Modify information of a donor");
+				System.out.println("7. Delete donor");
+				System.out.println("8. List donors");
+				System.out.println("9. Add donation");
+				System.out.println("10. Delete donation");
+				System.out.println("11. List donations");
+				System.out.println("12. Get list of blood extractions");
 
 				System.out.println("0. Return.");
 
@@ -67,27 +67,30 @@ public class PersonalMenu {
 					deleteNurse(personalManager);
 					break;
 				case 4:
-					registerDonor(personalManager, donorManager);
+					listPersonal(personalManager);
 					break;
 				case 5:
-					modifyDonor(donorManager);
+					registerDonor(personalManager, donorManager);
 					break;
 				case 6:
-					deleteDonor(donorManager);
+					modifyDonor(personalManager, donorManager);
 					break;
 				case 7:
-					listDonors(donorManager);
+					deleteDonor(personalManager, donorManager);
 					break;
 				case 8:
-					addDonation(personalManager, donorManager, donationManager, bloodManager);
+					listDonors(donorManager);
 					break;
 				case 9:
-					deleteDonation(donationManager);
+					addDonation(personalManager, donorManager, donationManager, bloodManager);
 					break;
 				case 10:
-					listDonations(donationManager);
+					deleteDonation(personalManager, donationManager);
 					break;
 				case 11:
+					listDonations(donationManager);
+					break;
+				case 12:
 					listOfBloodExtractions(bloodManager);
 					break;
 
@@ -106,63 +109,74 @@ public class PersonalMenu {
 	private void registerNurse(JDBCPersonalManager personalManager, JDBCContractManager contractManager) {
 		System.out.println("Type your name");
 		String name = Utilities.readString();
+
 		System.out.println("Type your surname ");
 		String surname = Utilities.readString();
-		System.out.println("Type yor email");
-		String email = Utilities.readString();
+
 		System.out.println("Establishing a contract");
-		Contract contract = makeAContract();
+		Contract contract = Utilities.makeAContract();
+
 		System.out.println("Please introduce a photo");
 		byte[] photo = null; // TODO como guardar la foto
 		contractManager.addContract(contract); // SQL DONE
 
-		Personal nurse = new Personal(name, surname, email, contract, photo);
+		Personal nurse = new Personal(name, surname, this.email, contract, photo);
 		personalManager.addPersonal(nurse);// SQL DONE
 
 	}
 
 	private void modifyNurse(JDBCPersonalManager personalManager) {
-		System.out.println("Type the email of the nurse you want to modify information from ");
-		String email = Utilities.readString();
-		Personal nurseModifying = personalManager.searchPersonalByEmail(email); // sql done
+
+		Personal nurseModifying = personalManager.searchPersonalByEmail(this.email); // sql done
 
 		if (nurseModifying != null) {
 
-			System.out.println("Enter new name :");
+			System.out.println("Moidfy your name :");
 			String newName = Utilities.readString();
 
-			System.out.println("Enter new surname :");
+			System.out.println("Modify your surname :");
 			String newSurname = Utilities.readString();
 
-			System.out.println("Enter new email :");
+			System.out.println("Modify your email :");
 			String newEmail = Utilities.readString();
+			this.email = newEmail;
 
 			System.out.println("Enter new photo :");
 			String newPhoto = Utilities.readString();
-			personalManager.modifyPersonal(nurseModifying, newName, newSurname, newEmail, newPhoto);
+			personalManager.modifyPersonal(nurseModifying, newName, newSurname, this.email, newPhoto);
 
 		} else {
-			System.out.println("Nurse with email " + email + " not found.");
+			System.out.println("You have introduced this email:  " + this.email
+					+ " and you are not found in the blood bank database, please register first!");
 		}
 	}
 
 	private void deleteNurse(JDBCPersonalManager personalManager) {
-		Integer id_nurse_deleted = Utilities.readInteger("Introduce the id of the nurse you want to delete");
-		personalManager.deletePersonalByID(id_nurse_deleted); // SQL DONE
 
+		Personal nurseDeleteing = personalManager.searchPersonalByEmail(this.email); // sql done
+
+		if (nurseDeleteing != null) {
+			Integer id_nurse_deleted = Utilities.readInteger("Introduce the id of the nurse you want to delete");
+			personalManager.deletePersonalByID(id_nurse_deleted);// SQL DONE
+		} else {
+			System.out.println(
+					"You are not registered in the blood bank database, please register first to delete other people");
+		}
 	}
 
-	private static Contract makeAContract() {
-		Integer hoursToWork = Utilities.askHoursWanted("How many hours do you want to work?");
-		Integer salaryDependingOnHoursWorked = Utilities.salaryCalculator(hoursToWork);
-
-		return new Contract(hoursToWork, salaryDependingOnHoursWorked);
+	private void listPersonal(JDBCPersonalManager personalManager) {
+		System.out.println("List of personal/nurses registered ordered by id:");
+		List<Personal> nurses = personalManager.listPersonal();
+		for (Personal nurse : nurses) {
+			System.out.println(nurse);
+		}
 
 	}
 
 	private void registerDonor(JDBCPersonalManager personalManager, JDBCDonorManager donorManager)
 			throws ParseException {
 		if (personalManager.isPersonalTableNotEmpty()) { // if there is some nurse the registration can be done
+
 			System.out.println("Donor´s name :");
 			String name = Utilities.readString();
 
@@ -187,55 +201,67 @@ public class PersonalMenu {
 		}
 	}
 
-	private void modifyDonor(JDBCDonorManager donorManager) throws ParseException {
+	private void modifyDonor(JDBCPersonalManager personalManager, JDBCDonorManager donorManager) throws ParseException {
 
-		Integer idDonor = Utilities.readInteger("Enter the donor ID you want to modify :");
+		if (personalManager.isPersonalTableNotEmpty()) {
+			Integer idDonor = Utilities.readInteger("Enter the donor ID you want to modify :");
 
-		Donor donorExisting = donorManager.getDonorByID(idDonor);
+			Donor donorExisting = donorManager.getDonorByID(idDonor);
 
-		if (donorExisting != null) {
+			if (donorExisting != null) {
 
-			System.out.println("Donor´s name modification:");
-			String name = Utilities.readString();
+				System.out.println("Donor´s name modification:");
+				String name = Utilities.readString();
 
-			System.out.println("Donor´s surname modification :");
-			String surname = Utilities.readString();
+				System.out.println("Donor´s surname modification :");
+				String surname = Utilities.readString();
 
-			System.out.println("Donor´s dob in formal yyyy/mm/dd modification ");
-			String dob_str = Utilities.readString();
-			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-			Date dob = (Date) df.parse(dob_str);
+				System.out.println("Donor´s dob in formal yyyy/mm/dd modification ");
+				String dob_str = Utilities.readString();
+				DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+				Date dob = (Date) df.parse(dob_str);
 
-			String bloodType = Utilities.askBloodType("Donor´s blood type modification");
-			int times = donorExisting.getTimes(); // not modified
+				String bloodType = Utilities.askBloodType("Donor´s blood type modification");
 
-			Donor donorModified = new Donor(idDonor, name, surname, dob, bloodType, times);
-			donorManager.modifyDonor(donorModified);
+				int times = donorExisting.getTimes(); // not modified
 
-			System.out.println("Donor modified successfully.");
+				Donor donorModified = new Donor(idDonor, name, surname, dob, bloodType, times);
+				donorManager.modifyDonor(donorModified);
 
+				System.out.println("Donor modified successfully.");
+
+			} else {
+				System.out.println("No donor existing with that id ");
+			}
 		} else {
-			System.out.println("No donor existing with that id ");
+			System.out.println("No personal for modifying a donor, please register in the blood bank database first");
 		}
 
 	}
 
-	private void deleteDonor(JDBCDonorManager donorManager) {
-		Integer idDonor = Utilities.readInteger("Enter the donor ID you want to delete :");
+	private void deleteDonor(JDBCPersonalManager personalManager, JDBCDonorManager donorManager) {
+		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
 
-		Donor donorExisting = donorManager.getDonorByID(idDonor);
+		if (loggedInPersonal != null) {
 
-		if (donorExisting != null) {
-			donorManager.deleteDonor(donorExisting.getId());
+			Integer idDonor = Utilities.readInteger("Enter the donor ID you want to delete :");
+			Donor donorExisting = donorManager.getDonorByID(idDonor);
+
+			if (donorExisting != null) {
+				donorManager.deleteDonor(donorExisting.getId());
+			} else {
+				System.out.println("No donor existing with that id ");
+			}
 		} else {
-			System.out.println("No donor existing with that id ");
+			System.out.println(
+					"You are not registered in the blood bank database, please register first to delete a donor");
 		}
 
 	}
 
 	private void listDonors(JDBCDonorManager donorManager) {
 		System.out.println("List of donors ordered by name:");
-		List<Donor> donors = donorManager.getDonorsByName();
+		List<Donor> donors = donorManager.listDonorsByName();
 		for (Donor donor : donors) {
 			System.out.println(donor);
 		}
@@ -244,15 +270,21 @@ public class PersonalMenu {
 
 	private void addDonation(JDBCPersonalManager personalManager, JDBCDonorManager donorManager,
 			JDBCDonationManager donationManager, JDBCBloodManager bloodManager) {
-		System.out.println("Type the email of the nurse attending ");
+
+		System.out.println("Type the email of the nurse who has performed the extraction of blood ");
 		String email = Utilities.readString();
 
 		Personal nurseAttending = personalManager.searchPersonalByEmail(email);
+
 		System.out.println("Type the name of the donor ");
 		String nameDonor = Utilities.readString();
 		System.out.println("Type the surname of the donor ");
 		String surname = Utilities.readString();
-		Donor donorDonating = donorManager.searchDonorByNameAndSurname(nameDonor, surname);
+
+		System.out.println("Type the blood type of the donor ");
+		String bloodType = Utilities.askBloodType("Blood type");
+
+		Donor donorDonating = donorManager.searchDonorByNameSurnameBloodtype(nameDonor, surname, bloodType);
 
 		System.out.println("How many liters is the donor donating ");
 		float amountDonating = Utilities.readfloat();
@@ -262,7 +294,7 @@ public class PersonalMenu {
 
 		Donation newDonation = new Donation(currentDate, amountDonating, donorDonating, nurseAttending);
 		donationManager.addDonation(newDonation);
-		donorManager.incrementDonorTimes(donorDonating);
+		donorManager.incrementDonorTimes(donorDonating); // the donor´s times donating increment 1
 
 		Blood newBlood = new Blood(donorDonating.getBloodtype(), amountDonating, currentDate);
 
@@ -272,30 +304,39 @@ public class PersonalMenu {
 
 	}
 
-	private void deleteDonation(JDBCDonationManager donationManager) throws IOException {
-		int choice;
-		System.out.println("How would you like to delete a donation:");
-		System.out.println("1. Delete donation by ID");
-		System.out.println("2. Delete donation by blood type");
-		System.out.println("0. Exit");
+	private void deleteDonation(JDBCPersonalManager personalManager, JDBCDonationManager donationManager)
+			throws IOException {
 
-		choice = Utilities.readInteger("Enter an option");
+		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
 
-		switch (choice) {
-		case 1:
-			int donationId = Utilities.readInteger("Enter the ID of the donation to delete");
-			donationManager.deleteDonationById(donationId);
-			break;
-		case 2:
-			String bloodType = Utilities.askBloodType("Select the blood type you want to delete");
-			donationManager.deleteDonationByBloodType(bloodType);
-			break;
-		case 0:
-			System.out.println("Exiting option of deleting donation.");
-			break;
-		default:
-			System.out.println("Invalid choice. Please enter a valid option.");
-			break;
+		if (loggedInPersonal != null) {
+			int choice;
+			System.out.println("How would you like to delete a donation:");
+			System.out.println("1. Delete donation by ID");
+			System.out.println("2. Delete donation by blood type");
+			System.out.println("0. Exit");
+
+			choice = Utilities.readInteger("Enter an option");
+
+			switch (choice) {
+			case 1:
+				int donationId = Utilities.readInteger("Enter the ID of the donation to delete");
+				donationManager.deleteDonationById(donationId);
+				break;
+			case 2:
+				String bloodType = Utilities.askBloodType("Select the blood type you want to delete");
+				donationManager.deleteDonationByBloodType(bloodType);
+				break;
+			case 0:
+				System.out.println("Exiting option of deleting donation.");
+				break;
+			default:
+				System.out.println("Invalid choice. Please enter a valid option.");
+				break;
+			}
+		} else {
+			System.out.println(
+					"You are not registered in the blood bank database, please register first to delete a donation");
 		}
 
 	}

@@ -14,7 +14,6 @@ import bloodBankPOJOs.Personal;
 
 public class JDBCDonationManager implements DonationManager {
 	private JDBCManager manager;
-	private JDBCBloodManager bloodManager;
 	private JDBCDonorManager donorManager;
 	private JDBCPersonalManager personalManager;
 
@@ -22,17 +21,6 @@ public class JDBCDonationManager implements DonationManager {
 		this.manager = m;
 	}
 
-	@Override
-	public Donation searchDonationById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Donation searchDonationByDate(Date date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void addDonation(Donation donation) {
@@ -75,7 +63,7 @@ public class JDBCDonationManager implements DonationManager {
 
 	@Override
 
-	public void deleteDonationById(int donationId) {
+	public void deleteDonationById(Integer donationId) {
 
 		try {
 			String sql = "DELETE FROM donation WHERE id = ?";

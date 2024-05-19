@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import bloodBankPOJOs.Contract;
+
 public class Utilities {
 
 	public static String readString() {
@@ -106,6 +108,14 @@ public class Utilities {
 	public static Integer salaryCalculator(int hoursWorked) {
 		int priceOfAnHour = 10;
 		return priceOfAnHour * hoursWorked;
+
+	}
+
+	public static Contract makeAContract() {
+		Integer hoursToWork = askHoursWanted("How many hours do you want to work?");
+		Integer salaryDependingOnHoursWorked = salaryCalculator(hoursToWork);
+
+		return new Contract(hoursToWork, salaryDependingOnHoursWorked);
 
 	}
 

@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import bloodBankIfaces.DonorManager;
 import bloodBankPOJOs.Donor;
@@ -110,20 +112,20 @@ public class JDBCDonorManager implements DonorManager {
 	}
 
 	@Override
-	public Donor searchDonorByNameAndSurname(String nameDonor, String surname) {
+	public Donor searchDonorByNameSurnameBloodtype(String nameDonor, String surname, String bloodType) {
 		 Donor donor = null;
 		    
 		    try {
-		        String sql = "SELECT * FROM donor WHERE name = ? AND surname = ?";
+		        String sql = "SELECT * FROM donor WHERE name = ? AND surname = ? AND bloodType = ?\";";
 		        PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 		        prep.setString(1, nameDonor);
 		        prep.setString(2, surname);
+		        prep.setString(3,bloodType);
 		        ResultSet rs = prep.executeQuery();
 
 		        if (rs.next()) {
-		            int id = rs.getInt("id");
+		            Integer id = rs.getInt("id");
 		            Date dob = rs.getDate("dob");
-		            String bloodType = rs.getString("bloodtype");
 		            int times = rs.getInt("times");
 
 		            donor = new Donor(id, nameDonor, surname, dob, bloodType, times);
@@ -153,6 +155,35 @@ public class JDBCDonorManager implements DonorManager {
 		        e.printStackTrace();
 		    }
 		
+	}
+		
+
+	@Override
+	public List<Donor> listDonorsByName() {
+		 List<Donor> donors = new ArrayList<>();
+	        try {
+	            String sql = "SELECT * FROM donor ORDER BY name ASC";
+	            PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+	            ResultSet rs = prep.executeQuery();
+
+	            while (rs.next()) {
+	                Integer id = rs.getInt("id");
+	                String name = rs.getString("name");
+	                String surname = rs.getString("surname");
+	                Date dob = rs.getDate("dob");
+	                String bloodType = rs.getString("bloodtype");
+	                Integer times = rs.getInt("times");
+
+	                Donor donor = new Donor(id, name, surname, dob, bloodType, times);
+	                donors.add(donor);
+	            }
+
+	            rs.close();
+	            prep.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return donors;
 	}
 
 }

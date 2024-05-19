@@ -27,6 +27,17 @@ public class Blood implements Serializable {
 	}
 	
 
+	public Blood(Integer id, String bloodType, float liters, Date date) {
+		super();
+		this.id = id;
+		this.bloodType = bloodType;
+		this.liters = liters;
+		this.date = date;
+		donations = new ArrayList<Donation>();
+		hospitals = new ArrayList<Hospital>();
+	}
+
+
 	public Blood(String bloodType, float liters, Date date) {
 		super();
 		this.bloodType = bloodType;

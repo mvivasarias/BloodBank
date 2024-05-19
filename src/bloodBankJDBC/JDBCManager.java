@@ -34,21 +34,25 @@ public class JDBCManager {
 
 			String sql = "CREATE TABLE contract (" 
 						+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-						+ "salary INTEGER, hours INTEGER);";
+						+ "salary INTEGER, "
+						+ "hours INTEGER"
+						+ ");";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE personal (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "name TEXT NOT NULL, surname  TEXT NOT NULL," 
+					+ "name TEXT NOT NULL,"
+					+ "surname TEXT NOT NULL," 
 					+ "email TEXT NOT NULL,"
 					+ "foto BLOB,"
 					+ "contract_id INTEGER,"
-					+ "FOREIGN KEY(contract_id) REFERENCES contract(id)ON DELETE SET NULL);";
+					+ "FOREIGN KEY(contract_id) REFERENCES contract(id)ON DELETE SET NULL"
+					+ ");";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE blood (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
-					+ "type TEXT NOT NULL,"
+					+ "bloodType TEXT NOT NULL,"
 					+ "liters REAL NOT NULL,"
 					+ "date DATE NOT NULL"
 					+ ")";
@@ -56,30 +60,40 @@ public class JDBCManager {
 
 			sql = "CREATE TABLE donation (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
-					+ "date DATE NOT NULL, amount REAL,"
+					+ "date DATE NOT NULL,"
+					+ "amount REAL,"
 					+ "donor_id INTEGER REFERENCES donor(id),"
 					+ "personal_id INTEGER REFERENCES personal(id),"
-					+ "FOREIGN KEY(donor_id) REFERENCES donor(id)ON DELETE SET NULL);"
-					+ "FOREIGN KEY(personal_id) REFERENCES personal(id) ON DELETE SET NULL);";
+					+ "FOREIGN KEY(donor_id) REFERENCES donor(id)ON DELETE SET NULL,"
+					+ "FOREIGN KEY(personal_id) REFERENCES personal(id) ON DELETE SET NULL"
+					+ ");";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE donor (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "name TEXT NOT NULL,surname TEXT NOT NULL " 
-					+ "dob DATE NOT NULL, bloodtype TEXT NOT NULL, times INTEGER);";
+					+ "name TEXT NOT NULL,"
+					+ "surname TEXT NOT NULL " 
+					+ "dob DATE NOT NULL,"
+					+ "bloodtype TEXT NOT NULL, "
+					+ "times INTEGER"
+					+ ");";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE hospital (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "name TEXT NOT NULL,address TEXT NOT NULL, email TEXT NOT NULL UNIQUE); ";
+					+ "name TEXT NOT NULL,"
+					+ "address TEXT NOT NULL, "
+					+ "email TEXT NOT NULL UNIQUE"
+					+ "); ";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE donation_blood (" // DONATION GETS BLOOD N-N
 					+ "donation_id INTEGER,"
 					+ "blood_id INTEGER,"
-					+ "FOREIGN KEY(donation_id) REFERENCES donation(id)ON DELETE CASCADE,"
-					+ "FOREIGN KEY(blood_id) REFERENCES blood(id)ON DELETE CASCADE,"
-					+ "PRIMARY KEY(donation_id, blood_id));";
+					+ "FOREIGN KEY(donation_id) REFERENCES donation(id) ON DELETE CASCADE,"
+					+ "FOREIGN KEY(blood_id) REFERENCES blood(id) ON DELETE CASCADE,"
+					+ "PRIMARY KEY(donation_id, blood_id)"
+					+ ");";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE hospital_blood (" //REQUEST TABLE N-N
@@ -87,9 +101,10 @@ public class JDBCManager {
 					+ "blood_id INTEGER,"
 					+ "liters REAL,"
 					+ "date DATE,"
-					+ "FOREIGN KEY(hospital_id) REFERENCES hospital(id)ON DELETE CASCADE,"
-					+ "FOREIGN KEY(blood_id) REFERENCES blood(id)ON DELETE CASCADE,"
-					+ "PRIMARY KEY(hospital_id, blood_id, date));";
+					+ "FOREIGN KEY(hospital_id) REFERENCES hospital(id) ON DELETE CASCADE,"
+					+ "FOREIGN KEY(blood_id) REFERENCES blood(id) ON DELETE CASCADE,"
+					+ "PRIMARY KEY(hospital_id, blood_id, date)"
+					+ ");";
 					
 			stmt.executeUpdate(sql);
 			stmt.close();

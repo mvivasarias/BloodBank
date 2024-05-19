@@ -1,6 +1,5 @@
 package bloodBankJDBC;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +31,7 @@ public class JDBCContractManager implements ContractManager {
 			e.printStackTrace();
 		}
 	}
-	public Contract searchContractById(int contractId) {
+	public Contract searchContractById(Integer contractId) {
 
 		Contract contract = null;
 
