@@ -44,7 +44,7 @@ public class JDBCManager {
 					+ "name TEXT NOT NULL,"
 					+ "surname TEXT NOT NULL," 
 					+ "email TEXT NOT NULL,"
-					+ "foto BLOB,"
+					+ "photo BLOB,"
 					+ "contract_id INTEGER,"
 					+ "FOREIGN KEY(contract_id) REFERENCES contract(id)ON DELETE SET NULL"
 					+ ");";

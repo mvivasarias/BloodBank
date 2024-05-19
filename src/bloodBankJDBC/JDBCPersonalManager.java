@@ -24,13 +24,13 @@ public class JDBCPersonalManager implements PersonalManager {
 	public void addPersonal(Personal personalToADD) {
 
 		try {
-			String sql = "INSERT INTO personal (name, surname, email, foto, contract_id) VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO personal (name, surname, email, photo, contract_id) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 
 			prep.setString(1, personalToADD.getName());
 			prep.setString(2, personalToADD.getSurname());
 			prep.setString(3, personalToADD.getEmail());
-			prep.setBytes(4, personalToADD.getFoto());
+			prep.setBytes(4, personalToADD.getPhoto());
 			prep.setInt(5, personalToADD.getContract().getId());
 			prep.executeUpdate();
 
@@ -51,7 +51,7 @@ public class JDBCPersonalManager implements PersonalManager {
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, emailSearch);
 
-			ResultSet rs = prep.executeQuery(sql);
+			ResultSet rs = prep.executeQuery();
 
 			if (rs.next()) {
 
@@ -96,16 +96,16 @@ public class JDBCPersonalManager implements PersonalManager {
 			}
 			if (newPhoto != null && !newPhoto.isEmpty()) { // CONVERT TO BYTES IF PHOTO IS INTRODUCED IN A STRING FORMAT
 
-				personalToModify.setFoto(newPhoto.getBytes());
+				personalToModify.setPhoto(newPhoto.getBytes());
 			}
 
-			String sql = "UPDATE personal SET name = ?, surname = ?, email = ?, foto = ? WHERE id = ?";
+			String sql = "UPDATE personal SET name = ?, surname = ?, email = ?, photo = ? WHERE id = ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 
 			prep.setString(1, personalToModify.getName());
 			prep.setString(2, personalToModify.getSurname());
 			prep.setString(3, personalToModify.getEmail());
-			prep.setBytes(4, personalToModify.getFoto());
+			prep.setBytes(4, personalToModify.getPhoto());
 
 			int rowsUpdated = prep.executeUpdate();
 
@@ -172,10 +172,10 @@ public class JDBCPersonalManager implements PersonalManager {
 				String name = rs.getString("name");
 				String surname = rs.getString("surname");
 				String email = rs.getString("email");
-				Blob fotoBlob = rs.getBlob("foto");
+				Blob photoBlob = rs.getBlob("photo");
 				byte[] fotoBytes = null;
-				if (fotoBlob != null) {
-					fotoBytes = fotoBlob.getBytes(1, (int) fotoBlob.length());
+				if (photoBlob != null) {
+					fotoBytes = photoBlob.getBytes(1, (int) photoBlob.length());
 				}
 
 				Contract contract = contractManager.searchContractById(rs.getInt("contract_id"));
@@ -203,7 +203,7 @@ public class JDBCPersonalManager implements PersonalManager {
 				String name = rs.getString("name");
 				String surname = rs.getString("surname");
 				String email = rs.getString("email");
-				byte[] photo = rs.getBytes("foto");
+				byte[] photo = rs.getBytes("photo");
 				int contractId = rs.getInt("contract_id");
 				Contract contract = contractManager.searchContractById(contractId);
 
