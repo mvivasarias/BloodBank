@@ -41,6 +41,7 @@ public class Menu {
 		personalManager = new JDBCPersonalManager(jdbcManager);
 
 		usermanager = new JPAuserManager();
+		usermanager.connect();
 
 		try {
 			int choice;
@@ -57,13 +58,16 @@ public class Menu {
 				switch (choice) {
 				case 1:
 					login();
+					break;
 				case 2:
 					System.out.println("Add info of new user.");
 					signUpUser();
+					break;
 
 				case 3:
 					System.out.println("Udpate the password of an exissting user.");
 					updatePassword();
+					break;
 				case 0:
 					System.out.println("Exiting application.");
 					jdbcManager.disconnect();

@@ -15,6 +15,12 @@ import bloodBankPOJOs.User;
 public class JPAuserManager implements UserManager {
 	private EntityManager em;
 
+	/*public JPAuserManager() {
+		super();
+		this.connect();
+	}
+	*/
+
 	@Override
 	public void connect() {
 
@@ -35,7 +41,7 @@ public class JPAuserManager implements UserManager {
 
 	@Override
 	public List<Role> getRoles() {
-		
+
 		Query q = em.createNativeQuery("SELECT * FROM roles", Role.class);
 		List<Role> roles = (List<Role>) q.getResultList();
 
@@ -44,7 +50,7 @@ public class JPAuserManager implements UserManager {
 
 	@Override
 	public void newRole(Role r) {
-		
+
 		em.getTransaction().begin();
 		em.persist(r);
 		em.getTransaction().commit();
@@ -53,7 +59,7 @@ public class JPAuserManager implements UserManager {
 
 	@Override
 	public void newUser(User u) {
-		
+
 		em.getTransaction().begin();
 		em.persist(u);
 		em.getTransaction().commit();
@@ -61,13 +67,13 @@ public class JPAuserManager implements UserManager {
 
 	@Override
 	public void disconnect() {
-		
+
 		em.close();
 	}
 
 	@Override
 	public Role getRole(Integer id) {
-		
+
 		Query q = em.createNativeQuery("SELECT * FROM roles where id=" + id, Role.class);
 		Role r = (Role) q.getSingleResult();
 
@@ -76,7 +82,7 @@ public class JPAuserManager implements UserManager {
 
 	@Override
 	public User getUser(String email) {
-		
+
 		Query q = em.createNativeQuery("SELECT * FROM users where email=" + email, User.class);
 		User u = (User) q.getSingleResult();
 
@@ -85,7 +91,7 @@ public class JPAuserManager implements UserManager {
 
 	@Override
 	public User checkPassword(String email, String pass) {
-		
+
 		User u = null;
 
 		Query q = em.createNativeQuery("SELECT * from users where email =? and password=?", User.class);
@@ -111,7 +117,6 @@ public class JPAuserManager implements UserManager {
 
 		return u;
 	}
-
 
 	@Override
 	public void changePassword(User u, String new_passwd) {
