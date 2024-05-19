@@ -46,25 +46,32 @@ public class JDBCPersonalManager implements PersonalManager {
 		Personal person = null;
 
 		try {
-			Statement stmt = manager.getConnection().createStatement();
+
 			String sql = "SELECT * FROM personal WHERE email = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, emailSearch);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			ResultSet rs = prep.executeQuery(sql);
 
-			Integer person_id = rs.getInt("id");
-			String name = rs.getString("name");
-			String surname1 = rs.getString("surname");
-			String email = rs.getString("email");
-			byte[] photo = rs.getBytes("photo");
-			Integer contract_id = rs.getInt("contract_id");
+			if (rs.next()) {
 
-			Contract contract = contractManager.searchContractById(contract_id);
+				Integer person_id = rs.getInt("id");
+				String name = rs.getString("name");
+				String surname = rs.getString("surname");
+				String email = rs.getString("email");
+				byte[] photo = rs.getBytes("photo");
+				Integer contract_id = rs.getInt("contract_id");
 
-			person = new Personal(person_id, name, surname1, email, contract, photo);
+				Contract contract = contractManager.searchContractById(contract_id);
+
+				person = new Personal(person_id, name, surname, email, contract, photo);
+
+				System.out.println("You are in the blood bank database!");
+			} else {
+				System.out.println("You are not in the blood bank database, please register first!");
+			}
 			rs.close();
-			stmt.close();
-
-			System.out.println("You are in the database!");
+			prep.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
