@@ -6,14 +6,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
 
 public class Personal implements Serializable {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 6714833338820944413L;
-	
 	private Integer id;
 	private String name;
 	private String surname;
@@ -21,15 +24,14 @@ public class Personal implements Serializable {
 	private Contract contract;
 	private byte[] photo;
 	private List<Donation> donations;
-	
-	
+
 	public Personal() {
 		super();
 		donations = new ArrayList<Donation>();
-		
+
 	}
-	
-	//constructor sin el id
+
+	// constructor sin el id
 	public Personal(String name, String surname, String email, List<Donation> donations, Contract contract,
 			byte[] photo) {
 		super();
@@ -41,9 +43,7 @@ public class Personal implements Serializable {
 		this.photo = photo;
 	}
 
-	
-
-	public Personal( String name, String surname, String email, Contract contract, byte[] foto) {
+	public Personal(String name, String surname, String email, Contract contract, byte[] foto) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -51,7 +51,6 @@ public class Personal implements Serializable {
 		this.contract = contract;
 		this.photo = foto;
 	}
-	
 
 	public Personal(Integer id, String name, String surname, String email, Contract contract, byte[] foto) {
 		super();
@@ -61,9 +60,8 @@ public class Personal implements Serializable {
 		this.email = email;
 		this.contract = contract;
 		this.photo = foto;
-		this.donations= new ArrayList<Donation>();
+		this.donations = new ArrayList<Donation>();
 	}
-	
 
 	public Integer getId() {
 		return id;
@@ -89,8 +87,6 @@ public class Personal implements Serializable {
 		this.surname = surname;
 	}
 
-	
-
 	public String getEmail() {
 		return email;
 	}
@@ -106,7 +102,6 @@ public class Personal implements Serializable {
 	public void setContract(Contract contract) {
 		this.contract = contract;
 	}
-	
 
 	public byte[] getPhoto() {
 		return photo;
@@ -116,7 +111,6 @@ public class Personal implements Serializable {
 		this.photo = photo;
 	}
 
-	
 	public List<Donation> getDonations() {
 		return donations;
 	}
@@ -154,7 +148,4 @@ public class Personal implements Serializable {
 				+ contract + ", photo=" + Arrays.toString(photo) + "]";
 	}
 
-
-
-	
 }
