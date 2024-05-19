@@ -45,6 +45,8 @@ public class Contract implements Serializable {
 		this.personals = new ArrayList<Personal>();
 	}
 
+	
+
 	public Integer getId() {
 		return id;
 	}
@@ -97,7 +99,9 @@ public class Contract implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Contract [id=" + id + ", salary=" + salary + ", hours=" + hours + ", typeofwork=" +  "]";
+		return "Contract [id=" + id + ", salary=" + salary + ", hours=" + hours + ", personals=" + personals + "]";
 	}
+
+	
 
 }

@@ -38,7 +38,7 @@ public class PersonalMenu {
 		try {
 			int choice;
 			do {
-				System.out.println("Choose an option");
+				System.out.println("\nWelcome to the personal menu of the blood bank database\n"+"Select an option");
 				System.out.println("1. Register in the  blood bank database");
 				System.out.println("2. Modify your information ");
 				System.out.println("3. Delete personal");
@@ -115,12 +115,14 @@ public class PersonalMenu {
 
 		System.out.println("Establishing a contract");
 		Contract contract = Utilities.makeAContract();
+		Contract contractAdded=contractManager.addContract(contract); // SQL DONE
 
 		System.out.println("Please introduce a photo");
 		byte[] photo = null; // TODO como guardar la foto
-		contractManager.addContract(contract); // SQL DONE
-
-		Personal nurse = new Personal(name, surname, this.email, contract, photo);
+		
+		Personal nurse = new Personal(name, surname, this.email, contractAdded, photo);
+	
+		System.out.println(nurse.getContract().getId().toString());
 		personalManager.addPersonal(nurse);// SQL DONE
 
 	}

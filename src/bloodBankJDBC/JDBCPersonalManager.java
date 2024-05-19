@@ -32,7 +32,6 @@ public class JDBCPersonalManager implements PersonalManager {
 			prep.setString(3, personalToADD.getEmail());
 			prep.setBytes(4, personalToADD.getFoto());
 			prep.setInt(5, personalToADD.getContract().getId());
-
 			prep.executeUpdate();
 
 			System.out.println("Nurse added successfully to the blood bank database");
