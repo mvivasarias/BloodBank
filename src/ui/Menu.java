@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
 
+import bloodBankPOJOs.Hospital;
 import bloodBankPOJOs.Role;
 import bloodBankPOJOs.User;
 import bloodBankIfaces.UserManager;
@@ -94,6 +95,17 @@ public class Menu {
 		} else {
 			System.out.println("Login of hospital successful!");
 			HospitalMenu hospitalMenu = new HospitalMenu(email);
+			
+			System.out.println("Type the name of the Hospital");
+			String name = Utilities.readString();
+			System.out.println("Type the address of the Hospital");
+			String address = Utilities.readString();
+			String hospitalEmailUser = email;
+
+			Hospital hospitalToAdd = new Hospital(name, address, hospitalEmailUser);
+			hospitalManager.addHospital(hospitalToAdd);
+			
+		
 			hospitalMenu.hospitalMenuOptions(email,hospitalManager,bloodManager);
 		}
 	}
