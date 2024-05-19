@@ -4,12 +4,15 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import bloodBankIfaces.HospitalManager;
 import bloodBankPOJOs.Blood;
+import bloodBankPOJOs.Contract;
 import bloodBankPOJOs.Hospital;
+import bloodBankPOJOs.Personal;
 import bloodBankPOJOs.Request;
 import bloodBankPOJOs.Stock;
 
@@ -59,41 +62,34 @@ public class JDBCHospitalManager implements HospitalManager {
 	}
 
 	@Override
-	public List<Request> getRequestsOfHospital(String name) {
-		List<Request> requests = new ArrayList<Request>();
-
+	public List<Request> getRequestsOfHospitalByName (String hospitalName) {
+		List<Request> requests = new ArrayList<>();
 		try {
-			String sql = "SELECT r.liters, r.date, b.id AS blood_id, h.id AS hospital_id " + "FROM hospital_blood hb "
-					+ "JOIN request r ON hb.hospital_id = r.hospital_id AND hb.date_id = r.date_id "
-					+ "JOIN hospital h ON hb.hospital_id = h.id " + "JOIN blood b ON hb.blood_id = b.id "
-					+ "WHERE h.name = ?";
+			String sql = "SELECT hb.hospital_id, hb.blood_id, hb.date, hb.liters " + "FROM hospital_blood hb "
+					+ "JOIN hospital h ON hb.hospital_id = h.id " + "WHERE h.name = ?";
 
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setString(1, name);
-
+			prep.setString(1, hospitalName);
 			ResultSet rs = prep.executeQuery();
 
 			while (rs.next()) {
-				float liters = rs.getFloat("liters");
-				Date date = rs.getDate("date");
 				int hospitalId = rs.getInt("hospital_id");
 				int bloodId = rs.getInt("blood_id");
+				Date date = rs.getDate("date");
+				float liters = rs.getFloat("liters");
+				Hospital hospital = searchHospitalById(hospitalId);
+				Blood blood = bloodManager.searchBloodById(bloodId);
 
-				Hospital hospitalRequesting = searchHospitalById(hospitalId);
-				Blood bloodRequesting = bloodManager.searchBloodById(bloodId);
-
-				Request request = new Request(liters, date, hospitalRequesting, bloodRequesting);
-				requests.add(request);
+				requests.add(new Request(hospital, blood, liters, date));
 			}
 
 			rs.close();
 			prep.close();
 		} catch (SQLException e) {
-			System.err.println("Error listing requests: " + e.getMessage());
+			System.err.println("Error fetching requests: " + e.getMessage());
 		}
 
 		return requests;
-
 	}
 
 	public Hospital searchHospitalById(Integer id) {
@@ -122,12 +118,12 @@ public class JDBCHospitalManager implements HospitalManager {
 		return hospital;
 	}
 
-	public void addRequest(int hospitalId, int bloodId, float liters, Date date) {
+	public void addRequest(int hospital_id, int blood_id, float liters, Date date) {
 		try {
 			String sql = "INSERT INTO hospital_blood (hospital_id, blood_id, liters, date_id) VALUES (?, ?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, hospitalId);
-			prep.setInt(2, bloodId);
+			prep.setInt(1, hospital_id);
+			prep.setInt(2, blood_id);
 			prep.setFloat(3, liters);
 			prep.setDate(4, new java.sql.Date(date.getTime()));
 			int rowsAffected = prep.executeUpdate();
@@ -142,6 +138,34 @@ public class JDBCHospitalManager implements HospitalManager {
 		} catch (SQLException e) {
 			System.err.println("Error adding request to hospital_blood table: " + e.getMessage());
 		}
+	}
+
+	@Override
+	public Hospital searchHospitalByEmail(String email) {
+		Hospital hospital = null;
+
+		try {
+			Statement stmt = manager.getConnection().createStatement();
+			String sql = "SELECT * FROM hospital WHERE email = ?";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Integer hospital_id = rs.getInt("id");
+			String name = rs.getString("name");
+			String address = rs.getString("address");
+			String email_hosp = rs.getString("email");
+
+			hospital = new Hospital(hospital_id, name, address, email_hosp);
+
+			rs.close();
+			stmt.close();
+
+		} catch (SQLException e) {
+			System.err.println("Hospital with this email has not been found " + e.getMessage());
+			e.printStackTrace();
+		}
+		return hospital;
+
 	}
 
 }

@@ -49,13 +49,14 @@ public class JDBCManager {
 			sql = "CREATE TABLE blood (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
 					+ "type TEXT NOT NULL,"
-					+ "liters NUMERICAL NOT NULL"
-					+ "date DATE NOT NULL";
+					+ "liters REAL NOT NULL,"
+					+ "date DATE NOT NULL"
+					+ ")";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE donation (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT," 
-					+ "date DATE NOT NULL, amount NUMERIC,"
+					+ "date DATE NOT NULL, amount REAL,"
 					+ "donor_id INTEGER REFERENCES donor(id),"
 					+ "personal_id INTEGER REFERENCES personal(id),"
 					+ "FOREIGN KEY(donor_id) REFERENCES donor(id)ON DELETE SET NULL);"
@@ -70,7 +71,7 @@ public class JDBCManager {
 
 			sql = "CREATE TABLE hospital (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "name TEXT NOT NULL,address TEXT NOT NULL, email TEXT NOT NULL); ";
+					+ "name TEXT NOT NULL,address TEXT NOT NULL, email TEXT NOT NULL UNIQUE); ";
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE donation_blood (" // DONATION GETS BLOOD N-N
@@ -84,11 +85,11 @@ public class JDBCManager {
 			sql = "CREATE TABLE hospital_blood (" //REQUEST TABLE N-N
 					+ "hospital_id INTEGER,"
 					+ "blood_id INTEGER,"
-					+ "liters FLOAT,"
-					+ "date_id INTEGER,"
+					+ "liters REAL,"
+					+ "date DATE,"
 					+ "FOREIGN KEY(hospital_id) REFERENCES hospital(id)ON DELETE CASCADE,"
 					+ "FOREIGN KEY(blood_id) REFERENCES blood(id)ON DELETE CASCADE,"
-					+ "PRIMARY KEY(hospital_id, blood_id, date_id));";
+					+ "PRIMARY KEY(hospital_id, blood_id, date));";
 					
 			stmt.executeUpdate(sql);
 			stmt.close();

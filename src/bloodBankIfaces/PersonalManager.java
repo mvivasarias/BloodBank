@@ -9,6 +9,7 @@ public interface PersonalManager {
 			String newPhoto); //sql done
 
 	public Personal searchPersonalByEmail(String emailSearch); //sql done
+	public Personal searchPersonalByID(Integer id);
 
 	public void deletePersonalByID(Integer id); //sql done
 	

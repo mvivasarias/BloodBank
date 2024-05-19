@@ -13,9 +13,11 @@ public interface HospitalManager {
 
 	public void deleteHospital(String name); // sql done
 
-	public List<Request> getRequestsOfHospital(String name); // sql done
+	public List<Request>getRequestsOfHospitalByName(String name); // sql done
 
 	public Hospital searchHospitalById(Integer id); // sql done
 
 	public void addRequest(int hospitalId, int bloodId, float liters, Date date);
+	
+	public Hospital searchHospitalByEmail( String email);
 }

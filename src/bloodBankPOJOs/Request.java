@@ -9,23 +9,25 @@ public class Request implements Serializable{
 	
 	private static final long serialVersionUID = 6714833338820944413L;
 	
-	//combinacionb de date hospital blood
-	private float liters;
-	private Date date;
 	private Hospital hospital;
 	private Blood blood;
+	private float liters;
+	private Date date;
+	
 	
 	public Request() {
 		super();
 	}
 	
 	
-	public Request(float liters, Date date, Hospital hospital, Blood blood) {
+	
+
+	public Request(Hospital hospital, Blood blood, float liters, Date date) {
 		super();
-		this.liters = liters;
-		this.date = date;
 		this.hospital = hospital;
 		this.blood = blood;
+		this.liters = liters;
+		this.date = date;
 	}
 
 
@@ -86,13 +88,12 @@ public class Request implements Serializable{
 				&& Float.floatToIntBits(liters) == Float.floatToIntBits(other.liters);
 	}
 
+
 	@Override
 	public String toString() {
-		return "Request [liters=" + liters + ", date=" + date + ", hospital=" + hospital + ", blood=" + blood + "]";
+		return "Request [Hospital=" + this.hospital  + ", date=" + this.date + ",liters=" + this.liters + ", blood type=" + blood.getBloodType() + "]";
 	}
 
-	
-	
 	
 	
 	

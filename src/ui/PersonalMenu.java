@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -13,7 +14,6 @@ import bloodBankJDBC.JDBCContractManager;
 import bloodBankJDBC.JDBCDonationManager;
 import bloodBankJDBC.JDBCDonorManager;
 import bloodBankJDBC.JDBCPersonalManager;
-import bloodBankJDBC.JDBCStockManager;
 import bloodBankPOJOs.Blood;
 import bloodBankPOJOs.Contract;
 import bloodBankPOJOs.Donation;
@@ -34,8 +34,7 @@ public class PersonalMenu {
 	}
 
 	public void personalMenuOptions(String email, JDBCBloodManager bloodManager, JDBCContractManager contractManager,
-			JDBCDonationManager donationManager, JDBCDonorManager donorManager, JDBCPersonalManager personalManager,
-			JDBCStockManager stockManager) {
+			JDBCDonationManager donationManager, JDBCDonorManager donorManager, JDBCPersonalManager personalManager) {
 
 		try {
 			int choice;
@@ -52,7 +51,6 @@ public class PersonalMenu {
 				System.out.println("9. Delete donation");
 				System.out.println("10. List donations");
 				System.out.println("11. Get list of blood extractions");
-				System.out.println("12. Get stock ordered by blood type");
 
 				System.out.println("0. Return.");
 
@@ -78,20 +76,21 @@ public class PersonalMenu {
 					deleteDonor(donorManager);
 					break;
 				case 7:
-					addDonation(personalManager, donorManager,donationManager, bloodManager, stockManager);
+					listDonors(donorManager);
 					break;
 				case 8:
-					// deleteDonation();
+					addDonation(personalManager, donorManager, donationManager, bloodManager);
 					break;
 				case 9:
-					// listDonations();
+					deleteDonation(donationManager);
 					break;
 				case 10:
-					// listOfBloodExtractions();
+					listDonations(donationManager);
 					break;
 				case 11:
-					// stockOrderedByBloodType();
+					listOfBloodExtractions(bloodManager);
 					break;
+
 				case 0:
 					System.out.println("Back to main menu");
 
@@ -119,7 +118,6 @@ public class PersonalMenu {
 
 		Personal nurse = new Personal(name, surname, email, contract, photo);
 		personalManager.addPersonal(nurse);// SQL DONE
-		
 
 	}
 
@@ -223,48 +221,101 @@ public class PersonalMenu {
 	}
 
 	private void deleteDonor(JDBCDonorManager donorManager) {
-		Integer idDonor= Utilities.readInteger("Enter the donor ID you want to delete :");
-		
-		Donor donorExisting= donorManager.getDonorByID(idDonor);
-		
-		if(donorExisting!=null) {
+		Integer idDonor = Utilities.readInteger("Enter the donor ID you want to delete :");
+
+		Donor donorExisting = donorManager.getDonorByID(idDonor);
+
+		if (donorExisting != null) {
 			donorManager.deleteDonor(donorExisting.getId());
 		} else {
 			System.out.println("No donor existing with that id ");
 		}
-		
+
 	}
-	private void addDonation(JDBCPersonalManager personalManager, JDBCDonorManager donorManager,JDBCDonationManager donationManager, 
-			JDBCBloodManager bloodManager, JDBCStockManager stockManager) {
+
+	private void listDonors(JDBCDonorManager donorManager) {
+		System.out.println("List of donors ordered by name:");
+		List<Donor> donors = donorManager.getDonorsByName();
+		for (Donor donor : donors) {
+			System.out.println(donor);
+		}
+
+	}
+
+	private void addDonation(JDBCPersonalManager personalManager, JDBCDonorManager donorManager,
+			JDBCDonationManager donationManager, JDBCBloodManager bloodManager) {
 		System.out.println("Type the email of the nurse attending ");
-		String email= Utilities.readString();
-		
-		Personal nurseAttending=personalManager.searchPersonalByEmail(email);
+		String email = Utilities.readString();
+
+		Personal nurseAttending = personalManager.searchPersonalByEmail(email);
 		System.out.println("Type the name of the donor ");
-		String nameDonor=Utilities.readString();
+		String nameDonor = Utilities.readString();
 		System.out.println("Type the surname of the donor ");
-		String surname=Utilities.readString(); 
-		Donor donorDonating=donorManager.searchDonorByNameAndSurname(nameDonor,surname);
-		
+		String surname = Utilities.readString();
+		Donor donorDonating = donorManager.searchDonorByNameAndSurname(nameDonor, surname);
+
 		System.out.println("How many liters is the donor donating ");
-		float amountDonating=Utilities.readfloat();
-		
+		float amountDonating = Utilities.readfloat();
+
 		LocalDate localDate = LocalDate.now();
 		Date currentDate = Date.valueOf(localDate);
-				
-		Donation newDonation= new Donation(currentDate,amountDonating,donorDonating,nurseAttending);
+
+		Donation newDonation = new Donation(currentDate, amountDonating, donorDonating, nurseAttending);
 		donationManager.addDonation(newDonation);
 		donorManager.incrementDonorTimes(donorDonating);
-		
-		
-		Blood newBlood= new Blood(donorDonating.getBloodtype(),amountDonating,currentDate);
-		
+
+		Blood newBlood = new Blood(donorDonating.getBloodtype(), amountDonating, currentDate);
+
 		bloodManager.addBlood(newBlood);
-		
+
 		donationManager.addDonationBlood(newDonation.getId(), newBlood.getId());
-		
-		
-		
+
 	}
-	
+
+	private void deleteDonation(JDBCDonationManager donationManager) throws IOException {
+		int choice;
+		System.out.println("How would you like to delete a donation:");
+		System.out.println("1. Delete donation by ID");
+		System.out.println("2. Delete donation by blood type");
+		System.out.println("0. Exit");
+
+		choice = Utilities.readInteger("Enter an option");
+
+		switch (choice) {
+		case 1:
+			int donationId = Utilities.readInteger("Enter the ID of the donation to delete");
+			donationManager.deleteDonationById(donationId);
+			break;
+		case 2:
+			String bloodType = Utilities.askBloodType("Select the blood type you want to delete");
+			donationManager.deleteDonationByBloodType(bloodType);
+			break;
+		case 0:
+			System.out.println("Exiting option of deleting donation.");
+			break;
+		default:
+			System.out.println("Invalid choice. Please enter a valid option.");
+			break;
+		}
+
+	}
+
+	private void listDonations(JDBCDonationManager donationManager) {
+		System.out.println("List of donations ordered by date:");
+		List<Donation> donations = donationManager.getDonationsByDate();
+
+		for (Donation donation : donations) {
+			System.out.println(donation);
+		}
+
+	}
+
+	private void listOfBloodExtractions(JDBCBloodManager bloodManager) {
+		System.out.println("List of blood extractions ordered by blood type:");
+		List<Blood> bloods = bloodManager.getBloodListByType();
+		for (Blood blood : bloods) {
+			System.out.println(blood);
+		}
+
+	}
 }

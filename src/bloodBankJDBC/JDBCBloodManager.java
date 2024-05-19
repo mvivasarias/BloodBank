@@ -13,7 +13,6 @@ import bloodBankPOJOs.Stock;
 public class JDBCBloodManager implements BloodManager {
 
 	private JDBCManager manager;
-	private JDBCStockManager stockManager;
 
 	public JDBCBloodManager(JDBCManager m) {
 		this.manager = m;
@@ -25,12 +24,18 @@ public class JDBCBloodManager implements BloodManager {
 		return null;
 	}
 
-	
-
 	@Override
-	public void deleteBlood(Blood bloodToDelete) {
-		// TODO Auto-generated method stub
-		// DELETE BLOOD FROM TABLE
+	public void deleteBloodById(int bloodId) {
+		try {
+			String sql = "DELETE FROM blood WHERE id = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, bloodId);
+			prep.executeUpdate();
+			prep.close();
+		} catch (SQLException e) {
+			System.err.println("Error deleting blood by ID: " + e.getMessage());
+		}
+
 	}
 
 	@Override
@@ -111,6 +116,47 @@ public class JDBCBloodManager implements BloodManager {
 			System.out.println("Blood record added successfully.");
 		} catch (SQLException e) {
 			System.err.println("Error adding blood record: " + e.getMessage());
+		}
+
+	}
+
+	public float getTotalLitersAvailable(String bloodType) {
+		float totalLitersAvailable = 0;
+
+		try {
+			String sql = "SELECT SUM(liters) AS total_liters FROM blood WHERE type = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, bloodType);
+
+			ResultSet rs = prep.executeQuery();
+
+			if (rs.next()) {
+				totalLitersAvailable = rs.getFloat("total_liters");
+			}
+
+			rs.close();
+			prep.close();
+		} catch (SQLException e) {
+			System.err.println("Error getting total liters available: " + e.getMessage());
+		}
+
+		return totalLitersAvailable;
+
+	}
+
+	public void updateStockLitersById(int blood_id, float newLiters) {
+
+		try {
+			String sql = "UPDATE blood SET liters = ? WHERE id = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+
+			prep.setFloat(1, newLiters);
+			prep.setInt(2, blood_id);
+			prep.executeUpdate();
+			prep.close();
+
+		} catch (SQLException e) {
+			System.err.println("Error updating blood record: " + e.getMessage());
 		}
 
 	}

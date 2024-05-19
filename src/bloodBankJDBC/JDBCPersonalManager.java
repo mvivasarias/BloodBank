@@ -1,11 +1,15 @@
 package bloodBankJDBC;
 
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
 import bloodBankIfaces.PersonalManager;
 import bloodBankPOJOs.Contract;
+import bloodBankPOJOs.Donation;
 import bloodBankPOJOs.Personal;
 
 public class JDBCPersonalManager implements PersonalManager {
@@ -143,5 +147,37 @@ public class JDBCPersonalManager implements PersonalManager {
 			e.printStackTrace();
 		}
 		return isNotEmpty;
+	}
+
+	@Override
+	public Personal searchPersonalByID(Integer id) {
+		
+		  Personal personal = null;
+		    try {
+		        String sql = "SELECT * FROM personal WHERE id = ?";
+		        PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+		        prep.setInt(1, id);
+		        ResultSet rs = prep.executeQuery();
+
+		        if (rs.next()) {
+		            String name = rs.getString("name");
+		            String surname = rs.getString("surname");
+		            String email = rs.getString("email");
+		            Blob fotoBlob = rs.getBlob("foto");
+		            byte[] fotoBytes = null;
+		            if (fotoBlob != null) {
+		                fotoBytes = fotoBlob.getBytes(1, (int) fotoBlob.length());
+		            }
+		          
+		            Contract contract = contractManager.searchContractById(rs.getInt("contract_id"));
+		            personal = new Personal(id, name, surname, email, contract, fotoBytes);
+		        }
+		       
+		        rs.close();
+		        prep.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return personal;
 	}
 }

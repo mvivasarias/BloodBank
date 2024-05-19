@@ -9,7 +9,6 @@ import java.util.List;
 
 import bloodBankJDBC.JDBCBloodManager;
 import bloodBankJDBC.JDBCHospitalManager;
-import bloodBankJDBC.JDBCStockManager;
 import bloodBankPOJOs.Blood;
 import bloodBankPOJOs.Hospital;
 import bloodBankPOJOs.Request;
@@ -25,36 +24,25 @@ public class HospitalMenu {
 		this.email = email;
 	}
 
-	public void hospitalMenuOptions(String email, JDBCHospitalManager hospitalManager, JDBCBloodManager bloodManager,
-			JDBCStockManager stockManager) {
-		hospital=hospitalManager.searchHospitalByEmail(email);
+	public void hospitalMenuOptions(String email, JDBCHospitalManager hospitalManager, JDBCBloodManager bloodManager) {
+
+		hospital = hospitalManager.searchHospitalByEmail(email);
 		try {
 			int choice;
 			do {
 				System.out.println("Choose an option");
 				System.out.println("1. Request blood");
-				System.out.println("2. Add hospital");
-				System.out.println("3. Delete hospital");
-				System.out.println("4. Modify hospital");
-				System.out.println("5. Show requests of a hospital");
+				System.out.println("2. Show requests of this hospital");
 				System.out.println("0. Return.");
 
 				choice = Integer.parseInt(reader.readLine());
 
 				switch (choice) {
 				case 1:
-					requestBlood(hospitalManager, bloodManager, stockManager);
+					requestBlood(hospitalManager, bloodManager);
 					break;
+
 				case 2:
-					addHospital(hospitalManager);
-					break;
-				case 3:
-					deleteHospital(hospitalManager);
-					break;
-				case 4:
-					// modifyHospital(hospitalManager);
-					break;
-				case 5:
 					printRequestsFromHospital(hospitalManager);
 					break;
 				case 0:
@@ -69,20 +57,18 @@ public class HospitalMenu {
 		}
 	}
 
-	private void requestBlood(JDBCHospitalManager hospitalManager, JDBCBloodManager bloodManager,
-			JDBCStockManager stockManager) throws Exception {
-
+	private void requestBlood(JDBCHospitalManager hospitalManager, JDBCBloodManager bloodManager) throws Exception {
 
 		if (hospital != null) {
 
 			System.out.println("Type the liters needed");
-			float liters = Utilities.readfloat();
+			float litersNeeded = Utilities.readfloat();
 			System.out.println("Type the date of the request yyyy/mm/dd");
-			
-			String dateOfRequest = reader.readLine();
+
+			String dateOfRequest = Utilities.readString();
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 			Date date = (Date) df.parse(dateOfRequest);
-			
+
 			System.out.println("Type the blood type needed");
 			String bloodType = Utilities.askBloodType("Introduce blood type:");
 
@@ -91,33 +77,53 @@ public class HospitalMenu {
 				System.out.println("Blood type " + bloodType + " is not available.");
 			} else {
 
-				float totalLitersAvailable = stockManager.getTotalLitersAvailable(bloodType);
+				float totalLitersAvailable = bloodManager.getTotalLitersAvailable(bloodType);
 
-				if (totalLitersAvailable >= liters) {
+				if (totalLitersAvailable >= litersNeeded) {
 
 					System.out.println("Sufficient blood of type " + bloodType + " is available for the request.");
-					 stockManager.updateStockLiters(bloodType, liters);
-					
-					hospitalManager.addRequest(hospital.getId(), bloodRecords.getId(), liters,date); //arreglar
+
+					float litersRemaining = litersNeeded;
+					for (Blood blood : bloodRecords) {
+
+						if (litersRemaining <= 0) {
+							break;
+						}
+						float currentLiters = blood.getLiters();
+						int blood_id = blood.getId();
+
+						if (currentLiters <= litersRemaining) {
+							bloodManager.deleteBloodById(blood_id);
+							hospitalManager.addRequest(hospital.getId(), blood_id, currentLiters, date);
+							litersRemaining = litersRemaining - currentLiters;
+
+						} else {
+							bloodManager.updateStockLitersById(blood_id, currentLiters - litersRemaining);
+							hospitalManager.addRequest(hospital.getId(), blood_id, litersRemaining, date);
+							litersRemaining = 0;
+						}
+					}
+					System.out.println("Blood request has been successfully processed.");
 
 				} else {
 					System.out.println("Insufficient blood of type " + bloodType + " available. Available liters: "
 							+ totalLitersAvailable);
 				}
-			}
-		} else {
-			System.out.println("Hospital not found with such ID");
 
+			}
 		}
+
 	}
 
 	private void printRequestsFromHospital(JDBCHospitalManager hospitalManager) {
-		List<Request> requests = null;
-		System.out.println("Type the name of the Hospital");
-		String name = Utilities.readString();
-		requests = hospitalManager.getRequestsOfHospital(name);
-		System.out.println(requests);
-
+		List<Request> requests = hospitalManager.getRequestsOfHospitalByName(hospital.getName());
+		if (requests.isEmpty()) {
+			System.out.println("No requests found for hospital: " + hospital.getName());
+		} else {
+			for (Request request : requests) {
+				System.out.println(request);
+			}
+		}
 	}
 
 	private void addHospital(JDBCHospitalManager hospitalManager) {

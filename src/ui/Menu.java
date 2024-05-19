@@ -14,7 +14,6 @@ import bloodBankJDBC.JDBCDonorManager;
 import bloodBankJDBC.JDBCHospitalManager;
 import bloodBankJDBC.JDBCManager;
 import bloodBankJDBC.JDBCPersonalManager;
-import bloodBankJDBC.JDBCStockManager;
 import bloodbankJPA.JPAuserManager;
 
 public class Menu {
@@ -26,7 +25,6 @@ public class Menu {
 	private static JDBCDonorManager donorManager;
 	private static JDBCHospitalManager hospitalManager;
 	private static JDBCPersonalManager personalManager;
-	private static JDBCStockManager stockManager;
 
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	private static UserManager usermanager;
@@ -40,7 +38,6 @@ public class Menu {
 		donorManager = new JDBCDonorManager(jdbcManager);
 		hospitalManager = new JDBCHospitalManager(jdbcManager);
 		personalManager = new JDBCPersonalManager(jdbcManager);
-		stockManager = new JDBCStockManager(jdbcManager);
 
 		usermanager = new JPAuserManager();
 
@@ -92,12 +89,12 @@ public class Menu {
 		if (u != null & u.getRole().getName().equals("personal")) {
 			System.out.println("Login of personal successful!");
 			PersonalMenu personalMenu = new PersonalMenu(email);
-			personalMenu.personalMenuOptions(email,bloodManager,contractManager,donationManager,donorManager,personalManager,stockManager);
+			personalMenu.personalMenuOptions(email,bloodManager,contractManager,donationManager,donorManager,personalManager);
 
 		} else {
 			System.out.println("Login of hospital successful!");
 			HospitalMenu hospitalMenu = new HospitalMenu(email);
-			hospitalMenu.hospitalMenuOptions(email,hospitalManager,bloodManager,stockManager);
+			hospitalMenu.hospitalMenuOptions(email,hospitalManager,bloodManager);
 		}
 	}
 
