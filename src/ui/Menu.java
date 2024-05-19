@@ -95,18 +95,7 @@ public class Menu {
 		} else {
 			System.out.println("Login of hospital successful!");
 			HospitalMenu hospitalMenu = new HospitalMenu(email);
-			
-			System.out.println("Type the name of the Hospital");
-			String name = Utilities.readString();
-			System.out.println("Type the address of the Hospital");
-			String address = Utilities.readString();
-			String hospitalEmailUser = email;
-
-			Hospital hospitalToAdd = new Hospital(name, address, hospitalEmailUser);
-			hospitalManager.addHospital(hospitalToAdd);
-			
-		
-			hospitalMenu.hospitalMenuOptions(email,hospitalManager,bloodManager);
+		hospitalMenu.hospitalMenuOptions(email,hospitalManager,bloodManager);
 		}
 	}
 
@@ -127,8 +116,19 @@ public class Menu {
 			Role r = usermanager.getRole(rol);
 
 			User u = new User(email, pass, r);
-
 			usermanager.newUser(u);
+			
+				if (u != null & u.getRole().getName().equals("hospital")) {
+
+					System.out.println("Type the name of the Hospital");
+					String name = Utilities.readString();
+					System.out.println("Type the address of the Hospital");
+					String address = Utilities.readString();
+					String hospitalEmailUser = email;
+
+					Hospital hospitalToAdd = new Hospital(name, address, hospitalEmailUser);
+					hospitalManager.addHospital(hospitalToAdd);		
+				}
 
 		} catch (Exception e) {
 			e.printStackTrace();
