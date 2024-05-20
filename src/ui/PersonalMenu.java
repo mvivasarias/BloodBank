@@ -160,6 +160,7 @@ public class PersonalMenu {
 		Personal nurseDeleteing = personalManager.searchPersonalByEmail(this.email); // sql done
 
 		if (nurseDeleteing != null) {
+			System.out.println("Introduce the id of the nurse you want to delete");
 			Integer id_nurse_deleted = Utilities.readInteger("Introduce the id of the nurse you want to delete");
 			personalManager.deletePersonalByID(id_nurse_deleted);// SQL DONE
 		} else {
@@ -190,12 +191,14 @@ public class PersonalMenu {
 			System.out.println("Donor´s dob in formal yyyy/mm/dd");
 			String dob_str = Utilities.readString();
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-			Date dob = (Date) df.parse(dob_str);
+	        java.util.Date dobUtil = df.parse(dob_str); // Parse to java.util.Date
+	        java.sql.Date dobSql = new java.sql.Date(dobUtil.getTime()); // Convert to java.sql.Date
+
 
 			String bloodType = Utilities.askBloodType("Donor´s blood type");
 
 			Integer timesDonated = 0;
-			Donor donorRegistered = new Donor(name, surname, dob, bloodType, timesDonated);
+			Donor donorRegistered = new Donor(name, surname, dobSql, bloodType, timesDonated);
 
 			donorManager.addDonor(donorRegistered);
 

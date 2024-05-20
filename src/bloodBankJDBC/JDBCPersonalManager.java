@@ -37,9 +37,8 @@ public class JDBCPersonalManager implements PersonalManager {
 			prep.setBytes(4, personalToADD.getPhoto());
 			prep.setInt(5, personalToADD.getContract().getId());
 			prep.executeUpdate();
-			
+
 			prep.close();
-			
 
 			System.out.println("Nurse added successfully to the blood bank database");
 		} catch (SQLException e) {
@@ -48,7 +47,7 @@ public class JDBCPersonalManager implements PersonalManager {
 	}
 
 	@Override
-	public Personal searchPersonalByEmail(String emailSearch) { 
+	public Personal searchPersonalByEmail(String emailSearch) {
 
 		Personal person = null;
 
@@ -137,9 +136,14 @@ public class JDBCPersonalManager implements PersonalManager {
 
 			prep.setInt(1, id);
 
-			prep.executeUpdate();
-			System.out.println("Nurse with id: " + id + "deleted succesfully.");
-			
+			int rowsAffected = prep.executeUpdate();
+
+			if (rowsAffected > 0) {
+				System.out.println("Nurse with id: " + id + " deleted successfully.");
+			} else {
+				System.out.println("No personal with id: " + id + " found.");
+			}
+
 			prep.close();
 
 		} catch (Exception e) {
@@ -153,7 +157,7 @@ public class JDBCPersonalManager implements PersonalManager {
 		String sql = "SELECT COUNT(*) FROM personal";
 		try {
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			ResultSet rs = prep.executeQuery(sql);
+			ResultSet rs = prep.executeQuery();
 			if (rs.next()) {
 				int count = rs.getInt(1);
 				isNotEmpty = count > 0; // if count is higher than 0 it returns TRUE
