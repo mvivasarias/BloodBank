@@ -16,10 +16,9 @@ import javax.persistence.TableGenerator;
 @Table( name= "users")
 public class User implements Serializable {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 746547546967803353L;
+	
 	@Id
 	@GeneratedValue(generator = "users")
 	@TableGenerator(name = "users", table = "sqite_sequence", pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "users")
@@ -29,6 +28,7 @@ public class User implements Serializable {
 	private byte[] password; // lo ponemos como byte[] para la encriptacion
 	@ManyToOne
 	@JoinColumn(name = "role_id")
+	
 	private Role role;
 
 	public User() {
@@ -41,7 +41,7 @@ public class User implements Serializable {
 		this.password = password;
 		this.role = role;
 	}
-
+	
 	public Integer getId() {
 		return id;
 	}

@@ -132,10 +132,28 @@ public class Menu {
 
 			System.out.println("Introduce the role of the user.\n 1: personal, 2: hospital");
 			Integer rol = Integer.parseInt(reader.readLine());
-			Role r = usermanager.getRole(rol);
 
-			User u = new User(email, pass, r);
+			Role role = null;
+
+			while (role==null) {
+				switch (rol) {
+				case 1:
+					role = usermanager.getRole("personal");
+
+					break;
+				case 2:
+					role = usermanager.getRole("hospital");
+					break;
+				default:
+					System.out.println("Invalid option");
+					rol = Integer.parseInt(reader.readLine());
+                    break;
+				}
+			}
+			
+			User u = new User(email, pass,role);
 			usermanager.newUser(u);
+	
 
 			if (u != null & u.getRole().getName().equals("hospital")) {
 
@@ -147,6 +165,11 @@ public class Menu {
 
 				Hospital hospitalToAdd = new Hospital(name, address, hospitalEmailUser);
 				hospitalManager.addHospital(hospitalToAdd);
+				
+				System.out.println("Sign up as hospital successfull");
+				
+			} else {
+				System.out.println("Sign up as personal successfull");
 			}
 
 		} catch (Exception e) {
