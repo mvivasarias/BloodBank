@@ -7,7 +7,7 @@ import bloodBankPOJOs.Donation;
 public interface DonationManager {
 	public List<Donation> getDonationsByDate();
 	
-	public void addDonation (Donation donation);
+	public Donation addDonation (Donation donation);
 	
 	public void deleteDonationByBloodType(String bloodType);
 	

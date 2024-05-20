@@ -298,14 +298,14 @@ public class PersonalMenu {
 		Date currentDate = Date.valueOf(localDate);
 
 		Donation newDonation = new Donation(currentDate, amountDonating, donorDonating, nurseAttending);
-		donationManager.addDonation(newDonation);
+		Donation donationAdded=donationManager.addDonation(newDonation);
 		donorManager.incrementDonorTimes(donorDonating); // the donor´s times donating increment 1
 
 		Blood newBlood = new Blood(donorDonating.getBloodtype(), amountDonating, currentDate);
 
-		bloodManager.addBlood(newBlood);
+		Blood bloodAdded=bloodManager.addBlood(newBlood);
 
-		donationManager.addDonationBlood(newDonation.getId(), newBlood.getId());
+		donationManager.addDonationBlood(donationAdded.getId(), bloodAdded.getId());
 
 	}
 

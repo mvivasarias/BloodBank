@@ -12,7 +12,7 @@ public interface BloodManager {
 	
 	public List<Blood> searchBloodType(String bloodType);//sql done
 	
-	public void addBlood(Blood newBlood);//sql done
+	public Blood addBlood(Blood newBlood);//sql done
 	
 	public float getTotalLitersAvailable(String bloodType); //Sql done
 	

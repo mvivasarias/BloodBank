@@ -96,7 +96,8 @@ public class JDBCBloodManager implements BloodManager {
 	}
 
 	@Override
-	public void addBlood(Blood newBlood) {
+	public Blood addBlood(Blood newBlood) {
+		Blood blood=null;
 
 		try {
 			String sql = "INSERT INTO blood (type, liters, date) VALUES (?, ?, ?)";
@@ -109,7 +110,7 @@ public class JDBCBloodManager implements BloodManager {
 			try (ResultSet generatedKeys = prep.getGeneratedKeys()) {
 				if (generatedKeys.next()) {
 					int generatedId = generatedKeys.getInt(1); // Retrieve the generated ID
-					newBlood.setId(generatedId); // Set the generated ID in the Blood object
+					blood= new Blood(generatedId,newBlood.getBloodType(), newBlood.getLiters(), newBlood.getDate()); // Set the generated ID in the Blood object
 					System.out.println("Generated ID for blood record: " + generatedId);
 				} else {
 					throw new SQLException("Creating blood record failed, no ID obtained.");
@@ -121,6 +122,7 @@ public class JDBCBloodManager implements BloodManager {
 		} catch (SQLException e) {
 			System.err.println("Error adding blood record: " + e.getMessage());
 		}
+		return blood;
 
 	}
 
