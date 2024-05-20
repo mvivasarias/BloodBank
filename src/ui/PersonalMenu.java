@@ -193,9 +193,7 @@ public class PersonalMenu {
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 			java.util.Date utilDate = df.parse(dob_str);
 			java.sql.Date dobSql = new java.sql.Date(utilDate.getTime());
-			//java.sql.Date dobSql = java.sql.Date.valueOf(dob_str.replace("/", "-"));
-			//Date utilDate = (Date) df.parse(dob_str);
-			//java.sql.Date dobSql = new java.sql.Date(utilDate.getTime());
+	
 	        
 	        String bloodType = Utilities.askBloodType("Donor´s blood type");
 
