@@ -2,9 +2,9 @@ package bloodBankPOJOs;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.sql.Date;
 
 public class Donor implements Serializable{
 
