@@ -15,12 +15,6 @@ import bloodBankPOJOs.User;
 public class JPAuserManager implements UserManager {
 	private EntityManager em;
 
-	/*public JPAuserManager() {
-		super();
-		this.connect();
-	}
-	*/
-
 	@Override
 	public void connect() {
 

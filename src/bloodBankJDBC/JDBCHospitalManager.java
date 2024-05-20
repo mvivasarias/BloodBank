@@ -123,7 +123,7 @@ public class JDBCHospitalManager implements HospitalManager {
 		return hospital;
 	}
 
-	public void addRequest(int hospital_id, int blood_id, float liters, Date date) {
+	public void addRequest(int hospital_id, int blood_id, float liters, java.sql.Date date) {
 		try {
 			String sql = "INSERT INTO hospital_blood (hospital_id, blood_id, liters, date_id) VALUES (?, ?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);

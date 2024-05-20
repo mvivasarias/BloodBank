@@ -67,7 +67,8 @@ public class HospitalMenu {
 
 			String dateOfRequest = Utilities.readString();
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-			Date date = (Date) df.parse(dateOfRequest);
+			Date utilDate = (Date) df.parse(dateOfRequest);
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
 			System.out.println("Type the blood type needed");
 			String bloodType = Utilities.askBloodType("Introduce blood type:");
@@ -94,12 +95,12 @@ public class HospitalMenu {
 
 						if (currentLiters <= litersRemaining) {
 							bloodManager.deleteBloodById(blood_id);
-							hospitalManager.addRequest(hospital.getId(), blood_id, currentLiters, date);
+							hospitalManager.addRequest(hospital.getId(), blood_id, currentLiters, sqlDate);
 							litersRemaining = litersRemaining - currentLiters;
 
 						} else {
 							bloodManager.updateStockLitersById(blood_id, currentLiters - litersRemaining);
-							hospitalManager.addRequest(hospital.getId(), blood_id, litersRemaining, date);
+							hospitalManager.addRequest(hospital.getId(), blood_id, litersRemaining, sqlDate);
 							litersRemaining = 0;
 						}
 					}
