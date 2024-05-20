@@ -67,18 +67,17 @@ public class JPAuserManager implements UserManager {
 	}
 
 	@Override
-	public Role getRole(Integer id) {
-
-		Query q = em.createNativeQuery("SELECT * FROM roles where id=" + id, Role.class);
+	public Role getRole(String name) {
+		Query q = em.createNativeQuery("SELECT * FROM roles WHERE name LIKE ?", Role.class);
+		q.setParameter(1, name);
 		Role r = (Role) q.getSingleResult();
-
 		return r;
 	}
 
 	@Override
 	public User getUser(String email) {
 
-		Query q = em.createNativeQuery("SELECT * FROM users where email=" + email, User.class);
+		Query q = em.createNativeQuery("SELECT * FROM users where email= ?" + email, User.class);
 		User u = (User) q.getSingleResult();
 
 		return u;

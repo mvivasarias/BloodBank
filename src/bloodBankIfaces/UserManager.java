@@ -17,7 +17,7 @@ public interface UserManager {
 
 	public List<Role> getRoles();
 
-	public Role getRole(Integer id);
+	public Role getRole(String name);
 
 	public User getUser(String email);
 
