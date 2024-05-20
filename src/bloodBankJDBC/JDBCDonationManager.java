@@ -35,13 +35,23 @@ public class JDBCDonationManager implements DonationManager {
 			String sql = "INSERT INTO donation (date, amount, donor_id, personal_id) VALUES (?, ?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 
-			prep.setDate(1, new java.sql.Date(donation.getDate().getTime())); // Assuming donation.getDate() returns a
-																				// java.util.Date
+			prep.setDate(1, new java.sql.Date(donation.getDate().getTime())); 
+																				
 			prep.setFloat(2, donation.getAmount());
 			prep.setInt(3, donation.getDonor().getId());
 			prep.setInt(4, donation.getPersonal().getId());
 
 			prep.executeUpdate();
+			
+			try (ResultSet generatedKeys = prep.getGeneratedKeys()) {
+	            if (generatedKeys.next()) {
+	                int generatedId = generatedKeys.getInt(1); // Retrieve the generated ID
+	                donation.setId(generatedId); // Set the generated ID in the Donation object
+	                System.out.println("Generated ID for donation record: " + generatedId);
+	            } else {
+	                throw new SQLException("Creating donation record failed, no ID obtained.");
+	            }
+	        }
 
 			prep.close();
 		} catch (SQLException e) {

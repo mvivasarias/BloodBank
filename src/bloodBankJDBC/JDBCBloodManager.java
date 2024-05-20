@@ -17,7 +17,6 @@ public class JDBCBloodManager implements BloodManager {
 		this.manager = m;
 	}
 
-	
 	@Override
 	public void deleteBloodById(Integer bloodId) {
 		try {
@@ -106,6 +105,17 @@ public class JDBCBloodManager implements BloodManager {
 			prep.setFloat(2, newBlood.getLiters());
 			prep.setDate(3, new java.sql.Date(newBlood.getDate().getTime()));
 			prep.executeUpdate();
+
+			try (ResultSet generatedKeys = prep.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					int generatedId = generatedKeys.getInt(1); // Retrieve the generated ID
+					newBlood.setId(generatedId); // Set the generated ID in the Blood object
+					System.out.println("Generated ID for blood record: " + generatedId);
+				} else {
+					throw new SQLException("Creating blood record failed, no ID obtained.");
+				}
+			}
+
 			prep.close();
 			System.out.println("Blood record added successfully.");
 		} catch (SQLException e) {
@@ -157,29 +167,27 @@ public class JDBCBloodManager implements BloodManager {
 
 	@Override
 	public List<Blood> getBloodListByType() {
-		 List<Blood> bloods = new ArrayList<>();
-	        try {
-	            String sql = "SELECT * FROM blood ORDER BY bloodType ASC";
-	            PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-	            ResultSet rs = prep.executeQuery();
+		List<Blood> bloods = new ArrayList<>();
+		try {
+			String sql = "SELECT * FROM blood ORDER BY bloodType ASC";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			ResultSet rs = prep.executeQuery();
 
-	            while (rs.next()) {
-	                Integer id = rs.getInt("id");
-	                String bloodType = rs.getString("bloodType");
-	                float liters=rs.getFloat("liters");
-	                Date dob=rs.getDate("dob");
+			while (rs.next()) {
+				Integer id = rs.getInt("id");
+				String bloodType = rs.getString("bloodType");
+				float liters = rs.getFloat("liters");
+				Date dob = rs.getDate("dob");
 
-	                Blood blood = new Blood(id, bloodType, liters, dob);
-	                bloods.add(blood);
-	            }
+				Blood blood = new Blood(id, bloodType, liters, dob);
+				bloods.add(blood);
+			}
 
-	            rs.close();
-	            prep.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	        return bloods;
+			rs.close();
+			prep.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bloods;
 	}
 }
-	
-

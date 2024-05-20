@@ -121,8 +121,7 @@ public class PersonalMenu {
 		byte[] photo = null; // TODO como guardar la foto
 		
 		Personal nurse = new Personal(name, surname, this.email, contractAdded, photo);
-	
-		System.out.println(nurse.getContract().getId().toString());
+		
 		personalManager.addPersonal(nurse);// SQL DONE
 
 	}
