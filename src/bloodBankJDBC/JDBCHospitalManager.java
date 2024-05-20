@@ -40,7 +40,7 @@ public class JDBCHospitalManager implements HospitalManager {
 
 			prep.executeUpdate();
 
-			System.out.println("Hospital added successfully");
+			System.out.println("Hospital added successfully to the database");
 		} catch (SQLException e) {
 			System.err.println("Error adding hospital: " + e.getMessage());
 		}
@@ -150,10 +150,14 @@ public class JDBCHospitalManager implements HospitalManager {
 		Hospital hospital = null;
 
 		try {
-			Statement stmt = manager.getConnection().createStatement();
+			
 			String sql = "SELECT * FROM hospital WHERE email = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, email);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			ResultSet rs = prep.executeQuery();
+			
+			if(rs.next()) {
 
 			Integer hospital_id = rs.getInt("id");
 			String name = rs.getString("name");
@@ -161,9 +165,9 @@ public class JDBCHospitalManager implements HospitalManager {
 			String email_hosp = rs.getString("email");
 
 			hospital = new Hospital(hospital_id, name, address, email_hosp);
-
+			}
 			rs.close();
-			stmt.close();
+			prep.close();
 
 		} catch (SQLException e) {
 			System.err.println("Hospital with this email has not been found " + e.getMessage());

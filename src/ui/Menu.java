@@ -94,8 +94,10 @@ public class Menu {
 		String password = reader.readLine();
 
 		User u = usermanager.checkPassword(email, password);
+		
+		if(u != null) { 
 
-		if (u != null & u.getRole().getName().equals("personal")) {
+		if (u.getRole().getName().equals("personal")) {
 			System.out.println("Login of personal successful!");
 			PersonalMenu personalMenu = new PersonalMenu(email);
 			personalMenu.personalMenuOptions(email,bloodManager,contractManager,donationManager,donorManager,personalManager);
@@ -104,6 +106,8 @@ public class Menu {
 			System.out.println("Login of hospital successful!");
 			HospitalMenu hospitalMenu = new HospitalMenu(email);
 		hospitalMenu.hospitalMenuOptions(email,hospitalManager,bloodManager);
+		}} else {
+			System.out.println("You are not signed up yet, please go to option 2 first!");
 		}
 	}
 
@@ -119,7 +123,7 @@ public class Menu {
 			md.update(password.getBytes());
 			byte[] pass = md.digest();
 
-			System.out.println("Introduce the role of the user. 1: personal, 2: hospital");
+			System.out.println("Introduce the role of the user.\n 1: personal, 2: hospital");
 			Integer rol = Integer.parseInt(reader.readLine());
 			Role r = usermanager.getRole(rol);
 

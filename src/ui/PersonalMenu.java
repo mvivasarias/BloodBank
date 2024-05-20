@@ -194,7 +194,6 @@ public class PersonalMenu {
 	        java.util.Date dobUtil = df.parse(dob_str); // Parse to java.util.Date
 	        java.sql.Date dobSql = new java.sql.Date(dobUtil.getTime()); // Convert to java.sql.Date
 
-
 			String bloodType = Utilities.askBloodType("Donor´s blood type");
 
 			Integer timesDonated = 0;
