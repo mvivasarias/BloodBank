@@ -194,8 +194,8 @@ public class PersonalMenu {
 			java.sql.Date dobSql = java.sql.Date.valueOf(dob_str.replace("/", "-"));
 			//Date utilDate = (Date) df.parse(dob_str);
 			//java.sql.Date dobSql = new java.sql.Date(utilDate.getTime());
-
-			String bloodType = Utilities.askBloodType("Donor´s blood type");
+	        
+	        String bloodType = Utilities.askBloodType("Donor´s blood type");
 
 			Integer timesDonated = 0;
 			Donor donorRegistered = new Donor(name, surname, dobSql, bloodType, timesDonated);
