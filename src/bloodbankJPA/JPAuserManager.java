@@ -117,4 +117,22 @@ public class JPAuserManager implements UserManager {
 		// TODO Auto-generated method stub
 
 	}
+	@Override
+	
+	public boolean isEmailExisting(String email) {
+	    try {
+	       
+	        Query query = em.createQuery("SELECT COUNT(u) FROM User u WHERE u.email = :email");
+	        query.setParameter("email", email);
+	        
+	       
+	        Long count = (Long) query.getSingleResult();
+	        
+	        
+	        return count > 0; // If count > 0, email exists
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false; // Return false in case of an exception or error
+	    }
+	}
 }

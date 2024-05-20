@@ -24,5 +24,7 @@ public interface UserManager {
 	public User checkPassword(String email, String pass);
 
 	public void changePassword(User u, String new_passwd);
+	
+	public boolean isEmailExisting(String email);
 
 }

@@ -116,7 +116,7 @@ public class JDBCDonorManager implements DonorManager {
 		 Donor donor = null;
 		    
 		    try {
-		        String sql = "SELECT * FROM donor WHERE name = ? AND surname = ? AND bloodType = ?\";";
+		        String sql = "SELECT * FROM donor WHERE name = ? AND surname = ? AND bloodType = ? ";
 		        PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 		        prep.setString(1, nameDonor);
 		        prep.setString(2, surname);

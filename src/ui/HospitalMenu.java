@@ -67,7 +67,7 @@ public class HospitalMenu {
 
 			String dateOfRequest = Utilities.readString();
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-			Date utilDate = (Date) df.parse(dateOfRequest);
+			java.util.Date utilDate = df.parse(dateOfRequest);
 			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
 			System.out.println("Type the blood type needed");

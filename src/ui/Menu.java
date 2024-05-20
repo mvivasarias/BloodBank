@@ -116,6 +116,12 @@ public class Menu {
 		try {
 			System.out.println("Introduce email: ");
 			String email = reader.readLine();
+			
+			if (usermanager.isEmailExisting(email)) {
+	            System.out.println("Email already exists. Please choose a different email.");
+	            return; 
+	        }
+
 			System.out.println("Introduce the password");
 			String password = reader.readLine();
 

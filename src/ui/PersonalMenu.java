@@ -150,8 +150,8 @@ public class PersonalMenu {
 			personalManager.modifyPersonal(nurseModifying, newName, newSurname, this.email, newPhoto);
 
 		} else {
-			System.out.println("You have introduced this email:  " + this.email
-					+ " and you are not found in the blood bank database, please register first!");
+			System.out.println("You have entered the personal menu with the email:  " + this.email
+					+ " but you are not registered in the blood bank database, please register first!");
 		}
 	}
 
@@ -170,7 +170,7 @@ public class PersonalMenu {
 	}
 
 	private void listPersonal(JDBCPersonalManager personalManager) {
-		System.out.println("List of personal/nurses registered ordered by id:");
+		System.out.println("List of nurses registered ordered by id:");
 		List<Personal> nurses = personalManager.listPersonal();
 		for (Personal nurse : nurses) {
 			System.out.println(nurse);
@@ -191,8 +191,8 @@ public class PersonalMenu {
 			System.out.println("Donor´s dob in formal yyyy/mm/dd");
 			String dob_str = Utilities.readString();
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-	        java.util.Date dobUtil = df.parse(dob_str); // Parse to java.util.Date
-	        java.sql.Date dobSql = new java.sql.Date(dobUtil.getTime()); // Convert to java.sql.Date
+	        java.util.Date dobUtil = df.parse(dob_str); 
+	        java.sql.Date dobSql = new java.sql.Date(dobUtil.getTime()); 
 
 			String bloodType = Utilities.askBloodType("Donor´s blood type");
 
