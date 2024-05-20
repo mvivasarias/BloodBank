@@ -114,7 +114,7 @@ public class Menu {
 
 	private static void signUpUser() {
 
-		try {
+		try { 
 			System.out.println("Introduce email: ");
 			String email = reader.readLine();
 
