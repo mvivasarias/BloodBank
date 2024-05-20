@@ -8,6 +8,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="/VetClinic/lib/eclipselink-2.7.10.jar"/>
 	<classpathentry kind="lib" path="/VetClinic/lib/javax.persistence-2.1.1.v201509150925.jar"/>
-	<classpathentry kind="lib" path="/VetClinic/lib/sqlite-jdbc-3.8.7.jar"/>
+	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.8.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
