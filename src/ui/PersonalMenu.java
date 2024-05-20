@@ -187,7 +187,7 @@ public class PersonalMenu {
 			System.out.println("Donor´s surname :");
 			String surname = Utilities.readString();
 
-			System.out.println("Donor´s dob in formal yyyy/mm/dd");
+			System.out.println("Donor´s dob in format yyyy/MM/dd");
 			String dob_str = Utilities.readString();
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 			java.util.Date utilDate = df.parse(dob_str);
