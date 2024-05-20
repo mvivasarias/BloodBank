@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
@@ -113,10 +114,35 @@ public class JPAuserManager implements UserManager {
 	}
 
 	@Override
-	public void changePassword(User u, String new_passwd) {
-		// TODO Auto-generated method stub
+	public void changePassword(User u,  byte[] new_passwd) {
+		 EntityTransaction transaction = null;
+	        try {
+	            transaction = em.getTransaction();
+	            transaction.begin();
 
-	}
+	            // Retrieve the user from the database using email
+	            User userToUpdate = em.find(User.class, u.getEmail());
+
+	            // Check if the current password matches
+	            if (userToUpdate.getPassword().equals(u.getPassword())) {
+	                
+	            	// Update the password with the new one
+	                userToUpdate.setPassword(new_passwd);
+	                em.merge(userToUpdate);
+	                transaction.commit();
+	                
+	                System.out.println("Password updated successfully.");
+	            } else {
+	                System.out.println("Incorrect current password. Password not updated.");
+	            }
+	        } catch (Exception e) {
+	            if (transaction != null && transaction.isActive()) {
+	                transaction.rollback();
+	            }
+	            e.printStackTrace();
+	        }
+	    }
+
 	@Override
 	
 	public boolean isEmailExisting(String email) {
@@ -127,7 +153,6 @@ public class JPAuserManager implements UserManager {
 	        
 	       
 	        Long count = (Long) query.getSingleResult();
-	        
 	        
 	        return count > 0; // If count > 0, email exists
 	    } catch (Exception e) {

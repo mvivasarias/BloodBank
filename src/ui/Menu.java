@@ -36,13 +36,12 @@ public class Menu {
 		bloodManager = new JDBCBloodManager(jdbcManager);
 		contractManager = new JDBCContractManager(jdbcManager);
 		donationManager = new JDBCDonationManager(jdbcManager);
-		donationManager = new JDBCDonationManager(jdbcManager,donorManager,personalManager);
+		donationManager = new JDBCDonationManager(jdbcManager, donorManager, personalManager);
 		donorManager = new JDBCDonorManager(jdbcManager);
 		hospitalManager = new JDBCHospitalManager(jdbcManager);
-		hospitalManager = new JDBCHospitalManager(jdbcManager,bloodManager);
+		hospitalManager = new JDBCHospitalManager(jdbcManager, bloodManager);
 		personalManager = new JDBCPersonalManager(jdbcManager);
 		personalManager = new JDBCPersonalManager(jdbcManager, contractManager);
-		
 
 		usermanager = new JPAuserManager();
 		usermanager.connect();
@@ -55,6 +54,7 @@ public class Menu {
 				System.out.println("Choose an option");
 				System.out.println("1. Login User");
 				System.out.println("2. Sign-up new user");
+				System.out.println("3. Update password");
 				System.out.println("0. Exit.");
 
 				choice = Integer.parseInt(reader.readLine());
@@ -84,9 +84,8 @@ public class Menu {
 		}
 	}
 
-
 	private static void login() throws Exception {
-		
+
 		System.out.println("Email: ");
 		String email = reader.readLine();
 
@@ -94,33 +93,35 @@ public class Menu {
 		String password = reader.readLine();
 
 		User u = usermanager.checkPassword(email, password);
-		
-		if(u != null) { 
 
-		if (u.getRole().getName().equals("personal")) {
-			System.out.println("Login of personal successful!");
-			PersonalMenu personalMenu = new PersonalMenu(email);
-			personalMenu.personalMenuOptions(email,bloodManager,contractManager,donationManager,donorManager,personalManager);
+		if (u != null) {
 
+			if (u.getRole().getName().equals("personal")) {
+				System.out.println("Login of personal successful!");
+				PersonalMenu personalMenu = new PersonalMenu(email);
+				personalMenu.personalMenuOptions(email, bloodManager, contractManager, donationManager, donorManager,
+						personalManager);
+
+			} else {
+				System.out.println("Login of hospital successful!");
+				HospitalMenu hospitalMenu = new HospitalMenu(email);
+				hospitalMenu.hospitalMenuOptions(email, hospitalManager, bloodManager);
+			}
 		} else {
-			System.out.println("Login of hospital successful!");
-			HospitalMenu hospitalMenu = new HospitalMenu(email);
-		hospitalMenu.hospitalMenuOptions(email,hospitalManager,bloodManager);
-		}} else {
 			System.out.println("You are not signed up yet, please go to option 2 first!");
 		}
 	}
 
 	private static void signUpUser() {
-		
+
 		try {
 			System.out.println("Introduce email: ");
 			String email = reader.readLine();
-			
+
 			if (usermanager.isEmailExisting(email)) {
-	            System.out.println("Email already exists. Please choose a different email.");
-	            return; 
-	        }
+				System.out.println("Email already exists. Please choose a different email.");
+				return;
+			}
 
 			System.out.println("Introduce the password");
 			String password = reader.readLine();
@@ -135,23 +136,24 @@ public class Menu {
 
 			User u = new User(email, pass, r);
 			usermanager.newUser(u);
-			
-				if (u != null & u.getRole().getName().equals("hospital")) {
 
-					System.out.println("Type the name of the Hospital");
-					String name = Utilities.readString();
-					System.out.println("Type the address of the Hospital");
-					String address = Utilities.readString();
-					String hospitalEmailUser = email;
+			if (u != null & u.getRole().getName().equals("hospital")) {
 
-					Hospital hospitalToAdd = new Hospital(name, address, hospitalEmailUser);
-					hospitalManager.addHospital(hospitalToAdd);		
-				}
+				System.out.println("Type the name of the Hospital");
+				String name = Utilities.readString();
+				System.out.println("Type the address of the Hospital");
+				String address = Utilities.readString();
+				String hospitalEmailUser = email;
+
+				Hospital hospitalToAdd = new Hospital(name, address, hospitalEmailUser);
+				hospitalManager.addHospital(hospitalToAdd);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	private static void updatePassword() throws Exception {
 
 		System.out.println("Email: ");
@@ -163,11 +165,15 @@ public class Menu {
 		System.out.println("Enter new Password");
 		String new_passwd = reader.readLine();
 
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		md.update(new_passwd.getBytes());
+		byte[] newPassBytes = md.digest();
+
 		User u = usermanager.checkPassword(email, passwd);
 
 		if (u != null) {
 			System.out.println("Login of user successful!");
-			usermanager.changePassword(u, new_passwd);
+			usermanager.changePassword(u, newPassBytes);
 		}
 
 	}
