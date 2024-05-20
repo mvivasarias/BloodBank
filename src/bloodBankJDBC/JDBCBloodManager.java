@@ -42,7 +42,7 @@ public class JDBCBloodManager implements BloodManager {
 			ResultSet rs = prep.executeQuery();
 
 			if (rs.next()) {
-				String type = rs.getString("type");
+				String type = rs.getString("bloodType");
 				float liters = rs.getFloat("liters");
 				Date date = rs.getDate("date");
 
@@ -67,7 +67,7 @@ public class JDBCBloodManager implements BloodManager {
 		List<Blood> bloodList = new ArrayList<>();
 
 		try {
-			String sql = "SELECT * FROM blood WHERE type = ?";
+			String sql = "SELECT * FROM blood WHERE bloodType = ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, bloodType);
 			ResultSet rs = prep.executeQuery();
@@ -89,7 +89,7 @@ public class JDBCBloodManager implements BloodManager {
 			rs.close();
 			prep.close();
 		} catch (SQLException e) {
-			System.err.println("Error searching blood by type: " + e.getMessage());
+			System.err.println("Error searching blood by blood type: " + e.getMessage());
 		}
 
 		return bloodList;
@@ -130,7 +130,7 @@ public class JDBCBloodManager implements BloodManager {
 		float totalLitersAvailable = 0;
 
 		try {
-			String sql = "SELECT SUM(liters) AS total_liters FROM blood WHERE type = ?";
+			String sql = "SELECT SUM(liters) AS total_liters FROM blood WHERE bloodType = ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, bloodType);
 
