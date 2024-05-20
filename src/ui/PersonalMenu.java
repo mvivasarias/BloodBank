@@ -299,11 +299,13 @@ public class PersonalMenu {
 
 		Donation newDonation = new Donation(currentDate, amountDonating, donorDonating, nurseAttending);
 		Donation donationAdded=donationManager.addDonation(newDonation);
+		System.out.println("donation id"+donationAdded.getId());
 		donorManager.incrementDonorTimes(donorDonating); // the donor´s times donating increment 1
 
 		Blood newBlood = new Blood(donorDonating.getBloodtype(), amountDonating, currentDate);
 
 		Blood bloodAdded=bloodManager.addBlood(newBlood);
+		System.out.println("blood"+bloodAdded.getId());
 
 		donationManager.addDonationBlood(donationAdded.getId(), bloodAdded.getId());
 

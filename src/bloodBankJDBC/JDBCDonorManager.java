@@ -113,77 +113,86 @@ public class JDBCDonorManager implements DonorManager {
 
 	@Override
 	public Donor searchDonorByNameSurnameBloodtype(String nameDonor, String surname, String bloodType) {
-		 Donor donor = null;
-		    
-		    try {
-		        String sql = "SELECT * FROM donor WHERE name = ? AND surname = ? AND bloodType = ? ";
-		        PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-		        prep.setString(1, nameDonor);
-		        prep.setString(2, surname);
-		        prep.setString(3,bloodType);
-		        ResultSet rs = prep.executeQuery();
+		Donor donor = null;
 
-		        if (rs.next()) {
-		            Integer id = rs.getInt("id");
-		            Date dob = rs.getDate("dob");
-		            int times = rs.getInt("times");
+		try {
+			String sql = "SELECT * FROM donor WHERE name = ? AND surname = ? AND bloodType = ? ";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, nameDonor);
+			prep.setString(2, surname);
+			prep.setString(3, bloodType);
+			ResultSet rs = prep.executeQuery();
 
-		            donor = new Donor(id, nameDonor, surname, dob, bloodType, times);
-		        }
+			if (rs.next()) {
+				Integer id = rs.getInt("id");
+				Date dob = rs.getDate("dob");
+				int times = rs.getInt("times");
 
-		        rs.close();
-		        prep.close();
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }
-		    
-		    return donor;
-		
+				donor = new Donor(id, nameDonor, surname, dob, bloodType, times);
+			}
+
+			rs.close();
+			prep.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return donor;
+
 	}
+
 	public void incrementDonorTimes(Donor donorDonating) {
-		
-		 try {
-		        String sql = "UPDATE donor SET times = times + 1 WHERE id = ?";
-		        PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-		        
-		   
-		        prep.setInt(1, donorDonating.getId());
-		        prep.executeUpdate();
-		        
-		        prep.close();
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }
-		
+
+		try {
+			String sql = "UPDATE donor SET times = times + 1 WHERE id = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+
+			prep.setInt(1, donorDonating.getId());
+			prep.executeUpdate();
+			int rowsAffected = prep.executeUpdate();
+
+			if (rowsAffected > 0) {
+				System.out.println("Donor " + donorDonating.getName() + " " + donorDonating.getSurname()
+						+ " has donated blood " + (donorDonating.getTimes() + 1) + " times.");
+			} else {
+				System.out.println("Failed to increment donation times for donor " + donorDonating.getName() + " "
+						+ donorDonating.getSurname());
+			}
+
+			prep.close();
+			prep.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
-		
 
 	@Override
 	public List<Donor> listDonorsByName() {
-		 List<Donor> donors = new ArrayList<>();
-	        try {
-	            String sql = "SELECT * FROM donor ORDER BY name ASC";
-	            PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-	            ResultSet rs = prep.executeQuery();
+		List<Donor> donors = new ArrayList<>();
+		try {
+			String sql = "SELECT * FROM donor ORDER BY name ASC";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			ResultSet rs = prep.executeQuery();
 
-	            while (rs.next()) {
-	                Integer id = rs.getInt("id");
-	                String name = rs.getString("name");
-	                String surname = rs.getString("surname");
-	                Date dob = rs.getDate("dob");
-	                String bloodType = rs.getString("bloodtype");
-	                Integer times = rs.getInt("times");
+			while (rs.next()) {
+				Integer id = rs.getInt("id");
+				String name = rs.getString("name");
+				String surname = rs.getString("surname");
+				Date dob = rs.getDate("dob");
+				String bloodType = rs.getString("bloodtype");
+				Integer times = rs.getInt("times");
 
-	                Donor donor = new Donor(id, name, surname, dob, bloodType, times);
-	                donors.add(donor);
-	            }
+				Donor donor = new Donor(id, name, surname, dob, bloodType, times);
+				donors.add(donor);
+			}
 
-	            rs.close();
-	            prep.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	        return donors;
+			rs.close();
+			prep.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return donors;
 	}
 
 }
