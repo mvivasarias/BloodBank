@@ -190,8 +190,8 @@ public class PersonalMenu {
 			System.out.println("Donor´s dob in formal yyyy/mm/dd");
 			String dob_str = Utilities.readString();
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-	        java.util.Date dobUtil = df.parse(dob_str); 
-	        java.sql.Date dobSql = new java.sql.Date(dobUtil.getTime()); 
+			java.util.Date utilDate = df.parse(dob_str);
+			java.sql.Date dobSql = new java.sql.Date(utilDate.getTime());
 
 			String bloodType = Utilities.askBloodType("Donor´s blood type");
 
