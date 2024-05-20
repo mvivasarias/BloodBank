@@ -39,14 +39,16 @@ public class JDBCDonorManager implements DonorManager {
 
 	@Override
 	public void addDonor(Donor donorToAdd) {
+		
 
 		try {
+	
 			String sql = "INSERT INTO donor (name, surname, dob, bloodtype, times) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 
 			prep.setString(1, donorToAdd.getName());
 			prep.setString(2, donorToAdd.getSurname());
-			prep.setDate(3, new Date(donorToAdd.getDob().getTime()));
+			prep.setDate(3, donorToAdd.getDob()); 
 			prep.setString(4, donorToAdd.getBloodtype());
 			prep.setInt(5, donorToAdd.getTimes());
 

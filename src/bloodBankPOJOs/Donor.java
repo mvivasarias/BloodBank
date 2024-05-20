@@ -2,9 +2,12 @@ package bloodBankPOJOs;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Objects;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class Donor implements Serializable{
 
@@ -148,7 +151,9 @@ public class Donor implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Donor [id=" + id + ", name=" + name + ", surname=" + surname + ", dob=" + dob + ", bloodtype="
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String dobStr = df.format(dob);
+		return "Donor [id=" + id + ", name=" + name + ", surname=" + surname + ", dob=" + dobStr + ", bloodtype="
 				+ bloodtype + ", times=" + times + "]";
 	}
 	
