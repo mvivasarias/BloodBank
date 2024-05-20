@@ -23,21 +23,21 @@ public class JDBCContractManager implements ContractManager {
 			prep.setInt(1, addContract.getSalary());
 			prep.setInt(2, addContract.getHours());
 
-			
 			int affectedRows = prep.executeUpdate();
 
-            if (affectedRows == 0) {
-                throw new SQLException("Creating contract failed, no rows affected.");
-            }
+			if (affectedRows == 0) {
+				throw new SQLException("Creating contract failed, no rows affected.");
+			}
 
-            try (ResultSet generatedKeys = prep.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    int generatedId = generatedKeys.getInt(1); // Retrieve the generated ID
-                    contract = new Contract(generatedId, addContract.getSalary(), addContract.getHours());
-                } else {
-                    throw new SQLException("Creating contract failed, no ID obtained.");
-                }
-            }
+			try (ResultSet generatedKeys = prep.getGeneratedKeys()) {
+
+				if (generatedKeys.next()) {
+					int generatedId = generatedKeys.getInt(1); // Retrieve the generated ID
+					contract = new Contract(generatedId, addContract.getSalary(), addContract.getHours());
+				} else {
+					throw new SQLException("Creating contract failed, no ID obtained.");
+				}
+			}
 
 			System.out.println("Contract added successfully.");
 		} catch (SQLException e) {
@@ -45,6 +45,7 @@ public class JDBCContractManager implements ContractManager {
 		}
 		return contract;
 	}
+
 	public Contract searchContractById(Integer contractId) {
 
 		Contract contract = null;

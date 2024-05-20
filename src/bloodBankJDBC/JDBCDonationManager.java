@@ -33,37 +33,46 @@ public class JDBCDonationManager implements DonationManager {
 	@Override
 	public Donation addDonation(Donation donation) {
 		Donation newDonation=null;
-		try {
-			String sql = "INSERT INTO donation (date, amount, donor_id, personal_id) VALUES (?, ?, ?, ?)";
-			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			
-			prep.setDate(1, new java.sql.Date(donation.getDate().getTime()));
-			prep.setFloat(2, donation.getAmount());
-			prep.setInt(3, donation.getDonor().getId());
-			prep.setInt(4, donation.getPersonal().getId());
+		PreparedStatement prep = null;
+		 try {
+		        String sql = "INSERT INTO donation (date, amount, donor_id, personal_id) VALUES (?, ?, ?, ?)";
+		        prep = manager.getConnection().prepareStatement(sql);
+		        
+		        prep.setDate(1, new java.sql.Date(donation.getDate().getTime()));
+		        prep.setFloat(2, donation.getAmount());
+		        prep.setInt(3, donation.getDonor().getId());
+		        prep.setInt(4, donation.getPersonal().getId());
 
-			int affectedRows = prep.executeUpdate();
+		        int affectedRows = prep.executeUpdate();
 
-			if (affectedRows == 0) {
-				throw new SQLException("Creating donation failed, no rows affected.");
-			}
+		        if (affectedRows == 0) {
+		            throw new SQLException("Creating donation failed, no rows affected.");
+		        }
 
-			try (ResultSet generatedKeys = prep.getGeneratedKeys()) {
-				if (generatedKeys.next()) {
-					int generatedId = generatedKeys.getInt(1); // Retrieve the generated ID
-					newDonation= new Donation (generatedId,donation.getDate(),donation.getAmount(),donation.getDonor(),donation.getPersonal());
-					System.out.println("Generated ID for donation record: " + generatedId);
-				} else {
-					throw new SQLException("Creating donation record failed, no ID obtained.");
-				}
-			}
-
-			prep.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return newDonation;
-
+		        try (ResultSet generatedKeys = prep.getGeneratedKeys()) {
+		            if (generatedKeys.next()) {
+		                int generatedId = generatedKeys.getInt(1); // Retrieve the generated ID
+		                newDonation = new Donation(generatedId, donation.getDate(), donation.getAmount(), donation.getDonor(), donation.getPersonal());
+		                System.out.println("Generated ID for donation record: " + generatedId);
+		            } else {
+		                throw new SQLException("Creating donation record failed, no ID obtained.");
+		            }
+		        }
+		        
+		        System.out.println("Donation added successfully.");
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        // Close the PreparedStatement in a finally block to ensure it's always closed
+		        if (prep != null) {
+		            try {
+		                prep.close();
+		            } catch (SQLException e) {
+		                e.printStackTrace();
+		            }
+		        }
+		    }
+		    return newDonation;
 	}
 
 	@Override
