@@ -1,5 +1,6 @@
 package ui;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -190,8 +191,9 @@ public class PersonalMenu {
 			System.out.println("Donor´s dob in format yyyy/MM/dd");
 			String dob_str = Utilities.readString();
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-			java.util.Date utilDate = df.parse(dob_str);
-			java.sql.Date dobSql = new java.sql.Date(utilDate.getTime());
+			java.sql.Date dobSql = java.sql.Date.valueOf(dob_str.replace("/", "-"));
+			//Date utilDate = (Date) df.parse(dob_str);
+			//java.sql.Date dobSql = new java.sql.Date(utilDate.getTime());
 
 			String bloodType = Utilities.askBloodType("Donor´s blood type");
 
@@ -221,16 +223,17 @@ public class PersonalMenu {
 				System.out.println("Donor´s surname modification :");
 				String surname = Utilities.readString();
 
-				System.out.println("Donor´s dob in formal yyyy/mm/dd modification ");
+				System.out.println("Donor´s dob in format yyyy/mm/dd modification ");
 				String dob_str = Utilities.readString();
-				DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-				Date dob = (Date) df.parse(dob_str);
+				java.sql.Date dobSql = java.sql.Date.valueOf(dob_str.replace("/", "-"));
+				//DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+				//Date dob = (Date) df.parse(dob_str);
 
 				String bloodType = Utilities.askBloodType("Donor´s blood type modification");
 
 				int times = donorExisting.getTimes(); // not modified
 
-				Donor donorModified = new Donor(idDonor, name, surname, dob, bloodType, times);
+				Donor donorModified = new Donor(idDonor, name, surname, dobSql, bloodType, times);
 				donorManager.modifyDonor(donorModified);
 
 				System.out.println("Donor modified successfully.");
