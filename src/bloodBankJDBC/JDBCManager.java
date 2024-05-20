@@ -72,7 +72,7 @@ public class JDBCManager {
 			sql = "CREATE TABLE donor (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "name TEXT NOT NULL,"
-					+ "surname TEXT NOT NULL " 
+					+ "surname TEXT NOT NULL, " 
 					+ "dob DATE NOT NULL,"
 					+ "bloodtype TEXT NOT NULL, "
 					+ "times INTEGER"
