@@ -48,7 +48,7 @@ public class JDBCDonorManager implements DonorManager {
 
 			prep.setString(1, donorToAdd.getName());
 			prep.setString(2, donorToAdd.getSurname());
-			prep.setDate(3, donorToAdd.getDob()); 
+			prep.setDate(3, donorToAdd.getDob()); //usa la fecha de nacimiento del donante
 			prep.setString(4, donorToAdd.getBloodtype());
 			prep.setInt(5, donorToAdd.getTimes());
 
