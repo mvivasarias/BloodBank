@@ -1,6 +1,7 @@
 package bloodBankPOJOs;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,6 +33,7 @@ public class Role implements Serializable {
 	public Role(String name) {
 		super();
 		this.name = name;
+		this.users = new ArrayList<>();
 	}
 
 	public Integer getId() {
@@ -57,11 +59,17 @@ public class Role implements Serializable {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+	public void addUser(User user) {
+		if (!users.contains(user)) {
+			users.add(user);
+		}
+	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, name, users);
 	}
+	
 
 	@Override
 	public boolean equals(Object obj) {
