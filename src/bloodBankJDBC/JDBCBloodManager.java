@@ -100,7 +100,7 @@ public class JDBCBloodManager implements BloodManager {
 		Blood blood=null;
 
 		try {
-			String sql = "INSERT INTO blood (type, liters, date) VALUES (?, ?, ?)";
+			String sql = "INSERT INTO blood (bloodType, liters, date) VALUES (?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, newBlood.getBloodType());
 			prep.setFloat(2, newBlood.getLiters());
@@ -125,7 +125,6 @@ public class JDBCBloodManager implements BloodManager {
 		return blood;
 
 	}
-	
 
 	public float getTotalLitersAvailable(String bloodType) {
 		float totalLitersAvailable = 0;
