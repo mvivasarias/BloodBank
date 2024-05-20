@@ -125,6 +125,7 @@ public class JDBCBloodManager implements BloodManager {
 		return blood;
 
 	}
+	
 
 	public float getTotalLitersAvailable(String bloodType) {
 		float totalLitersAvailable = 0;
