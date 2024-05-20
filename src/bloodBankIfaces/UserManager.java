@@ -17,8 +17,7 @@ public interface UserManager {
 
 	public List<Role> getRoles();
 
-	//public Role getRole(Integer id);
-	public Role getRole(String name);
+	public Role getRole(Integer id);
 
 	public User getUser(String email);
 
@@ -27,7 +26,5 @@ public interface UserManager {
 	public void changePassword(User u,  byte[] new_passwd);
 	
 	public boolean isEmailExisting(String email);
-
-	void assignRole(User user, Role role);
 
 }

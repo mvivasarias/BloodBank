@@ -191,7 +191,9 @@ public class PersonalMenu {
 			System.out.println("Donor´s dob in format yyyy/MM/dd");
 			String dob_str = Utilities.readString();
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-			java.sql.Date dobSql = java.sql.Date.valueOf(dob_str.replace("/", "-"));
+			java.util.Date utilDate = df.parse(dob_str);
+			java.sql.Date dobSql = new java.sql.Date(utilDate.getTime());
+			//java.sql.Date dobSql = java.sql.Date.valueOf(dob_str.replace("/", "-"));
 			//Date utilDate = (Date) df.parse(dob_str);
 			//java.sql.Date dobSql = new java.sql.Date(utilDate.getTime());
 	        
