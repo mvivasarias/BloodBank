@@ -50,7 +50,7 @@ public class Menu {
 			int choice;
 
 			do {
-
+				System.out.println("\n WELCOME TO THE BLOOD BANK MAIN MENU!");
 				System.out.println("Choose an option");
 				System.out.println("1. Login User");
 				System.out.println("2. Sign-up new user");

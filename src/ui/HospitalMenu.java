@@ -30,7 +30,7 @@ public class HospitalMenu {
 		try {
 			int choice;
 			do {
-				System.out.println("Choose an option");
+				System.out.println("\nWelcome to the personal menu of the blood bank database\n"+"Select an option");
 				System.out.println("1. Request blood");
 				System.out.println("2. Show requests of this hospital");
 				System.out.println("0. Return.");
