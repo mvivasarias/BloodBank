@@ -39,7 +39,7 @@ public class PersonalMenu {
 		try {
 			int choice;
 			do {
-				System.out.println("\nWelcome to the personal menu of the blood bank database\n"+"Select an option (REGISTER FIRST!)");
+				System.out.println("\nWelcome to the personal menu of the blood bank database\n"+"Select an option (REGISTER FIRST!)\n");
 				System.out.println("1. REGISTER as personal in the  blood bank database to perform any action");
 				System.out.println("2. Modify your information ");
 				System.out.println("3. Delete personal");
