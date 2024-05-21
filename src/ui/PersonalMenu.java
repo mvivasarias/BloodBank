@@ -1,6 +1,5 @@
 package ui;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -39,7 +38,8 @@ public class PersonalMenu {
 		try {
 			int choice;
 			do {
-				System.out.println("\nHELLO user!\nWelcome to the personal menu of the blood bank database\n"+"Select an option (REGISTER FIRST!)\n");
+				System.out.println("\nHELLO user!\nWelcome to the personal menu of the blood bank database\n"
+						+ "Select an option (REGISTER FIRST!)\n");
 				System.out.println("1. REGISTER as personal in the  blood bank database to perform any action");
 				System.out.println("2. Modify your information ");
 				System.out.println("3. Delete personal");
@@ -80,19 +80,19 @@ public class PersonalMenu {
 					deleteDonor(personalManager, donorManager);
 					break;
 				case 8:
-					listDonors(donorManager);
+					listDonors(personalManager, donorManager);
 					break;
 				case 9:
-					addDonation(personalManager, donorManager, donationManager, bloodManager,contractManager);
+					addDonation(personalManager, donorManager, donationManager, bloodManager, contractManager);
 					break;
 				case 10:
 					deleteDonation(personalManager, donationManager);
 					break;
 				case 11:
-					listDonations(donationManager);
+					listDonations(personalManager, donationManager);
 					break;
 				case 12:
-					listOfBloodExtractions(bloodManager);
+					listOfBloodExtractions(personalManager, bloodManager);
 					break;
 
 				case 0:
@@ -116,13 +116,13 @@ public class PersonalMenu {
 
 		System.out.println("Establishing a contract");
 		Contract contract = Utilities.makeAContract();
-		Contract contractAdded=contractManager.addContract(contract); // SQL DONE
+		Contract contractAdded = contractManager.addContract(contract); // SQL DONE
 
 		System.out.println("Please introduce a photo");
 		byte[] photo = null; // TODO como guardar la foto
-		
+
 		Personal nurse = new Personal(name, surname, this.email, contractAdded, photo);
-		
+
 		personalManager.addPersonal(nurse);// SQL DONE
 
 	}
@@ -145,13 +145,13 @@ public class PersonalMenu {
 
 			System.out.println("Enter new photo :");
 			String newPhoto = Utilities.readString();
-			
+
 			System.out.println("proceeding to modify :");
 			personalManager.modifyPersonal(nurseModifying, newName, newSurname, this.email, newPhoto);
 
 		} else {
 			System.out.println("You have entered the personal menu with the email:  " + this.email
-					+ " but you are not registered in the blood bank database, please register first!");
+					+ " but you are not registered in the blood bank database, please register first! OPTION 1");
 		}
 	}
 
@@ -165,7 +165,7 @@ public class PersonalMenu {
 			personalManager.deletePersonalByID(id_nurse_deleted);// SQL DONE
 		} else {
 			System.out.println(
-					"You are not registered in the blood bank database, please register first to delete other people");
+					"You are not registered in the blood bank database, please register first to delete other people OPTION 1");
 		}
 	}
 
@@ -180,7 +180,9 @@ public class PersonalMenu {
 
 	private void registerDonor(JDBCPersonalManager personalManager, JDBCDonorManager donorManager)
 			throws ParseException {
-		if (personalManager.isPersonalTableNotEmpty()) { // if there is some nurse the registration can be done
+		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
+
+		if (loggedInPersonal != null) { // if there is some nurse the registration can be done
 
 			System.out.println("Donor´s name :");
 			String name = Utilities.readString();
@@ -193,9 +195,8 @@ public class PersonalMenu {
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 			java.util.Date utilDate = df.parse(dob_str);
 			java.sql.Date dobSql = new java.sql.Date(utilDate.getTime());
-			
-	        
-	        String bloodType = Utilities.askBloodType("Donor´s blood type");
+
+			String bloodType = Utilities.askBloodType("Donor´s blood type");
 
 			Integer timesDonated = 0;
 			Donor donorRegistered = new Donor(name, surname, dobSql, bloodType, timesDonated);
@@ -203,14 +204,16 @@ public class PersonalMenu {
 			donorManager.addDonor(donorRegistered);
 
 		} else {
-			System.out.println("No personal for registering a donor");
+			System.out.println("No personal for registering a donor, please register in the blood bank first Option 1");
 
 		}
 	}
 
 	private void modifyDonor(JDBCPersonalManager personalManager, JDBCDonorManager donorManager) throws ParseException {
 
-		if (personalManager.isPersonalTableNotEmpty()) {
+		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
+
+		if (loggedInPersonal != null) {
 			Integer idDonor = Utilities.readInteger("Enter the donor ID you want to modify :");
 
 			Donor donorExisting = donorManager.getDonorByID(idDonor);
@@ -226,8 +229,8 @@ public class PersonalMenu {
 				System.out.println("Donor´s dob in format yyyy/mm/dd modification ");
 				String dob_str = Utilities.readString();
 				java.sql.Date dobSql = java.sql.Date.valueOf(dob_str.replace("/", "-"));
-				//DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-				//Date dob = (Date) df.parse(dob_str);
+				// DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+				// Date dob = (Date) df.parse(dob_str);
 
 				String bloodType = Utilities.askBloodType("Donor´s blood type modification");
 
@@ -242,7 +245,8 @@ public class PersonalMenu {
 				System.out.println("No donor existing with that id ");
 			}
 		} else {
-			System.out.println("No personal for modifying a donor, please register in the blood bank database first");
+			System.out.println(
+					"No personal for modifying a donor, please register in the blood bank database first OPTION 1");
 		}
 
 	}
@@ -262,30 +266,45 @@ public class PersonalMenu {
 			}
 		} else {
 			System.out.println(
-					"You are not registered in the blood bank database, please register first to delete a donor");
+					"You are not registered in the blood bank database, please register first to delete a donor OPTION 1");
 		}
 
 	}
 
-	private void listDonors(JDBCDonorManager donorManager) {
-		System.out.println("List of donors ordered by name:");
-		List<Donor> donors = donorManager.listDonorsByName();
-		for (Donor donor : donors) {
-			System.out.println(donor);
+	private void listDonors(JDBCPersonalManager personalManager, JDBCDonorManager donorManager) {
+		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
+
+		if (loggedInPersonal != null) {
+			System.out.println("List of donors ordered by name:");
+			List<Donor> donors = donorManager.listDonorsByName();
+			for (Donor donor : donors) {
+				System.out.println(donor);
+			}
+		} else {
+			System.out.println(
+					"You are not registered in the blood bank database, please register first to delete a donor OPTION 1");
 		}
 
 	}
 
 	private void addDonation(JDBCPersonalManager personalManager, JDBCDonorManager donorManager,
 			JDBCDonationManager donationManager, JDBCBloodManager bloodManager, JDBCContractManager contractManager) {
-
+		
+		if (!personalManager.isPersonalTableNotEmpty()) {
+	        System.out.println("No personal registered in the blood bank database for performing the extraction of blood.");
+	        System.out.println("Redirecting to the main menu...");
+	        personalMenuOptions(this.email, bloodManager, contractManager, donationManager, donorManager, personalManager);
+	        return;
+	    }
+		
 		System.out.println("Type the email of the nurse who has performed the extraction of blood ");
 		String email = Utilities.readString();
 
-		Personal nurseAttending = personalManager.searchPersonalByEmail(email);
+		Personal nurseAttending = personalManager.searchPersonalByEmail(email); //it could be any personal (nurse)
 		if (nurseAttending == null) {
 			System.out.println("Redirecting to the main menu...");
-			personalMenuOptions(this.email, bloodManager, contractManager, donationManager, donorManager, personalManager);
+			personalMenuOptions(this.email, bloodManager, contractManager, donationManager, donorManager,
+					personalManager);
 			return;
 		}
 
@@ -306,14 +325,14 @@ public class PersonalMenu {
 		Date currentDate = Date.valueOf(localDate);
 
 		Donation newDonation = new Donation(currentDate, amountDonating, donorDonating, nurseAttending);
-		Donation donationAdded=donationManager.addDonation(newDonation);
-		System.out.println("donation id"+donationAdded.getId());
+		Donation donationAdded = donationManager.addDonation(newDonation);
+		System.out.println("donation id" + donationAdded.getId());
 		donorManager.incrementDonorTimes(donorDonating); // the donor´s times donating increment 1
 
 		Blood newBlood = new Blood(donorDonating.getBloodtype(), amountDonating, currentDate);
 
-		Blood bloodAdded=bloodManager.addBlood(newBlood);
-		System.out.println("blood"+bloodAdded.getId());
+		Blood bloodAdded = bloodManager.addBlood(newBlood);
+		System.out.println("blood" + bloodAdded.getId());
 
 		donationManager.addDonationBlood(donationAdded.getId(), bloodAdded.getId());
 
@@ -351,26 +370,40 @@ public class PersonalMenu {
 			}
 		} else {
 			System.out.println(
-					"You are not registered in the blood bank database, please register first to delete a donation");
+					"You are not registered in the blood bank database, please register first to delete a donation Option 1");
 		}
 
 	}
 
-	private void listDonations(JDBCDonationManager donationManager) {
-		System.out.println("List of donations ordered by date:");
-		List<Donation> donations = donationManager.getDonationsByDate();
+	private void listDonations(JDBCPersonalManager personalManager, JDBCDonationManager donationManager) {
+		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
 
-		for (Donation donation : donations) {
-			System.out.println(donation);
+		if (loggedInPersonal != null) {
+			System.out.println("List of donations ordered by date:");
+			List<Donation> donations = donationManager.getDonationsByDate();
+
+			for (Donation donation : donations) {
+				System.out.println(donation);
+			}
+		} else {
+			System.out.println(
+					"You are not registered in the blood bank database, please register first to delete a donation Option 1");
 		}
 
 	}
 
-	private void listOfBloodExtractions(JDBCBloodManager bloodManager) {
-		System.out.println("List of blood extractions ordered by blood type:");
-		List<Blood> bloods = bloodManager.getBloodListByType();
-		for (Blood blood : bloods) {
-			System.out.println(blood);
+	private void listOfBloodExtractions(JDBCPersonalManager personalManager, JDBCBloodManager bloodManager) {
+		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
+
+		if (loggedInPersonal != null) {
+			System.out.println("List of blood extractions ordered by blood type:");
+			List<Blood> bloods = bloodManager.getBloodListByType();
+			for (Blood blood : bloods) {
+				System.out.println(blood);
+			}
+		} else {
+			System.out.println(
+					"You are not registered in the blood bank database, please register first to delete a donation Option 1");
 		}
 
 	}
