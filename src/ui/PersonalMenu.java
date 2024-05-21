@@ -83,7 +83,7 @@ public class PersonalMenu {
 					listDonors(donorManager);
 					break;
 				case 9:
-					addDonation(personalManager, donorManager, donationManager, bloodManager);
+					addDonation(personalManager, donorManager, donationManager, bloodManager,contractManager);
 					break;
 				case 10:
 					deleteDonation(personalManager, donationManager);
@@ -277,12 +277,17 @@ public class PersonalMenu {
 	}
 
 	private void addDonation(JDBCPersonalManager personalManager, JDBCDonorManager donorManager,
-			JDBCDonationManager donationManager, JDBCBloodManager bloodManager) {
+			JDBCDonationManager donationManager, JDBCBloodManager bloodManager, JDBCContractManager contractManager) {
 
 		System.out.println("Type the email of the nurse who has performed the extraction of blood ");
 		String email = Utilities.readString();
 
 		Personal nurseAttending = personalManager.searchPersonalByEmail(email);
+		if (nurseAttending == null) {
+			System.out.println("Redirecting to the main menu...");
+			personalMenuOptions(this.email, bloodManager, contractManager, donationManager, donorManager, personalManager);
+			return;
+		}
 
 		System.out.println("Type the name of the donor ");
 		String nameDonor = Utilities.readString();
