@@ -300,7 +300,7 @@ public class PersonalMenu {
 		System.out.println("Type the email of the nurse who has performed the extraction of blood ");
 		String email = Utilities.readString();
 
-		Personal nurseAttending = personalManager.searchPersonalByEmail(email); //it could be any personal (nurse)
+		Personal nurseAttending = personalManager.searchPersonalByEmail(email); //it could be any personal (nurse) not 
 		if (nurseAttending == null) {
 			System.out.println("Redirecting to the main menu...");
 			personalMenuOptions(this.email, bloodManager, contractManager, donationManager, donorManager,
