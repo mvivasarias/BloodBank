@@ -1,8 +1,6 @@
 package bloodBankPOJOs;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Contract implements Serializable {
@@ -15,18 +13,18 @@ public class Contract implements Serializable {
 	private Integer id;
 	private Integer salary;
 	private Integer hours;
-	private List<Personal> personals;   
+	private Personal personal;   
 	
 	public Contract() {
 		super();
-		this.personals = new ArrayList<Personal>();
+	
 	}
 
-	public Contract(Integer salary, Integer hours, List<Personal> personals) {
+	public Contract(Integer salary, Integer hours, Personal personal) {
 		super();
 		this.salary = salary;
 		this.hours = hours;
-		this.personals = new ArrayList<Personal>();
+		this.personal = personal;
 	}
 
 	public Contract(Integer id, Integer salary, Integer hours) {
@@ -34,7 +32,7 @@ public class Contract implements Serializable {
 		this.id = id;
 		this.salary = salary;
 		this.hours = hours;
-		this.personals = new ArrayList<Personal>();
+		this.personal = new Personal();
 	}
 	
 
@@ -42,7 +40,7 @@ public class Contract implements Serializable {
 		super();
 		this.salary = salary;
 		this.hours = hours;
-		this.personals = new ArrayList<Personal>();
+		this.personal = new Personal();
 	}
 
 	
@@ -71,17 +69,20 @@ public class Contract implements Serializable {
 		this.hours = hours;
 	}
 
-	public List<Personal> getPersonals() {
-		return personals;
+	
+
+	public Personal getPersonal() {
+		return personal;
 	}
 
-	public void setPersonals(List<Personal> personals) {
-		this.personals = personals;
+	public void setPersonal(Personal personal) {
+		this.personal = personal;
 	}
+	
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(hours, id, personals, salary);
+		return Objects.hash(hours, id, personal, salary);
 	}
 
 	@Override
@@ -94,13 +95,15 @@ public class Contract implements Serializable {
 			return false;
 		Contract other = (Contract) obj;
 		return Objects.equals(hours, other.hours) && Objects.equals(id, other.id)
-				&& Objects.equals(personals, other.personals) && Objects.equals(salary, other.salary);
+				&& Objects.equals(personal, other.personal) && Objects.equals(salary, other.salary);
 	}
 
 	@Override
 	public String toString() {
-		return "Contract [id=" + id + ", salary=" + salary + ", hours=" + hours + ", personals=" + personals + "]";
+		return "Contract [id=" + id + ", salary=" + salary + ", hours=" + hours + ", personal=" + personal + "]";
 	}
+
+	
 
 	
 
