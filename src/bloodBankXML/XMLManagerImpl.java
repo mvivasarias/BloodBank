@@ -49,7 +49,7 @@ public class XMLManagerImpl implements XMLManager {
 			Marshaller marshaller= jaxbContext.createMarshaller();
 			
 			//set the object and the name of the file
-			File file= new File("./xmls/Person.xml");
+			File file= new File("Person.xml");
 			marshaller.marshal(person, file);
 
 		} catch (Exception e) {
