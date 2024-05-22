@@ -9,6 +9,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
+
+import bloodBankIfaces.XMLManager;
 import bloodBankJDBC.JDBCBloodManager;
 import bloodBankJDBC.JDBCContractManager;
 import bloodBankJDBC.JDBCDonationManager;
@@ -23,6 +25,7 @@ import bloodBankPOJOs.Personal;
 public class PersonalMenu {
 
 	private String email;
+	private static XMLManager xmlManager;
 
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -52,6 +55,7 @@ public class PersonalMenu {
 				System.out.println("10. Delete donation");
 				System.out.println("11. List donations");
 				System.out.println("12. Get list of blood extractions");
+				System.out.println("13. Print me to xml");
 
 				System.out.println("0. Return.");
 
@@ -94,6 +98,10 @@ public class PersonalMenu {
 				case 12:
 					listOfBloodExtractions(personalManager, bloodManager);
 					break;
+				case 13:
+					printMe(personalManager);
+					break;
+
 
 				case 0:
 					System.out.println("Back to main menu");
@@ -381,5 +389,17 @@ public class PersonalMenu {
 				System.out.println(blood);
 			}
 		}
+	}
+	private void printMe(JDBCPersonalManager personalManager) {
+		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
+		
+
+		if (loggedInPersonal != null) {
+			int personalId=loggedInPersonal.getId();
+			xmlManager.personal2xml(personalId);
+		}
+		
+		
+		
 	}
 }

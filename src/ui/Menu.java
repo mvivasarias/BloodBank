@@ -8,6 +8,7 @@ import bloodBankPOJOs.Hospital;
 import bloodBankPOJOs.Role;
 import bloodBankPOJOs.User;
 import bloodBankIfaces.UserManager;
+import bloodBankIfaces.XMLManager;
 import bloodBankJDBC.JDBCBloodManager;
 import bloodBankJDBC.JDBCContractManager;
 import bloodBankJDBC.JDBCDonationManager;
@@ -26,6 +27,7 @@ public class Menu {
 	private static JDBCDonorManager donorManager;
 	private static JDBCHospitalManager hospitalManager;
 	private static JDBCPersonalManager personalManager;
+
 
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	private static UserManager usermanager;
