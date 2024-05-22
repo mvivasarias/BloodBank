@@ -37,8 +37,8 @@ public class Personal implements Serializable {
 	private Contract contract;
 	@XmlTransient
 	private byte[] photo;
-	@XmlElement (name = "donation")
-	@XmlElementWrapper(name = "donations")
+	@XmlElement (name = "Donation")
+	@XmlElementWrapper(name = "Donations")
 	private List<Donation> donations;
 
 	public Personal() {

@@ -2,7 +2,7 @@ package bloodBankPOJOs;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import bloodBankXMLutils.SQLDateAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="Donations")
+@XmlRootElement(name="Donation")
 public class Donation  implements Serializable {
 
 	/**
