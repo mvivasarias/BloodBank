@@ -14,5 +14,7 @@ public interface DonationManager {
 	public void deleteDonationById(Integer donationId);
 	
 	public void addDonationBlood(Integer donationID, Integer bloodID);
+	
+	public List<Donation> getDonationsOfaPersonal(Integer id);
 
 }

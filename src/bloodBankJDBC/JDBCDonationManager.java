@@ -32,47 +32,48 @@ public class JDBCDonationManager implements DonationManager {
 
 	@Override
 	public Donation addDonation(Donation donation) {
-		Donation newDonation=null;
+		Donation newDonation = null;
 		PreparedStatement prep = null;
-		 try {
-		        String sql = "INSERT INTO donation (date, amount, donor_id, personal_id) VALUES (?, ?, ?, ?)";
-		        prep = manager.getConnection().prepareStatement(sql);
-		        
-		        prep.setDate(1, new java.sql.Date(donation.getDate().getTime()));
-		        prep.setFloat(2, donation.getAmount());
-		        prep.setInt(3, donation.getDonor().getId());
-		        prep.setInt(4, donation.getPersonal().getId());
+		try {
+			String sql = "INSERT INTO donation (date, amount, donor_id, personal_id) VALUES (?, ?, ?, ?)";
+			prep = manager.getConnection().prepareStatement(sql);
 
-		        int affectedRows = prep.executeUpdate();
+			prep.setDate(1, new java.sql.Date(donation.getDate().getTime()));
+			prep.setFloat(2, donation.getAmount());
+			prep.setInt(3, donation.getDonor().getId());
+			prep.setInt(4, donation.getPersonal().getId());
 
-		        if (affectedRows == 0) {
-		            throw new SQLException("Creating donation failed, no rows affected.");
-		        }
+			int affectedRows = prep.executeUpdate();
 
-		        try (ResultSet generatedKeys = prep.getGeneratedKeys()) {
-		            if (generatedKeys.next()) {
-		                int generatedId = generatedKeys.getInt(1); // Retrieve the generated ID
-		                newDonation = new Donation(generatedId, donation.getDate(), donation.getAmount(), donation.getDonor(), donation.getPersonal());
-		                System.out.println("Generated ID for donation record: " + generatedId);
-		            } else {
-		                throw new SQLException("Creating donation record failed, no ID obtained.");
-		            }
-		        }
-		        
-		        System.out.println("Donation added successfully.");
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    } finally {
-		        // Close the PreparedStatement in a finally block to ensure it's always closed
-		        if (prep != null) {
-		            try {
-		                prep.close();
-		            } catch (SQLException e) {
-		                e.printStackTrace();
-		            }
-		        }
-		    }
-		    return newDonation;
+			if (affectedRows == 0) {
+				throw new SQLException("Creating donation failed, no rows affected.");
+			}
+
+			try (ResultSet generatedKeys = prep.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					int generatedId = generatedKeys.getInt(1); // Retrieve the generated ID
+					newDonation = new Donation(generatedId, donation.getDate(), donation.getAmount(),
+							donation.getDonor(), donation.getPersonal());
+					System.out.println("Generated ID for donation record: " + generatedId);
+				} else {
+					throw new SQLException("Creating donation record failed, no ID obtained.");
+				}
+			}
+
+			System.out.println("Donation added successfully.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// Close the PreparedStatement in a finally block to ensure it's always closed
+			if (prep != null) {
+				try {
+					prep.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return newDonation;
 	}
 
 	@Override
@@ -149,6 +150,33 @@ public class JDBCDonationManager implements DonationManager {
 				Personal personal = personalManager.searchPersonalByID(rs.getInt("personal_id"));
 
 				donations.add(new Donation(id, date, amount, donor, personal));
+			}
+
+			rs.close();
+			prep.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return donations;
+	}
+
+	@Override
+	public List<Donation> getDonationsOfaPersonal(Integer id) {
+		List<Donation> donations = new ArrayList<>();
+		try {
+			String sql = "SELECT * FROM donation WHERE personal_id = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, id);
+			ResultSet rs = prep.executeQuery();
+
+			while (rs.next()) {
+				int donationId = rs.getInt("id");
+				Date date = rs.getDate("date");
+				float amount = rs.getFloat("amount");
+				Donor donor = donorManager.getDonorByID(rs.getInt("donor_id"));
+				Personal personal = personalManager.searchPersonalByID(rs.getInt("personal_id"));
+
+				donations.add(new Donation(donationId, date, amount, donor, personal));
 			}
 
 			rs.close();
