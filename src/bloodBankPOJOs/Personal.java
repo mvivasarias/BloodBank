@@ -6,18 +6,37 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name="Personal")
+@XmlType(propOrder= {"contract","email"})
 public class Personal implements Serializable {
-
+	
+	
 	private static final long serialVersionUID = 6714833338820944413L;
+	@XmlTransient
 	private Integer id;
+	
+	@XmlAttribute
 	private String name;
+	@XmlAttribute
 	private String surname;
+	@XmlElement  //required by default attribute name of the pojo
 	private String email;
+	@XmlElement //required
 	private Contract contract;
+	@XmlTransient
 	private byte[] photo;
+	@XmlTransient
 	private List<Donation> donations;
 
 	public Personal() {

@@ -5,17 +5,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name="Hospital")
+
 public class Hospital implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2983952873784901800L;
-	
+	@XmlTransient
 	private Integer id;
+	@XmlAttribute
 	private String name;
+	@XmlElement
 	private String address;
+	@XmlElement
 	private String email;
+	@XmlTransient
 	private List<Blood> bloods;
 	
 	public Hospital() {

@@ -3,16 +3,29 @@ package bloodBankPOJOs;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name="Contract")
+@XmlType(propOrder= {"person","salary","hours"})
 public class Contract implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7520806989904275224L;
-	
+	@XmlTransient
 	private Integer id;
+	@XmlElement
 	private Integer salary;
+	@XmlElement
 	private Integer hours;
+	@XmlElement (name="person")
 	private Personal personal;   
 	
 	public Contract() {

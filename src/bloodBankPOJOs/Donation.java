@@ -6,18 +6,37 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import bloodBankXMLutils.SQLDateAdapter;
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name="Donations")
 public class Donation  implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8609950568446520203L;
-	
+	@XmlTransient
 	private Integer id;
+	@XmlElement
+	@XmlJavaTypeAdapter(SQLDateAdapter.class)
 	private Date date;
+	@XmlAttribute
 	private float amount;
+	@XmlElement
 	private Donor donor;
+	@XmlElement (name="nurse")
 	private Personal personal;
+	@XmlElement (name="Blood")
+	@XmlElementWrapper(name="Bloods")
 	private List<Blood> bloods;
 	
 	public Donation() {
