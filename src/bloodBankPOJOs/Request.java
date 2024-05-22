@@ -1,7 +1,7 @@
 package bloodBankPOJOs;
 
 import java.io.Serializable;
-import java.sql.Date;// Confirmadme porfa que es este
+import java.sql.Date;
 import java.util.Objects;
 
 public class Request implements Serializable{
