@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import bloodBankIfaces.XMLManager;
 import bloodBankJDBC.JDBCContractManager;
@@ -58,9 +59,27 @@ public class XMLManagerImpl implements XMLManager {
 	}
 
 	@Override
-	public Blood xml2Blood(File xml) {
-		// TODO Auto-generated method stub
-		return null;
+	public Donation xml2Donation(File xml) {
+		Donation donation=null;
+		
+		manager = new JDBCManager();
+		donationManager= new JDBCDonationManager(manager);
+		
+		try {
+			
+		
+		JAXBContext jaxbContext= JAXBContext.newInstance(Donation.class);
+		Unmarshaller unmarshaller=jaxbContext.createUnmarshaller();
+		
+		donation=(Donation)unmarshaller.unmarshal(xml);
+		donationManager.addDonation(donation);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return donation;
 	}
+
+
 
 }

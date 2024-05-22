@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
@@ -36,7 +37,8 @@ public class PersonalMenu {
 	}
 
 	public void personalMenuOptions(String email, JDBCBloodManager bloodManager, JDBCContractManager contractManager,
-			JDBCDonationManager donationManager, JDBCDonorManager donorManager, JDBCPersonalManager personalManager, XMLManager xmlManager) {
+			JDBCDonationManager donationManager, JDBCDonorManager donorManager, JDBCPersonalManager personalManager,
+			XMLManager xmlManager) {
 
 		try {
 			int choice;
@@ -56,6 +58,7 @@ public class PersonalMenu {
 				System.out.println("11. List donations");
 				System.out.println("12. Get list of blood extractions");
 				System.out.println("13. Print me to xml");
+				System.out.println("14. Load donation");
 
 				System.out.println("0. Return.");
 
@@ -87,7 +90,8 @@ public class PersonalMenu {
 					listDonors(personalManager, donorManager);
 					break;
 				case 9:
-					addDonation(personalManager, donorManager, donationManager, bloodManager, contractManager,xmlManager);
+					addDonation(personalManager, donorManager, donationManager, bloodManager, contractManager,
+							xmlManager);
 					break;
 				case 10:
 					deleteDonation(personalManager, donationManager);
@@ -99,9 +103,11 @@ public class PersonalMenu {
 					listOfBloodExtractions(personalManager, bloodManager);
 					break;
 				case 13:
-					printMe(personalManager,xmlManager);
+					printMe(personalManager, xmlManager);
 					break;
-
+				case 14:
+					loadDonations(personalManager, xmlManager);
+					break;
 
 				case 0:
 					System.out.println("Back to main menu");
@@ -281,14 +287,15 @@ public class PersonalMenu {
 	}
 
 	private void addDonation(JDBCPersonalManager personalManager, JDBCDonorManager donorManager,
-			JDBCDonationManager donationManager, JDBCBloodManager bloodManager, JDBCContractManager contractManager,XMLManager xmlManager) {
+			JDBCDonationManager donationManager, JDBCBloodManager bloodManager, JDBCContractManager contractManager,
+			XMLManager xmlManager) {
 
 		if (!personalManager.isPersonalTableNotEmpty()) {
 			System.out.println(
 					"No personal registered in the blood bank database for performing the extraction of blood.");
 			System.out.println("Redirecting to the main menu...");
 			personalMenuOptions(this.email, bloodManager, contractManager, donationManager, donorManager,
-					personalManager,xmlManager);
+					personalManager, xmlManager);
 			return;
 		}
 
@@ -299,7 +306,7 @@ public class PersonalMenu {
 		if (nurseAttending == null) {
 			System.out.println("Redirecting to the main menu...");
 			personalMenuOptions(this.email, bloodManager, contractManager, donationManager, donorManager,
-					personalManager,xmlManager);
+					personalManager, xmlManager);
 			return;
 		}
 
@@ -390,15 +397,21 @@ public class PersonalMenu {
 			}
 		}
 	}
-	private void printMe(JDBCPersonalManager personalManager,XMLManager xmlManager) {
+
+	private void printMe(JDBCPersonalManager personalManager, XMLManager xmlManager) {
 		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
 
 		if (loggedInPersonal != null) {
 			xmlManager.personal2xml(loggedInPersonal.getId());
-			
 		}
+
+	}
+	private void loadDonations(JDBCPersonalManager personalManager, XMLManager xmlManager) {
+		Donation donation=null;
+		File file= new File("/Users/mariavivasarias/Desktop/BASES DE DATOS/External-Donation.xml");
 		
-		
+		donation=xmlManager.xml2Donation(file);
+		System.out.println(donation);
 		
 	}
 }

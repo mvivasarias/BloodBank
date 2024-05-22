@@ -24,9 +24,9 @@ public class Personal implements Serializable {
 	
 	
 	private static final long serialVersionUID = 6714833338820944413L;
+	
 	@XmlTransient
 	private Integer id;
-	
 	@XmlAttribute
 	private String name;
 	@XmlAttribute
