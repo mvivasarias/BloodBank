@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="Personal")
-@XmlType(propOrder= {"contract","email"})
+
 public class Personal implements Serializable {
 	
 	
