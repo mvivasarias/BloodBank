@@ -8,6 +8,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
 import bloodBankIfaces.XMLManager;
+import bloodBankJDBC.JDBCContractManager;
 import bloodBankJDBC.JDBCDonationManager;
 import bloodBankJDBC.JDBCManager;
 import bloodBankJDBC.JDBCPersonalManager;
@@ -21,6 +22,7 @@ public class XMLManagerImpl implements XMLManager {
 	JDBCDonationManager donationManager;
 	@Override
 	public void personal2xml(Integer id) {
+		 System.out.println(" ID passed : " + id);
 		
 		Personal person = null;
 		List<Donation> donations = new ArrayList<Donation>();
@@ -33,6 +35,11 @@ public class XMLManagerImpl implements XMLManager {
 		try { 
 			//search for the person
 			person=personalManager.searchPersonalByID(id);
+			if (person == null) {
+	            System.out.println("No person found with ID: " + id);
+	            return; 
+	        }
+			System.out.print(person.toString());
 			//search for donations of a person
 			donations=donationManager.getDonationsOfaPersonal(id);
 			person.setDonations(donations);

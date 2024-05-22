@@ -1,6 +1,5 @@
 package bloodBankJDBC;
 
-import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +16,7 @@ public class JDBCPersonalManager implements PersonalManager {
 
 	public JDBCPersonalManager(JDBCManager m) {
 		this.manager = m;
+		this.contractManager = new JDBCContractManager(m);
 	}
 
 	public JDBCPersonalManager(JDBCManager m, JDBCContractManager contractManager) {
@@ -72,10 +72,12 @@ public class JDBCPersonalManager implements PersonalManager {
 
 				person = new Personal(person_id, name, surname, email, contract, photo);
 
-				System.out.println("You are successfuly registered as personal in the blood bank database with email: "+emailSearch+"contiue with your action ");
+				System.out.println("You are successfuly registered as personal in the blood bank database with email: "
+						+ emailSearch + "contiue with your action ");
 			} else {
 				System.out.println("You have entered the personal menu as a user with the email:  " + emailSearch
-						+ " \nbut you are not registered in the blood bank database, \nPlease register first-> OPTION 1");;
+						+ " \nbut you are not registered in the blood bank database, \nPlease register first-> OPTION 1");
+				;
 			}
 			rs.close();
 			prep.close();
@@ -175,25 +177,27 @@ public class JDBCPersonalManager implements PersonalManager {
 	@Override
 	public Personal searchPersonalByID(Integer id) {
 
-		Personal personal = null;
+		Personal person = null;
 		try {
 			String sql = "SELECT * FROM personal WHERE id = ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, id);
+
 			ResultSet rs = prep.executeQuery();
 
 			if (rs.next()) {
+
+				Integer person_id = rs.getInt("id");
 				String name = rs.getString("name");
 				String surname = rs.getString("surname");
 				String email = rs.getString("email");
-				Blob photoBlob = rs.getBlob("foto");
-				byte[] fotoBytes = null;
-				if (photoBlob != null) {
-					fotoBytes = photoBlob.getBytes(1, (int) photoBlob.length());
-				}
+				byte[] photo = rs.getBytes("foto");
+				Integer contract_id = rs.getInt("contract_id");
 
-				Contract contract = contractManager.searchContractById(rs.getInt("contract_id"));
-				personal = new Personal(id, name, surname, email, contract, fotoBytes);
+				Contract contract = contractManager.searchContractById(contract_id);
+
+				person = new Personal(person_id, name, surname, email, contract, photo);
+
 			}
 
 			rs.close();
@@ -201,7 +205,7 @@ public class JDBCPersonalManager implements PersonalManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return personal;
+		return person;
 	}
 
 	@Override

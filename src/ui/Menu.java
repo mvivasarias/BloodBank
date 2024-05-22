@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
 
+import bloodBankXML.XMLManagerImpl;
 import bloodBankPOJOs.Hospital;
 import bloodBankPOJOs.Role;
 import bloodBankPOJOs.User;
@@ -27,7 +28,7 @@ public class Menu {
 	private static JDBCDonorManager donorManager;
 	private static JDBCHospitalManager hospitalManager;
 	private static JDBCPersonalManager personalManager;
-
+	private static XMLManager xmlManager;
 
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	private static UserManager usermanager;
@@ -47,6 +48,8 @@ public class Menu {
 
 		usermanager = new JPAuserManager();
 		usermanager.connect();
+		
+		xmlManager = new XMLManagerImpl();
 
 		try {
 			int choice;
@@ -102,7 +105,7 @@ public class Menu {
 				System.out.println("Login of personal successful!");
 				PersonalMenu personalMenu = new PersonalMenu(email);
 				personalMenu.personalMenuOptions(email, bloodManager, contractManager, donationManager, donorManager,
-						personalManager);
+						personalManager,xmlManager);
 
 			} else {
 				System.out.println("Login of hospital successful!");

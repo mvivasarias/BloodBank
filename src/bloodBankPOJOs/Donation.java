@@ -35,8 +35,7 @@ public class Donation  implements Serializable {
 	private Donor donor;
 	@XmlElement (name="nurse")
 	private Personal personal;
-	@XmlElement (name="Blood")
-	@XmlElementWrapper(name="Bloods")
+	@XmlTransient
 	private List<Blood> bloods;
 	
 	public Donation() {

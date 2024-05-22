@@ -21,11 +21,11 @@ import bloodBankPOJOs.Contract;
 import bloodBankPOJOs.Donation;
 import bloodBankPOJOs.Donor;
 import bloodBankPOJOs.Personal;
+import bloodBankXML.XMLManagerImpl;
 
 public class PersonalMenu {
 
 	private String email;
-	private static XMLManager xmlManager;
 
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -36,7 +36,7 @@ public class PersonalMenu {
 	}
 
 	public void personalMenuOptions(String email, JDBCBloodManager bloodManager, JDBCContractManager contractManager,
-			JDBCDonationManager donationManager, JDBCDonorManager donorManager, JDBCPersonalManager personalManager) {
+			JDBCDonationManager donationManager, JDBCDonorManager donorManager, JDBCPersonalManager personalManager, XMLManager xmlManager) {
 
 		try {
 			int choice;
@@ -87,7 +87,7 @@ public class PersonalMenu {
 					listDonors(personalManager, donorManager);
 					break;
 				case 9:
-					addDonation(personalManager, donorManager, donationManager, bloodManager, contractManager);
+					addDonation(personalManager, donorManager, donationManager, bloodManager, contractManager,xmlManager);
 					break;
 				case 10:
 					deleteDonation(personalManager, donationManager);
@@ -99,7 +99,7 @@ public class PersonalMenu {
 					listOfBloodExtractions(personalManager, bloodManager);
 					break;
 				case 13:
-					printMe(personalManager);
+					printMe(personalManager,xmlManager);
 					break;
 
 
@@ -281,14 +281,14 @@ public class PersonalMenu {
 	}
 
 	private void addDonation(JDBCPersonalManager personalManager, JDBCDonorManager donorManager,
-			JDBCDonationManager donationManager, JDBCBloodManager bloodManager, JDBCContractManager contractManager) {
+			JDBCDonationManager donationManager, JDBCBloodManager bloodManager, JDBCContractManager contractManager,XMLManager xmlManager) {
 
 		if (!personalManager.isPersonalTableNotEmpty()) {
 			System.out.println(
 					"No personal registered in the blood bank database for performing the extraction of blood.");
 			System.out.println("Redirecting to the main menu...");
 			personalMenuOptions(this.email, bloodManager, contractManager, donationManager, donorManager,
-					personalManager);
+					personalManager,xmlManager);
 			return;
 		}
 
@@ -299,7 +299,7 @@ public class PersonalMenu {
 		if (nurseAttending == null) {
 			System.out.println("Redirecting to the main menu...");
 			personalMenuOptions(this.email, bloodManager, contractManager, donationManager, donorManager,
-					personalManager);
+					personalManager,xmlManager);
 			return;
 		}
 
@@ -390,13 +390,13 @@ public class PersonalMenu {
 			}
 		}
 	}
-	private void printMe(JDBCPersonalManager personalManager) {
+	private void printMe(JDBCPersonalManager personalManager,XMLManager xmlManager) {
 		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
-		
 
 		if (loggedInPersonal != null) {
-			int personalId=loggedInPersonal.getId();
-			xmlManager.personal2xml(personalId);
+			System.out.println("personal id"+loggedInPersonal.getId());
+			xmlManager.personal2xml(loggedInPersonal.getId());
+			System.out.println("Printed to an XML file!");
 		}
 		
 		
