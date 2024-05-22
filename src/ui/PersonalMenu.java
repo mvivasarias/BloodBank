@@ -394,9 +394,8 @@ public class PersonalMenu {
 		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
 
 		if (loggedInPersonal != null) {
-			System.out.println("personal id"+loggedInPersonal.getId());
 			xmlManager.personal2xml(loggedInPersonal.getId());
-			System.out.println("Printed to an XML file!");
+			
 		}
 		
 		
