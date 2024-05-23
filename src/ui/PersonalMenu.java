@@ -61,8 +61,6 @@ public class PersonalMenu {
 				System.out.println("14. Load a personal from xml");
 				System.out.println("15. Load a donation from xml");
 				System.out.println("16. Print a list of donations to xml");
-				
-				
 
 				System.out.println("0. Return.");
 
@@ -132,6 +130,13 @@ public class PersonalMenu {
 	}
 
 	private void registerNurse(JDBCPersonalManager personalManager, JDBCContractManager contractManager) {
+
+		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
+		if (loggedInPersonal != null) {
+			return;
+
+		}
+
 		System.out.println("Type your name");
 		String name = Utilities.readString();
 
@@ -189,9 +194,9 @@ public class PersonalMenu {
 
 	private void listPersonal(JDBCPersonalManager personalManager) {
 
-		Personal nurseDeleteing = personalManager.searchPersonalByEmail(this.email); // sql done
+		Personal nurseDeleteingPersonal = personalManager.searchPersonalByEmail(this.email); // sql done
 
-		if (nurseDeleteing != null) {
+		if (nurseDeleteingPersonal != null) {
 			System.out.println("List of nurses registered ordered by id:");
 			List<Personal> nurses = personalManager.listPersonal();
 			for (Personal nurse : nurses) {
@@ -214,8 +219,8 @@ public class PersonalMenu {
 			String surname = Utilities.readString();
 
 			System.out.println("Donor´s dob d");
-			LocalDate dob= Utilities.getDateFromKeyboard();
-			Date dobSql=Date.valueOf(dob);
+			LocalDate dob = Utilities.getDateFromKeyboard();
+			Date dobSql = Date.valueOf(dob);
 
 			String bloodType = Utilities.askBloodType("Donor´s blood type");
 
@@ -244,11 +249,12 @@ public class PersonalMenu {
 				System.out.println("Donor´s surname modification :");
 				String surname = Utilities.readString();
 
-				System.out.println("Donor´s dob ");;
-				LocalDate dob= Utilities.getDateFromKeyboard();
-				Date dobSql=Date.valueOf(dob);
-				
-				//Date dobSQL=date(dobSql/1000, 'unixepoch','localtime');
+				System.out.println("Donor´s dob ");
+				;
+				LocalDate dob = Utilities.getDateFromKeyboard();
+				Date dobSql = Date.valueOf(dob);
+
+				// Date dobSQL=date(dobSql/1000, 'unixepoch','localtime');
 
 				String bloodType = Utilities.askBloodType("Donor´s blood type modification");
 
@@ -414,30 +420,32 @@ public class PersonalMenu {
 		}
 
 	}
+
 	private void loadPersonal(JDBCPersonalManager personalManager, XMLManager xmlManager) {
-		Personal person=null;
-		File file= new File("/Users/mariavivasarias/Desktop/BASES DE DATOS/External-Personon.xml");
-		person=xmlManager.xml2Personal(file);
+		Personal person = null;
+		File file = new File("/Users/mariavivasarias/Desktop/BASES DE DATOS/External-Personon.xml");
+		person = xmlManager.xml2Personal(file);
 		System.out.println(person);
-		
-		
+
 	}
+
 	private void loadDonations(JDBCPersonalManager personalManager, XMLManager xmlManager) {
-		Donation donation=null;
-		File file= new File("/Users/mariavivasarias/Desktop/BASES DE DATOS/External-Donations.xml");
-		
-		donation=xmlManager.xml2Donation(file);
+		Donation donation = null;
+		File file = new File("/Users/mariavivasarias/Desktop/BASES DE DATOS/External-Donations.xml");
+
+		donation = xmlManager.xml2Donation(file);
 		System.out.println(donation);
-		
+
 	}
+
 	private void printDonations(JDBCPersonalManager personalManager, XMLManager xmlManager) {
 		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
 
 		if (loggedInPersonal != null) {
 			System.out.println("Introduce the blood type to print that list to an xml");
-			String bloodType=Utilities.askBloodType("blood type");
+			String bloodType = Utilities.askBloodType("blood type");
 			xmlManager.donation2xml(bloodType);
-			
+
 		}
 
 	}
