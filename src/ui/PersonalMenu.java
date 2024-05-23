@@ -57,8 +57,12 @@ public class PersonalMenu {
 				System.out.println("10. Delete donation");
 				System.out.println("11. List donations");
 				System.out.println("12. Get list of blood extractions");
-				System.out.println("13. Print me to xml");
-				System.out.println("14. Load donation");
+				System.out.println("13. Print you as personal to xml");
+				System.out.println("14. Load a personal from xml");
+				System.out.println("15. Load a donation from xml");
+				System.out.println("16. Print a list of donations to xml");
+				
+				
 
 				System.out.println("0. Return.");
 
@@ -106,7 +110,13 @@ public class PersonalMenu {
 					printMe(personalManager, xmlManager);
 					break;
 				case 14:
+					loadPersonal(personalManager, xmlManager);
+					break;
+				case 15:
 					loadDonations(personalManager, xmlManager);
+					break;
+				case 16:
+					printDonations(personalManager, xmlManager);
 					break;
 
 				case 0:
@@ -406,12 +416,31 @@ public class PersonalMenu {
 		}
 
 	}
+	private void loadPersonal(JDBCPersonalManager personalManager, XMLManager xmlManager) {
+		Personal person=null;
+		File file= new File("/Users/mariavivasarias/Desktop/BASES DE DATOS/External-Personon.xml");
+		person=xmlManager.xml2Personal(file);
+		System.out.println(person);
+		
+		
+	}
 	private void loadDonations(JDBCPersonalManager personalManager, XMLManager xmlManager) {
 		Donation donation=null;
-		File file= new File("/Users/mariavivasarias/Desktop/BASES DE DATOS/External-Donation.xml");
+		File file= new File("/Users/mariavivasarias/Desktop/BASES DE DATOS/External-Donations.xml");
 		
 		donation=xmlManager.xml2Donation(file);
 		System.out.println(donation);
 		
+	}
+	private void printDonations(JDBCPersonalManager personalManager, XMLManager xmlManager) {
+		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
+
+		if (loggedInPersonal != null) {
+			System.out.println("Introduce the blood type to print that list to an xml");
+			String bloodType=Utilities.askBloodType("blood type");
+			xmlManager.donation2xml(bloodType);
+			
+		}
+
 	}
 }

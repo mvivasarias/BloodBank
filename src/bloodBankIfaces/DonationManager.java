@@ -16,5 +16,7 @@ public interface DonationManager {
 	public void addDonationBlood(Integer donationID, Integer bloodID);
 	
 	public List<Donation> getDonationsOfaPersonal(Integer id);
+	
+	 public List<Donation> getDonationsByBloodType(String bloodType);
 
 }

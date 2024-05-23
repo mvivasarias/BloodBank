@@ -20,6 +20,8 @@ public class JDBCDonationManager implements DonationManager {
 
 	public JDBCDonationManager(JDBCManager m) {
 		this.manager = m;
+		this.donorManager = new JDBCDonorManager(manager);
+		this.personalManager = new JDBCPersonalManager(manager);
 	}
 
 	public JDBCDonationManager(JDBCManager manager, JDBCDonorManager donorManager,
@@ -187,4 +189,42 @@ public class JDBCDonationManager implements DonationManager {
 		return donations;
 	}
 
+	@Override
+	public List<Donation> getDonationsByBloodType(String bloodType) {
+
+		List<Donation> donations = new ArrayList<>();
+		try {
+
+			String sql = "SELECT d.id, d.date, d.amount, d.donor_id, d.personal_id " + "FROM donation d "
+					+ "JOIN donation_blood db ON d.id = db.donation_id " + "JOIN blood b ON db.blood_id = b.id "
+					+ "WHERE b.blood_type = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, bloodType);
+
+			ResultSet resultSet = prep.executeQuery();
+
+			while (resultSet.next()) {
+				Donation donation = new Donation();
+				donation.setId(resultSet.getInt("id"));
+				donation.setDate(resultSet.getDate("date"));
+				donation.setAmount(resultSet.getFloat("amount"));
+
+				Donor donor = new Donor();
+				donor.setId(resultSet.getInt("donor_id"));
+				donation.setDonor(donor);
+
+				Personal person = new Personal();
+				person.setId(resultSet.getInt("personal_id"));
+				donation.setPersonal(person);
+
+				donations.add(donation);
+			}
+
+			resultSet.close();
+			prep.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return donations;
+	}
 }

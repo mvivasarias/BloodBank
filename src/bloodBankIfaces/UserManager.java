@@ -26,5 +26,7 @@ public interface UserManager {
 	public void changePassword(User u,  byte[] new_passwd);
 	
 	public boolean isEmailExisting(String email);
+	
+	public void deleteUserByEmail(String email);
 
 }

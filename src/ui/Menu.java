@@ -59,7 +59,8 @@ public class Menu {
 				System.out.println("Choose an option");
 				System.out.println("1. Login User");
 				System.out.println("2. Sign-up new user");
-				System.out.println("3. Update password");
+				System.out.println("3. Delete user");
+				System.out.println("4. Update password");
 				System.out.println("0. Exit.");
 
 				choice = Integer.parseInt(reader.readLine());
@@ -72,8 +73,11 @@ public class Menu {
 					System.out.println("Add info of new user.");
 					signUpUser();
 					break;
-
 				case 3:
+					System.out.println("Delete a user.");
+					deleteUser();
+					break;
+				case 4:
 					System.out.println("Udpate the password of an exissting user.");
 					updatePassword();
 					break;
@@ -179,6 +183,14 @@ public class Menu {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	private static void deleteUser() {
+		System.out.println("Introduce the email of the user you want to delete: ");
+		String email = Utilities.readString();
+		
+		if(usermanager.isEmailExisting(email)) {
+			usermanager.deleteUserByEmail(email);
 		}
 	}
 

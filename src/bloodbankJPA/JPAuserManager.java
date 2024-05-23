@@ -113,50 +113,67 @@ public class JPAuserManager implements UserManager {
 	}
 
 	@Override
-	public void changePassword(User u,  byte[] new_passwd) {
-		 EntityTransaction transaction = null;
-	        try {
-	            transaction = em.getTransaction();
-	            transaction.begin();
+	public void changePassword(User u, byte[] new_passwd) {
+		EntityTransaction transaction = null;
+		try {
 
-	            // Retrieve the user from the database using email
-	            User userToUpdate = em.find(User.class, u.getEmail());
+			// Retrieve the user from the database using email
+			User userToUpdate = em.find(User.class, u.getEmail());
 
-	            // Check if the current password matches
-	            if (userToUpdate.getPassword().equals(u.getPassword())) {
-	                
-	            	// Update the password with the new one
-	                userToUpdate.setPassword(new_passwd);
-	                em.merge(userToUpdate);
-	                transaction.commit();
-	                
-	                System.out.println("Password updated successfully.");
-	            } else {
-	                System.out.println("Incorrect current password. Password not updated.");
-	            }
-	        } catch (Exception e) {
-	            if (transaction != null && transaction.isActive()) {
-	                transaction.rollback();
-	            }
-	            e.printStackTrace();
-	        }
-	    }
+			// Check if the current password matches
+			if (userToUpdate.getPassword().equals(u.getPassword())) {
+
+				// Update the password with the new one
+				userToUpdate.setPassword(new_passwd);
+				em.merge(userToUpdate);
+				transaction.commit();
+
+				System.out.println("Password updated successfully.");
+			} else {
+				System.out.println("Incorrect current password. Password not updated.");
+			}
+		} catch (Exception e) {
+			if (transaction != null && transaction.isActive()) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+	}
+
+	public boolean isEmailExisting(String email) {
+		try {
+
+			Query query = em.createQuery("SELECT COUNT(u) FROM User u WHERE u.email = :email");
+			query.setParameter("email", email);
+
+			Long count = (Long) query.getSingleResult();
+
+			return count > 0; // If count > 0, email exists if not email DOES NOT EXIST
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false; // Return false in case of an exception or error
+		}
+	}
 
 	@Override
-	
-	public boolean isEmailExisting(String email) {
-	    try {
-	       
-	        Query query = em.createQuery("SELECT COUNT(u) FROM User u WHERE u.email = :email");
-	        query.setParameter("email", email);
-	        
-	       
-	        Long count = (Long) query.getSingleResult();
-	        
-	        return count > 0; // If count > 0, email exists
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return false; // Return false in case of an exception or error
-	    }
+	public void deleteUserByEmail(String email) {
+		try {
+			em.getTransaction().begin();
+			Query query = em.createNativeQuery("Select * FROM users WHERE email=?", User.class);
+			query.setParameter(1, email);
+			User user = (User) query.getSingleResult();
+
+			em.remove(user);
+			em.getTransaction().commit();
+			
+			 System.out.println("User deleted successfully");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			 System.out.println("User failed to be deleted");
+
+		}
+
 	}
 }
