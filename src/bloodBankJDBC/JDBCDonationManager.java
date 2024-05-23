@@ -197,7 +197,7 @@ public class JDBCDonationManager implements DonationManager {
 
 			String sql = "SELECT d.id, d.date, d.amount, d.donor_id, d.personal_id " + "FROM donation d "
 					+ "JOIN donation_blood db ON d.id = db.donation_id " + "JOIN blood b ON db.blood_id = b.id "
-					+ "WHERE b.blood_type = ?";
+					+ "WHERE b.bloodType = ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, bloodType);
 
