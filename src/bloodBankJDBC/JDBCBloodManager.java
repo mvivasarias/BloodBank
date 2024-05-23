@@ -179,9 +179,9 @@ public class JDBCBloodManager implements BloodManager {
 				Integer id = rs.getInt("id");
 				String bloodType = rs.getString("bloodType");
 				float liters = rs.getFloat("liters");
-				Date dob = rs.getDate("dob");
+				Date date = rs.getDate("date");
 
-				Blood blood = new Blood(id, bloodType, liters, dob);
+				Blood blood = new Blood(id, bloodType, liters, date);
 				bloods.add(blood);
 			}
 
