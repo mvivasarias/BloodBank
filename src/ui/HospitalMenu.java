@@ -91,18 +91,18 @@ public class HospitalMenu {
 						}
 						float currentLiters = blood.getLiters();
 						int blood_id = blood.getId();
-						float usedLiters = Math.min(litersRemaining, currentLiters); // lirersRem<=
-																						// usedLiters=litersRemaininf
-						hospitalManager.addRequest(hospital.getId(), blood_id, usedLiters, dateRequestSQL); // currentLiters<litersRemaining
-																											// =																			// usedLiters=currentLiters
-						if (usedLiters == currentLiters) {
+
+						if (currentLiters <= litersRemaining) {
+
+							hospitalManager.addRequest(hospital.getId(), blood_id, currentLiters, dateRequestSQL);
 							bloodManager.deleteBloodById(blood_id);
+							litersRemaining = litersRemaining - currentLiters;
 
 						} else {
-							bloodManager.updateStockLitersById(blood_id, currentLiters - usedLiters);
-
+							bloodManager.updateStockLitersById(blood_id, currentLiters - litersRemaining);
+							hospitalManager.addRequest(hospital.getId(), blood_id, litersRemaining, dateRequestSQL);
+							litersRemaining = 0;
 						}
-						litersRemaining = litersRemaining - currentLiters;
 					}
 					System.out.println("Blood request has been successfully processed.");
 

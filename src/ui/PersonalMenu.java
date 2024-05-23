@@ -56,7 +56,7 @@ public class PersonalMenu {
 				System.out.println("9. Add donation");
 				System.out.println("10. Delete donation");
 				System.out.println("11. List donations");
-				System.out.println("12. Get list of blood extractions");
+				System.out.println("12. Get list of blood remaining");
 				System.out.println("13. Print you as personal to xml");
 				System.out.println("14. Load a personal from xml");
 				System.out.println("15. Load a donation from xml");
