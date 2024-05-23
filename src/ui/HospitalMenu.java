@@ -112,7 +112,7 @@ public class HospitalMenu {
 					
 					List<Blood> bloodLeft = bloodManager.searchBloodType(bloodType);
 					for (Blood blood: bloodLeft) {
-						System.out.println("Blood stock of "+ bloodType+ " in the blood bank after request");
+						System.out.println("Blood stock of "+ bloodType+ " in the blood bank after request.");
 						System.out.println(blood.toString());
 					}
 
