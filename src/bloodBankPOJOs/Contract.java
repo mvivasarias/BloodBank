@@ -113,7 +113,7 @@ public class Contract implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Contract [id=" + id + ", salary=" + salary + ", hours=" + hours + ", personal=" + personal + "]";
+		return "\nContract [id=" + id + ", salary=" + salary + ", hours=" + hours +"]";
 	}
 
 	
