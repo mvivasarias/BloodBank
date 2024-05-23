@@ -156,8 +156,7 @@ public class Blood implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Blood [id=" + id + ", bloodType=" + bloodType + ", liters=" + liters + ", date=" + date + ", donations="
-				+ donations + ", hospitals=" + hospitals + "]";
+		return "Blood [id=" + id + ", bloodType=" + bloodType + ", liters=" + liters + ", date=" + date+"]";
 	}
 	
 

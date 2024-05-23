@@ -73,7 +73,7 @@ public class JDBCPersonalManager implements PersonalManager {
 				person = new Personal(person_id, name, surname, email, contract, photo);
 
 				System.out.println("You are successfuly registered as personal in the blood bank database with email: "
-						+ emailSearch + "contiue with your action ");
+						+ emailSearch + " contiue with your action ");
 			} else {
 				System.out.println("You have entered the personal menu as a user with the email:  " + emailSearch
 						+ " \nbut you are not registered in the blood bank database, \nPlease register first-> OPTION 1");
