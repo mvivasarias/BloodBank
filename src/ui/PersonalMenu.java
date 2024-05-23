@@ -147,8 +147,9 @@ public class PersonalMenu {
 		Contract contract = Utilities.makeAContract();
 		Contract contractAdded = contractManager.addContract(contract); // SQL DONE
 
-		System.out.println("Please introduce a photo");
-		byte[] photo = null; // TODO como guardar la foto
+		System.out.println("Please introduce a photo(file path");
+		String photoPath=Utilities.readString();
+		byte[] photo = Utilities.readImage(photoPath);
 
 		Personal nurse = new Personal(name, surname, this.email, contractAdded, photo);
 

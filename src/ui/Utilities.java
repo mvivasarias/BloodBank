@@ -1,6 +1,8 @@
 package ui;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.DateTimeException;
@@ -122,23 +124,41 @@ public class Utilities {
 	}
 
 	public static LocalDate getDateFromKeyboard() {
-        while (true) {
-            System.out.println("YEAR yyyy");
-            int year = readInteger("Reading year");
-            System.out.println("MONTH MM");
-            int month = readInteger("Reading month");
-            System.out.println("DAY DD");
-            int day = readInteger("Reading day");
-            
-            LocalDate localDate;
-            try {
-                localDate = LocalDate.of(year, month, day);
-                return localDate;
+		while (true) {
+			System.out.println("YEAR yyyy");
+			int year = readInteger("Reading year");
+			System.out.println("MONTH MM");
+			int month = readInteger("Reading month");
+			System.out.println("DAY DD");
+			int day = readInteger("Reading day");
 
-            } catch (DateTimeException dateTimeException) {
-                System.out.println(dateTimeException + "Introduce again the date");
+			LocalDate localDate;
+			try {
+				localDate = LocalDate.of(year, month, day);
+				return localDate;
 
-            }
-        }
+			} catch (DateTimeException dateTimeException) {
+				System.out.println(dateTimeException + "Introduce again the date");
+
+			}
+		}
 	}
+
+	public static byte[] readImage(String filePath) {
+
+		File file = new File(filePath);
+		int lenghtFile = (int) file.length();
+		byte[] imageData = new byte[lenghtFile];
+
+		try (FileInputStream fileInputStram = new FileInputStream(file)) {
+
+			fileInputStram.read(imageData);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return imageData;
+	}
+
 }
