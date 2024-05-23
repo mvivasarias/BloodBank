@@ -213,11 +213,9 @@ public class PersonalMenu {
 			System.out.println("Donor´s surname :");
 			String surname = Utilities.readString();
 
-			System.out.println("Donor´s dob in format yyyy/MM/dd");
-			String dob_str = Utilities.readString();
-			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-			java.util.Date utilDate = df.parse(dob_str);
-			java.sql.Date dobSql = new java.sql.Date(utilDate.getTime());
+			System.out.println("Donor´s dob d");
+			LocalDate dob= Utilities.getDateFromKeyboard();
+			Date dobSql=Date.valueOf(dob);
 
 			String bloodType = Utilities.askBloodType("Donor´s blood type");
 
@@ -246,11 +244,10 @@ public class PersonalMenu {
 				System.out.println("Donor´s surname modification :");
 				String surname = Utilities.readString();
 
-				System.out.println("Donor´s dob in format yyyy/mm/dd modification ");
-				String dob_str = Utilities.readString();
-				java.sql.Date dobSql = java.sql.Date.valueOf(dob_str.replace("/", "-"));
-				// DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-				// Date dob = (Date) df.parse(dob_str);
+				System.out.println("Donor´s dob ");
+				System.out.println("Donor´s dob d");
+				LocalDate dob= Utilities.getDateFromKeyboard();
+				Date dobSql=Date.valueOf(dob);
 
 				String bloodType = Utilities.askBloodType("Donor´s blood type modification");
 

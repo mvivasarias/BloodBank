@@ -2,8 +2,10 @@ package ui;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 
 import bloodBankJDBC.JDBCBloodManager;
@@ -62,12 +64,9 @@ public class HospitalMenu {
 
 			System.out.println("Type the liters needed");
 			float litersNeeded = Utilities.readfloat();
-			System.out.println("Type the date of the request yyyy/mm/dd");
-
-			String dateOfRequest = Utilities.readString();
-			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-			java.util.Date utilDate = df.parse(dateOfRequest);
-			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			System.out.println("Type the date of the request ");
+			LocalDate dateOfRequest= Utilities.getDateFromKeyboard();
+			Date dateRequestSQL=Date.valueOf(dateOfRequest);
 
 			System.out.println("Type the blood type needed");
 			String bloodType = Utilities.askBloodType("Introduce blood type:");
@@ -94,12 +93,12 @@ public class HospitalMenu {
 
 						if (currentLiters <= litersRemaining) {
 							bloodManager.deleteBloodById(blood_id);
-							hospitalManager.addRequest(hospital.getId(), blood_id, currentLiters, sqlDate);
+							hospitalManager.addRequest(hospital.getId(), blood_id, currentLiters, dateRequestSQL);
 							litersRemaining = litersRemaining - currentLiters;
 
 						} else {
 							bloodManager.updateStockLitersById(blood_id, currentLiters - litersRemaining);
-							hospitalManager.addRequest(hospital.getId(), blood_id, litersRemaining, sqlDate);
+							hospitalManager.addRequest(hospital.getId(), blood_id, litersRemaining, dateRequestSQL);
 							litersRemaining = 0;
 						}
 					}

@@ -3,6 +3,8 @@ package ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 
 import bloodBankPOJOs.Contract;
 
@@ -119,4 +121,24 @@ public class Utilities {
 
 	}
 
+	public static LocalDate getDateFromKeyboard() {
+        while (true) {
+            System.out.println("YEAR yyyy");
+            int year = readInteger("Reading year");
+            System.out.println("MONTH MM");
+            int month = readInteger("Reading month");
+            System.out.println("DAY DD");
+            int day = readInteger("Reading day");
+            
+            LocalDate localDate;
+            try {
+                localDate = LocalDate.of(year, month, day);
+                return localDate;
+
+            } catch (DateTimeException dateTimeException) {
+                System.out.println(dateTimeException + "Introduce again the date");
+
+            }
+        }
+	}
 }
