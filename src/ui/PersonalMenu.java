@@ -244,10 +244,11 @@ public class PersonalMenu {
 				System.out.println("Donor´s surname modification :");
 				String surname = Utilities.readString();
 
-				System.out.println("Donor´s dob ");
-				System.out.println("Donor´s dob d");
+				System.out.println("Donor´s dob ");;
 				LocalDate dob= Utilities.getDateFromKeyboard();
 				Date dobSql=Date.valueOf(dob);
+				
+				Date dobSQL=date(dobSql/1000, 'unixepoch','localtime');
 
 				String bloodType = Utilities.askBloodType("Donor´s blood type modification");
 
