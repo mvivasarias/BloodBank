@@ -123,26 +123,27 @@ public class JDBCHospitalManager implements HospitalManager {
 		return hospital;
 	}
 
-	public void addRequest(int hospital_id, int blood_id, float liters, java.sql.Date date) {
-		try {
-			String sql = "INSERT INTO hospital_blood (hospital_id, blood_id, liters, date) VALUES (?, ?, ?, ?)";
-			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setInt(1, hospital_id);
-			prep.setInt(2, blood_id);
-			prep.setFloat(3, liters);
-			prep.setDate(4, new java.sql.Date(date.getTime()));
-			int rowsAffected = prep.executeUpdate();
+	public void addRequest(Integer hospital_id, Integer blood_id, float liters, Date date) {
+	    try {
+	        String sql = "INSERT INTO hospital_blood (hospital_id, blood_id, liters, date) VALUES (?, ?, ?, ?)";
+	        PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+	        prep.setInt(1, hospital_id);
+	        prep.setInt(2, blood_id);
+	        prep.setFloat(3, liters);
+	        prep.setDate(4, new java.sql.Date(date.getTime()));
 
-			if (rowsAffected > 0) {
-				System.out.println("Request added successfully to hospital_blood table.");
-			} else {
-				System.out.println("Failed to add request to hospital_blood table.");
-			}
+	        int rowsAffected = prep.executeUpdate();
 
-			prep.close();
-		} catch (SQLException e) {
-			System.err.println("Error adding request to hospital_blood table: " + e.getMessage());
-		}
+	        if (rowsAffected > 0) {
+	            System.out.println("Request added successfully to hospital_blood table.");
+	        } else {
+	            System.out.println("Failed to add request to hospital_blood table.");
+	        }
+
+	        prep.close();
+	    } catch (SQLException e) {
+	        System.err.println("Error adding request to hospital_blood table: " + e.getMessage());
+	    }
 	}
 
 	@Override
@@ -176,5 +177,7 @@ public class JDBCHospitalManager implements HospitalManager {
 		return hospital;
 
 	}
-
 }
+
+
+

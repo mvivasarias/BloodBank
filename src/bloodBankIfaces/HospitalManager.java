@@ -16,7 +16,7 @@ public interface HospitalManager {
 
 	public Hospital searchHospitalById(Integer id); // sql done
 
-	public void addRequest(int hospitalId, int bloodId, float liters,java.sql.Date date);
+	public void addRequest(Integer hospitalId, Integer bloodId, float liters,Date date);
 	
 	public Hospital searchHospitalByEmail( String email);
 }

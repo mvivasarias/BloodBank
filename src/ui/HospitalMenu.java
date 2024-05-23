@@ -90,7 +90,7 @@ public class HospitalMenu {
 							break;
 						}
 						float currentLiters = blood.getLiters();
-						int blood_id = blood.getId();
+						Integer blood_id = blood.getId();
 
 						if (currentLiters <= litersRemaining) {
 
