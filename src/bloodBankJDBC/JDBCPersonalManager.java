@@ -92,7 +92,7 @@ public class JDBCPersonalManager implements PersonalManager {
 	public void modifyPersonal(Personal personalToModify, String newName, String newSurname, String newEmail,
 			String newPhoto) {
 		// not modifying neither the id nor the contract
-		System.out.println("modifying...");
+		
 		try {
 
 			if (newName != null && !newName.isEmpty()) {
@@ -116,6 +116,8 @@ public class JDBCPersonalManager implements PersonalManager {
 			prep.setString(2, personalToModify.getSurname());
 			prep.setString(3, personalToModify.getEmail());
 			prep.setBytes(4, personalToModify.getPhoto());
+			prep.setInt(5, personalToModify.getId()); // Set the id in the WHERE clause
+
 
 			int rowsUpdated = prep.executeUpdate();
 			prep.close();
