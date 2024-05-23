@@ -92,8 +92,9 @@ public class HospitalMenu {
 						int blood_id = blood.getId();
 
 						if (currentLiters <= litersRemaining) {
-							bloodManager.deleteBloodById(blood_id);
+							
 							hospitalManager.addRequest(hospital.getId(), blood_id, currentLiters, dateRequestSQL);
+							bloodManager.deleteBloodById(blood_id);
 							litersRemaining = litersRemaining - currentLiters;
 
 						} else {
