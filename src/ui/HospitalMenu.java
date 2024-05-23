@@ -70,8 +70,12 @@ public class HospitalMenu {
 
 			System.out.println("Type the blood type needed");
 			String bloodType = Utilities.askBloodType("Introduce blood type:");
-
+			
 			List<Blood> bloodRecords = bloodManager.searchBloodType(bloodType);
+			for (Blood blood: bloodRecords) {
+				System.out.println("Blood stock of "+ bloodType+ " in the blood bank");
+				System.out.println(blood.toString()+"\n");
+			}
 
 			if (bloodRecords.isEmpty()) {
 				System.out.println("Blood type " + bloodType + " is not available.");
@@ -104,7 +108,13 @@ public class HospitalMenu {
 							litersRemaining = 0;
 						}
 					}
-					System.out.println("Blood request has been successfully processed.");
+					System.out.println("Blood request has been successfully processed.\n");
+					
+					List<Blood> bloodLeft = bloodManager.searchBloodType(bloodType);
+					for (Blood blood: bloodLeft) {
+						System.out.println("Blood stock of "+ bloodType+ " in the blood bank after request");
+						System.out.println(blood.toString());
+					}
 
 				} else {
 					System.out.println("Insufficient blood of type " + bloodType + " available. Available liters: "
