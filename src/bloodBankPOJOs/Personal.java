@@ -161,7 +161,7 @@ public class Personal implements Serializable {
 	@Override
 	public String toString() {
 		return "Personal [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", contract="
-				+ contract + ", photo=" + Arrays.toString(photo) + "]";
+				+ contract + ", photo=" + photo + "]";
 	}
 
 }
