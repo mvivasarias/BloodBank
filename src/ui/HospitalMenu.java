@@ -31,7 +31,7 @@ public class HospitalMenu {
 		try {
 			int choice;
 			do {
-				System.out.println("\nWelcome to the hospital menu of the blood bank database\n"+"Select an option");
+				System.out.println("\nWelcome to the hospital menu of the blood bank database\n" + "Select an option");
 				System.out.println("1. Request blood");
 				System.out.println("2. Show requests of this hospital");
 				System.out.println("0. Return.");
@@ -65,13 +65,14 @@ public class HospitalMenu {
 			System.out.println("Type the liters needed");
 			float litersNeeded = Utilities.readfloat();
 			System.out.println("Type the date of the request ");
-			LocalDate dateOfRequest= Utilities.getDateFromKeyboard();
-			Date dateRequestSQL=Date.valueOf(dateOfRequest);
+			LocalDate dateOfRequest = Utilities.getDateFromKeyboard();
+			Date dateRequestSQL = Date.valueOf(dateOfRequest);
 
 			System.out.println("Type the blood type needed");
 			String bloodType = Utilities.askBloodType("Introduce blood type:");
 
 			List<Blood> bloodRecords = bloodManager.searchBloodType(bloodType);
+
 			if (bloodRecords.isEmpty()) {
 				System.out.println("Blood type " + bloodType + " is not available.");
 			} else {
@@ -90,18 +91,18 @@ public class HospitalMenu {
 						}
 						float currentLiters = blood.getLiters();
 						int blood_id = blood.getId();
-
-						if (currentLiters <= litersRemaining) {
-							
-							hospitalManager.addRequest(hospital.getId(), blood_id, currentLiters, dateRequestSQL);
+						float usedLiters = Math.min(litersRemaining, currentLiters); // lirersRem<=
+																						// usedLiters=litersRemaininf
+						hospitalManager.addRequest(hospital.getId(), blood_id, usedLiters, dateRequestSQL); // currentLiters<litersRemaining
+																											// =																			// usedLiters=currentLiters
+						if (usedLiters == currentLiters) {
 							bloodManager.deleteBloodById(blood_id);
-							litersRemaining = litersRemaining - currentLiters;
 
 						} else {
-							bloodManager.updateStockLitersById(blood_id, currentLiters - litersRemaining);
-							hospitalManager.addRequest(hospital.getId(), blood_id, litersRemaining, dateRequestSQL);
-							litersRemaining = 0;
+							bloodManager.updateStockLitersById(blood_id, currentLiters - usedLiters);
+
 						}
+						litersRemaining = litersRemaining - currentLiters;
 					}
 					System.out.println("Blood request has been successfully processed.");
 
