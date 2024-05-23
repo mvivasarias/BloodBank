@@ -125,7 +125,7 @@ public class JDBCHospitalManager implements HospitalManager {
 
 	public void addRequest(int hospital_id, int blood_id, float liters, java.sql.Date date) {
 		try {
-			String sql = "INSERT INTO hospital_blood (hospital_id, blood_id, liters, date_id) VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO hospital_blood (hospital_id, blood_id, liters, date) VALUES (?, ?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setInt(1, hospital_id);
 			prep.setInt(2, blood_id);
