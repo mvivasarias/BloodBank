@@ -18,7 +18,7 @@ public class Contract implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -7520806989904275224L;
-	@XmlTransient
+	@XmlElement
 	private Integer id;
 	@XmlElement
 	private Integer salary;
