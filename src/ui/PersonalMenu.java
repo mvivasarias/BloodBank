@@ -176,7 +176,6 @@ public class PersonalMenu {
 			personalManager.modifyPersonal(nurseModifying, newName, newSurname, this.email, newPhoto);
 		}
 	}
-	
 
 	private void deleteNurse(JDBCPersonalManager personalManager) {
 
