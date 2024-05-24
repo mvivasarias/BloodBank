@@ -33,6 +33,7 @@ public class Contract implements Serializable {
 	
 	}
 
+	
 	public Contract(Integer salary, Integer hours, Personal personal) {
 		super();
 		this.salary = salary;
