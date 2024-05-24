@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE Personal [
-   <!ELEMENT Personal (email, contract, Donations)>
+   <!ELEMENT Personal (email, contract, Donations, photo)>
    <!ATTLIST Personal name CDATA #REQUIRED
                       surname CDATA #REQUIRED>
    
@@ -23,9 +23,11 @@
    <!ELEMENT dob (#PCDATA)>
    <!ELEMENT BloodType (#PCDATA)>
    
-   <!ELEMENT nurse (email, contract, Donations)>
+   <!ELEMENT nurse (email, contract, Donations, photo)>
    <!ATTLIST nurse name CDATA #REQUIRED
-                     surname CDATA #REQUIRED>
+                    surname CDATA #REQUIRED>
+   
+   <!ELEMENT photo (#PCDATA)>
 ]>
 
 <Personal name="Paco" surname="Vivas">
@@ -35,38 +37,6 @@
         <salary>50000</salary>
         <hours>40</hours>
     </contract>
-    <Donations>
-        <Donation amount="50">
-            <date>2024-05-01</date>
-            <donor name="Maria" surname="Carrasco">
-                <dob>1990-03-15</dob>
-                <BloodType>A+</BloodType>
-            </donor>
-            <nurse name="Pepe" surname="Perez">
-                <email>pepe@gmail.com</email>
-                <contract>
-                    <id>2</id>
-                    <salary>60000</salary>
-                    <hours>20</hours>
-                </contract>
-                <Donations/>
-            </nurse>
-        </Donation>
-        <Donation amount="30">
-            <date>2024-05-15</date>
-            <donor name="Carmen" surname="Clar">
-                <dob>1985-07-20</dob>
-                <BloodType>O-</BloodType>
-            </donor>
-            <nurse name="Carlota" surname="Vivas">
-                <email>carlotavivas@gmail.com</email>
-                <contract>
-                    <id>2</id>
-                    <salary>60000</salary>
-                    <hours>20</hours>
-                </contract>
-                <Donations/>
-            </nurse>
-        </Donation>
-    </Donations>
+    <Donations/>
+    <photo>photos/paco.jpg</photo>
 </Personal>

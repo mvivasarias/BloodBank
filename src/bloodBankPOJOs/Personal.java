@@ -35,7 +35,7 @@ public class Personal implements Serializable {
 	private String email;
 	@XmlElement //required
 	private Contract contract;
-	@XmlTransient
+	@XmlElement
 	private byte[] photo;
 	@XmlElement (name = "Donation")
 	@XmlElementWrapper(name = "Donations")

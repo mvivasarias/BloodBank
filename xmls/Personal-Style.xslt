@@ -48,6 +48,7 @@
                             <th>Contract ID</th>
                             <th>Salary</th>
                             <th>Hours</th>
+                            <th>Photo</th>
                         </tr>
                         <tr>
                             <td><xsl:value-of select="@name" /></td>
@@ -56,6 +57,14 @@
                             <td><xsl:value-of select="contract/id" /></td>
                             <td><xsl:value-of select="contract/salary" /></td>
                             <td><xsl:value-of select="contract/hours" /></td>
+                            <td>
+                                <xsl:if test="photo">
+                                    <img src="data:image/jpeg;base64,{photo}" alt="Photo" width="100" height="100" />
+                                </xsl:if>
+                                <xsl:if test="not(photo)">
+                                    No Photo
+                                </xsl:if>
+                            </td>
                         </tr>
                     </table>
                     <h3>Donations</h3>
