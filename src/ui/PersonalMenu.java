@@ -272,7 +272,7 @@ public class PersonalMenu {
 		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
 
 		if (loggedInPersonal != null) {
-
+			System.out.println("Enter the donor ID you want to delete :");
 			Integer idDonor = Utilities.readInteger("Enter the donor ID you want to delete :");
 			Donor donorExisting = donorManager.getDonorByID(idDonor);
 
