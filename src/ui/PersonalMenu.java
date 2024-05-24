@@ -233,6 +233,7 @@ public class PersonalMenu {
 		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
 
 		if (loggedInPersonal != null) {
+			System.out.println("Enter the donor ID you want to delete :");
 			Integer idDonor = Utilities.readInteger("Enter the donor ID you want to modify :");
 
 			Donor donorExisting = donorManager.getDonorByID(idDonor);
@@ -272,10 +273,11 @@ public class PersonalMenu {
 		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
 
 		if (loggedInPersonal != null) {
-			System.out.println("Enter the donor ID you want to delete :");
+			System.out.println("Enter the donor ID you want to modify :");
 			Integer idDonor = Utilities.readInteger("Enter the donor ID you want to delete :");
 			Donor donorExisting = donorManager.getDonorByID(idDonor);
 
+			
 			if (donorExisting != null) {
 				donorManager.deleteDonor(donorExisting.getId());
 			} else {
