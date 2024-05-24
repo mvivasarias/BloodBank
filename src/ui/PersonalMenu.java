@@ -434,8 +434,9 @@ public class PersonalMenu {
 
 	private void loadDonations(JDBCPersonalManager personalManager, XMLManager xmlManager) {
 		Donation donation = null;
-		File file = new File("/xmls/Donations.xml");
-
+		File dir = new File("xmls");
+		String fileName = "Donations.xml";
+		File file = new File(dir, fileName);
 		donation = xmlManager.xml2Donation(file);
 		System.out.println(donation);
 
