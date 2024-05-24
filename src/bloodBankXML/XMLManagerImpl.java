@@ -220,16 +220,16 @@ public class XMLManagerImpl implements XMLManager {
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true); // To format the XML
 			String fileName = "DonationBloodType" + bloodType + ".xml";
 
-			File tempXmlFile = new File("xmls" + File.separator + fileName);
-			marshaller.marshal(wrapper, tempXmlFile);
+			File tempXmlFile = new File("xmls" + File.separator + fileName); 
+			marshaller.marshal(wrapper, tempXmlFile); //DOCUMENT XML
 			// Load XSLT file
 			TransformerFactory tFactory = TransformerFactory.newInstance();
 			Transformer transformer = tFactory
-					.newTransformer(new StreamSource(new File("xmls" + File.separator + "Donation-Style.xslt")));
+					.newTransformer(new StreamSource(new File("xmls" + File.separator + "Donation-Style.xslt"))); //CREATES AN XSLT TRANSOFRMER
 
 			// Transforming XML to HTML
 			transformer.transform(new StreamSource(tempXmlFile),
-					new StreamResult(new File("xmls" + File.separator + "Donation-Output.html")));
+					new StreamResult(new File("xmls" + File.separator + "Donation-Output.html"))); //TRANSFORMS THE XML TO HTLM
 
 			// Clean up temporary XML file
 			tempXmlFile.delete();
