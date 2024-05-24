@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<donations>
+    <donation amount="10.0">
+        <date>2024-05-23</date>
+        <donor/>
+        <nurse name="carmen" surname="clar">
+            <email>carmenc@gmail.com</email>
+            <contract>
+                <salary>20</salary>
+                <hours>200</hours>
+            </contract>
+            <Donations/>
+        </nurse>
+    </donation>
+</donations>
