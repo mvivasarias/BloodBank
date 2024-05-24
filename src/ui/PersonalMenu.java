@@ -176,7 +176,7 @@ public class PersonalMenu {
 			personalManager.modifyPersonal(nurseModifying, newName, newSurname, this.email, newPhoto);
 		}
 	}
-
+	
 	private void deleteNurse(JDBCPersonalManager personalManager) {
 
 		Personal nurseDeleteing = personalManager.searchPersonalByEmail(this.email); // sql done
