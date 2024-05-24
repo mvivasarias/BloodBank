@@ -42,10 +42,12 @@ public class XMLManagerImpl implements XMLManager {
 			Marshaller marshaller = jaxbContext.createMarshaller();
 
 			// set the object and the name of the file
-			File file = new File("/xmls/PersonID"+id+".xml");
+			String fileName = "PersonID" + id + ".xml";
+			
+			File file = new File("xmls"+File.separator+fileName);
 			marshaller.marshal(person, file);
 
-			System.out.println("Printed personal class to an XML file!");
+			System.out.println("\nPrinted personal class to an XML file!");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,6 +94,7 @@ public class XMLManagerImpl implements XMLManager {
 			e.printStackTrace();
 		}
 
+		
 	}
 
 	@Override
