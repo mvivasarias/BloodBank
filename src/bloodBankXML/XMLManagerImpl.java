@@ -177,10 +177,10 @@ public class XMLManagerImpl implements XMLManager {
 
 			// Load XSLT file
 			TransformerFactory tFactory = TransformerFactory.newInstance();
-			Transformer transformer = tFactory.newTransformer(new StreamSource(new File("./xmls/Personal-Style.xslt")));
+			Transformer transformer = tFactory.newTransformer(new StreamSource(new File("html" + File.separator + "Personal-Style.xslt")));
 
 			// Transforming to html
-			transformer.transform(new StreamSource(file), new StreamResult(new File("./xmls/Personal-Output.html")));
+			transformer.transform(new StreamSource(file), new StreamResult(new File("html" + File.separator + "Personal-Output.html")));
 
 			// Clean up temporary XML file
 			file.delete();
@@ -212,7 +212,7 @@ public class XMLManagerImpl implements XMLManager {
 
 			// Load XSLT file
 			TransformerFactory tFactory = TransformerFactory.newInstance();
-			Transformer transformer = tFactory.newTransformer(new StreamSource(new File("./xmls/Donation-Style.xslt")));
+			Transformer transformer = tFactory.newTransformer(new StreamSource(new File("html" + File.separator + "Donation-Style.xslt")));
 
 			// Wrap the list of donations for JAXB
 			DonationsWrapper wrapper = new DonationsWrapper();
@@ -228,7 +228,7 @@ public class XMLManagerImpl implements XMLManager {
 			marshaller.marshal(wrapper, tempXmlFile);
 
 			// Transforming XML to HTML
-			transformer.transform(new StreamSource(tempXmlFile),new StreamResult(new File("./xmls/Donation-Output.html")));
+			transformer.transform(new StreamSource(tempXmlFile),new StreamResult(new File("html" + File.separator +"Donation-Output.html")));
 
 			// Clean up temporary XML file
 			tempXmlFile.delete();
