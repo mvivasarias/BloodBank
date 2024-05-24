@@ -174,17 +174,15 @@ public class XMLManagerImpl implements XMLManager {
 
 			File file = new File("xmls" + File.separator + fileName);
 			marshaller.marshal(person, file);
-
+			
 			// Load XSLT file
-			TransformerFactory tFactory = TransformerFactory.newInstance();
-			Transformer transformer = tFactory
-					.newTransformer(new StreamSource(new File("xmls" + File.separator + "Personal-Style.xslt")));
+	        TransformerFactory tFactory = TransformerFactory.newInstance();
+	        Transformer transformer = tFactory.newTransformer(new StreamSource(new File("xmls" + File.separator + "Personal-Style.xslt")));
 
-			// Transforming to html
-			transformer.transform(new StreamSource(file),
-					new StreamResult(new File("xmls" + File.separator + "Personal-Output.html")));
+	        // Transform XML to HTML
+	        transformer.transform(new StreamSource(file),
+	                new StreamResult(new File("html" + File.separator + "Personal-Output.html")));
 
-			// Clean up temporary XML file
 			file.delete();
 		} catch (Exception e) {
 			e.printStackTrace();
