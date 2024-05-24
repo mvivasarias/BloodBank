@@ -2,7 +2,11 @@
 <donations>
     <donation amount="10.0">
         <date>2024-05-23</date>
-        <donor/>
+        <donor name="carlos" surname="perez">
+            <dob>2002-02-01</dob>
+            <BloodType>A+</BloodType>
+            <BloodType>4</BloodType>
+        </donor>
         <nurse name="carmen" surname="clar">
             <email>carmenc@gmail.com</email>
             <contract>

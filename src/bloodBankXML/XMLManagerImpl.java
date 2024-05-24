@@ -141,6 +141,7 @@ public class XMLManagerImpl implements XMLManager {
 			person = (Personal) unmarshaller.unmarshal(xml);
 			personalManager.addPersonal(person);
 
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
