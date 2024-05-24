@@ -6,12 +6,41 @@
         <html>
             <head>
                 <title>Personal Details with Donations</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f0f0f0;
+                        color: #333;
+                    }
+                    h2 {
+                        color: #2e6da4;
+                    }
+                    table {
+                        border-collapse: collapse;
+                        width: 100%;
+                        margin-bottom: 20px;
+                    }
+                    th, td {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                    }
+                    th {
+                        background-color: #4CAF50;
+                        color: white;
+                    }
+                    tr:nth-child(even) {
+                        background-color: #f2f2f2;
+                    }
+                    tr:hover {
+                        background-color: #ddd;
+                    }
+                </style>
             </head>
             <body>
                 <h2>Personal Details with Donations</h2>
                 <xsl:for-each select="Personal">
                     <h3>Personal Details</h3>
-                    <table border="1">
+                    <table>
                         <tr>
                             <th>Name</th>
                             <th>Surname</th>
@@ -30,7 +59,7 @@
                         </tr>
                     </table>
                     <h3>Donations</h3>
-                    <table border="1">
+                    <table>
                         <tr>
                             <th>Amount</th>
                             <th>Date</th>
@@ -42,7 +71,7 @@
                             </tr>
                         </xsl:for-each>
                     </table>
-                    <br /> //BREAK
+                    <br />
                 </xsl:for-each>
             </body>
         </html>
