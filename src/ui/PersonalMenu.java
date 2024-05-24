@@ -59,8 +59,8 @@ public class PersonalMenu {
 				System.out.println("12. Get list of blood remaining");
 				System.out.println("13. Print you as personal to xml");
 				System.out.println("14. Load a personal from xml");
-				System.out.println("15. Load a donation from xml");
-				System.out.println("16. Print a list of donations to xml");
+				System.out.println("15. Print a list of donations to xml");
+				System.out.println("16. Load a donation from xml");
 
 				System.out.println("0. Return.");
 
@@ -111,10 +111,10 @@ public class PersonalMenu {
 					loadPersonal(personalManager, xmlManager);
 					break;
 				case 15:
-					loadDonations(personalManager, xmlManager);
+					printDonations(personalManager, xmlManager);
 					break;
 				case 16:
-					printDonations(personalManager, xmlManager);
+					loadDonations(personalManager, xmlManager);
 					break;
 
 				case 0:
@@ -148,7 +148,7 @@ public class PersonalMenu {
 		Contract contractAdded = contractManager.addContract(contract); // SQL DONE
 
 		System.out.println("Please introduce a photo  by typing the file path");
-		String photoPath=Utilities.readString();
+		String photoPath = Utilities.readString();
 		byte[] photo = Utilities.readImage(photoPath);
 
 		Personal nurse = new Personal(name, surname, this.email, contractAdded, photo);
@@ -174,11 +174,9 @@ public class PersonalMenu {
 			this.email = newEmail;
 
 			System.out.println("Please introduce a new photo  by typing the file path");
-			String photoPath=Utilities.readString();
+			String photoPath = Utilities.readString();
 			byte[] newPhoto = Utilities.readImage(photoPath);
 
-
-			
 			personalManager.modifyPersonal(nurseModifying, newName, newSurname, this.email, newPhoto);
 
 		}
@@ -417,7 +415,7 @@ public class PersonalMenu {
 
 	private void printMe(JDBCPersonalManager personalManager, XMLManager xmlManager) {
 		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
-	
+
 		if (loggedInPersonal != null) {
 			xmlManager.personal2xml(loggedInPersonal.getId());
 		}
@@ -427,12 +425,12 @@ public class PersonalMenu {
 	private void loadPersonal(JDBCPersonalManager personalManager, XMLManager xmlManager) {
 		Personal person = null;
 		System.out.println("Introduce an id to print that list to an xml");
-		Integer id=Utilities.readInteger("ID");
-		
+		Integer id = Utilities.readInteger("ID");
+
 		File dir = new File("xmls");
 		String fileName = "PersonID" + id + ".xml";
 		File file = new File(dir, fileName);
-		
+
 		person = xmlManager.xml2Personal(file);
 		System.out.println(person);
 
@@ -440,14 +438,14 @@ public class PersonalMenu {
 
 	private void loadDonations(JDBCPersonalManager personalManager, XMLManager xmlManager) {
 		Donation donation = null;
-		
+
 		System.out.println("Introduce the blood type list you want to load");
 		String bloodType = Utilities.askBloodType("blood type");
-		
+
 		File dir = new File("xmls");
 		String fileName = "DonationBloodType" + bloodType + ".xml";
 		File file = new File(dir, fileName);
-		
+
 		donation = xmlManager.xml2Donation(file);
 		System.out.println(donation);
 	}
