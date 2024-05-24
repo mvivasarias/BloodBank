@@ -57,9 +57,9 @@ public class PersonalMenu {
 				System.out.println("10. Delete donation");
 				System.out.println("11. List donations");
 				System.out.println("12. Get list of blood remaining");
-				System.out.println("13. Print you as personal to xml");
+				System.out.println("13. Save you as personal to file");
 				System.out.println("14. Load you as personal from xml");
-				System.out.println("15. Print a list of donations to xml");
+				System.out.println("15. Savea a list of donations to file");
 				System.out.println("16. Load a donation from xml");
 
 				System.out.println("0. Return.");
@@ -168,7 +168,7 @@ public class PersonalMenu {
 
 			System.out.println("Modify your surname :");
 			String newSurname = Utilities.readString();
-			
+
 			System.out.println("Please introduce a new photo  by typing the file path");
 			String photoPath = Utilities.readString();
 			byte[] newPhoto = Utilities.readImage(photoPath);
@@ -176,7 +176,7 @@ public class PersonalMenu {
 			personalManager.modifyPersonal(nurseModifying, newName, newSurname, this.email, newPhoto);
 		}
 	}
-	
+
 	private void deleteNurse(JDBCPersonalManager personalManager) {
 
 		Personal nurseDeleteing = personalManager.searchPersonalByEmail(this.email); // sql done
@@ -250,7 +250,7 @@ public class PersonalMenu {
 				LocalDate dob = Utilities.getDateFromKeyboard();
 				Date dobSql = Date.valueOf(dob);
 
-				// Date dobSQL=date(dobSql/1000, 'unixepoch','localtime'); 
+				// Date dobSQL=date(dobSql/1000, 'unixepoch','localtime');
 
 				String bloodType = Utilities.askBloodType("Donor´s blood type modification");
 
@@ -412,7 +412,26 @@ public class PersonalMenu {
 		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
 
 		if (loggedInPersonal != null) {
-			xmlManager.personal2xml(loggedInPersonal.getId());
+			System.out.println("How do you want to save the data?");
+			System.out.println("1. XML");
+			System.out.println("2. HTML");
+			int choice = Utilities.readInteger("choice");
+
+			switch (choice) {
+			case 1:
+				xmlManager.personal2xml(loggedInPersonal.getId());
+				System.out.println("Personal data saved as XML file.");
+				break;
+			case 2:
+
+				xmlManager.personalTransformerToHTML(loggedInPersonal.getId());
+				System.out.println("Personal data saved as HTML file.");
+				break;
+			default:
+				System.out.println("Invalid option. Please choose xml or html.");
+			}
+
+			
 		}
 
 	}
@@ -430,6 +449,34 @@ public class PersonalMenu {
 
 	}
 
+	private void printDonations(JDBCPersonalManager personalManager, XMLManager xmlManager) {
+		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
+
+		if (loggedInPersonal != null) {
+			System.out.println("Introduce the blood type to print that list to an XML or HTML file:");
+			String bloodType = Utilities.askBloodType("blood type");
+
+			System.out.println("How do you want to save the data?");
+			System.out.println("1. XML");
+			System.out.println("2. HTML");
+			int choice = Utilities.readInteger("choice");
+
+			switch (choice) {
+			case 1:
+				xmlManager.donation2xml(bloodType);
+				System.out.println("Donation data saved as XML file.");
+				break;
+			case 2:
+
+				xmlManager.donationTransformerToHTML(bloodType);
+				System.out.println("Donation data saved as HTML file.");
+				break;
+			default:
+				System.out.println("Invalid option. Please choose xml or html.");
+			}
+		}
+	}
+
 	private void loadDonations(JDBCPersonalManager personalManager, XMLManager xmlManager) {
 		Donation donation = null;
 
@@ -444,15 +491,4 @@ public class PersonalMenu {
 		System.out.println(donation);
 	}
 
-	private void printDonations(JDBCPersonalManager personalManager, XMLManager xmlManager) {
-		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
-
-		if (loggedInPersonal != null) {
-			System.out.println("Introduce the blood type to print that list to an xml");
-			String bloodType = Utilities.askBloodType("blood type");
-			xmlManager.donation2xml(bloodType);
-
-		}
-
-	}
 }

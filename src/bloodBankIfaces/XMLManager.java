@@ -10,5 +10,7 @@ public interface XMLManager {
 	public Donation xml2Donation(File xml);
 	public void donation2xml(String bloodType);
 	public Personal xml2Personal(File xml);
+	public void personalTransformerToHTML(Integer id);
+	public void donationTransformerToHTML(String bloodType);
 
 }
