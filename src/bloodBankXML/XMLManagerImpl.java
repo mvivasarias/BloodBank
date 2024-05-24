@@ -177,10 +177,12 @@ public class XMLManagerImpl implements XMLManager {
 
 			// Load XSLT file
 			TransformerFactory tFactory = TransformerFactory.newInstance();
-			Transformer transformer = tFactory.newTransformer(new StreamSource(new File("html" + File.separator + "Personal-Style.xslt")));
+			Transformer transformer = tFactory
+					.newTransformer(new StreamSource(new File("xmls" + File.separator + "Personal-Style.xslt")));
 
 			// Transforming to html
-			transformer.transform(new StreamSource(file), new StreamResult(new File("html" + File.separator + "Personal-Output.html")));
+			transformer.transform(new StreamSource(file),
+					new StreamResult(new File("xmls" + File.separator + "Personal-Output.html")));
 
 			// Clean up temporary XML file
 			file.delete();
@@ -192,8 +194,8 @@ public class XMLManagerImpl implements XMLManager {
 	@Override
 	public void donationTransformerToHTML(String bloodType) {
 		List<Donation> donationsToHtml = null;
-		Personal person=null;
-		Donor donor=null;
+		Personal person = null;
+		Donor donor = null;
 
 		manager = new JDBCManager();
 		personalManager = new JDBCPersonalManager(manager);
@@ -201,7 +203,7 @@ public class XMLManagerImpl implements XMLManager {
 		donationManager = new JDBCDonationManager(manager);
 		try {
 			donationsToHtml = donationManager.getDonationsByBloodType(bloodType);
-			
+
 			for (Donation donation : donationsToHtml) {
 				person = personalManager.searchPersonalByID(donation.getPersonal().getId());
 				donation.setPersonal(person);
@@ -209,10 +211,6 @@ public class XMLManagerImpl implements XMLManager {
 				donation.setDonor(donor);
 
 			}
-
-			// Load XSLT file
-			TransformerFactory tFactory = TransformerFactory.newInstance();
-			Transformer transformer = tFactory.newTransformer(new StreamSource(new File("html" + File.separator + "Donation-Style.xslt")));
 
 			// Wrap the list of donations for JAXB
 			DonationsWrapper wrapper = new DonationsWrapper();
@@ -226,9 +224,14 @@ public class XMLManagerImpl implements XMLManager {
 
 			File tempXmlFile = new File("xmls" + File.separator + fileName);
 			marshaller.marshal(wrapper, tempXmlFile);
+			// Load XSLT file
+			TransformerFactory tFactory = TransformerFactory.newInstance();
+			Transformer transformer = tFactory
+					.newTransformer(new StreamSource(new File("xmls" + File.separator + "Donation-Style.xslt")));
 
 			// Transforming XML to HTML
-			transformer.transform(new StreamSource(tempXmlFile),new StreamResult(new File("html" + File.separator +"Donation-Output.html")));
+			transformer.transform(new StreamSource(tempXmlFile),
+					new StreamResult(new File("xmls" + File.separator + "Donation-Output.html")));
 
 			// Clean up temporary XML file
 			tempXmlFile.delete();
