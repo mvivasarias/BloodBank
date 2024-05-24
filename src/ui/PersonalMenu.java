@@ -174,9 +174,9 @@ public class PersonalMenu {
 			byte[] newPhoto = Utilities.readImage(photoPath);
 
 			personalManager.modifyPersonal(nurseModifying, newName, newSurname, this.email, newPhoto);
-
 		}
 	}
+	
 
 	private void deleteNurse(JDBCPersonalManager personalManager) {
 
