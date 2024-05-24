@@ -169,10 +169,6 @@ public class PersonalMenu {
 			System.out.println("Modify your surname :");
 			String newSurname = Utilities.readString();
 
-			System.out.println("Modify your email :");
-			String newEmail = Utilities.readString();
-			this.email = newEmail;
-
 			System.out.println("Please introduce a new photo  by typing the file path");
 			String photoPath = Utilities.readString();
 			byte[] newPhoto = Utilities.readImage(photoPath);
