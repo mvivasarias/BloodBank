@@ -49,7 +49,7 @@ public class Menu {
 		usermanager = new JPAuserManager();
 		usermanager.connect();
 		
-		xmlManager = new XMLManagerImpl();
+		xmlManager = new XMLManagerImpl(jdbcManager);
 
 		try {
 			int choice;

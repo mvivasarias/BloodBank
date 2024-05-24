@@ -27,15 +27,23 @@ public class XMLManagerImpl implements XMLManager {
 	JDBCDonationManager donationManager;
 	JDBCDonorManager donorManager;
 
+	
+	
+	public XMLManagerImpl(JDBCManager m) {
+		super();
+		this.manager = m;
+		personalManager = new JDBCPersonalManager(manager);
+		donorManager = new JDBCDonorManager(manager);
+		donationManager = new JDBCDonationManager(manager);
+	}
+
 	@Override
 	public void personal2xml(Integer id) {
 
 		Personal person = null;
 		List<Donation> donations = new ArrayList<Donation>();
 
-		manager = new JDBCManager();
-		personalManager = new JDBCPersonalManager(manager);
-		donationManager = new JDBCDonationManager(manager);
+		
 
 		try {
 			// search for the person
@@ -69,10 +77,7 @@ public class XMLManagerImpl implements XMLManager {
 		Personal person = null;
 		Donor donor = null;
 
-		manager = new JDBCManager();
-		personalManager = new JDBCPersonalManager(manager);
-		donorManager = new JDBCDonorManager(manager);
-		donationManager = new JDBCDonationManager(manager);
+		
 
 		try {
 			// search for all the donations with a blood type
@@ -114,9 +119,7 @@ public class XMLManagerImpl implements XMLManager {
 	public Donation xml2Donation(File xml) {
 		Donation donation = null;
 
-		manager = new JDBCManager();
-		donationManager = new JDBCDonationManager(manager);
-
+		
 		try {
 
 			JAXBContext jaxbContext = JAXBContext.newInstance(Donation.class);
@@ -134,12 +137,10 @@ public class XMLManagerImpl implements XMLManager {
 	@Override
 	public Personal xml2Personal(File xml) {
 		Personal person = null;
-		manager = new JDBCManager();
-		personalManager = new JDBCPersonalManager(manager);
-
+		
 		try {
 
-			JAXBContext jaxbContext = JAXBContext.newInstance(Donation.class);
+			JAXBContext jaxbContext = JAXBContext.newInstance(Personal.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			person = (Personal) unmarshaller.unmarshal(xml);
 			personalManager.addPersonal(person);
@@ -155,10 +156,7 @@ public class XMLManagerImpl implements XMLManager {
 		Personal person = null;
 		List<Donation> donations = new ArrayList<Donation>();
 
-		manager = new JDBCManager();
-		personalManager = new JDBCPersonalManager(manager);
-		donationManager = new JDBCDonationManager(manager);
-
+		
 		try {
 
 			// search for the person
@@ -181,7 +179,7 @@ public class XMLManagerImpl implements XMLManager {
 
 	        // Transform XML to HTML
 	        transformer.transform(new StreamSource(file),
-	                new StreamResult(new File("html" + File.separator + "Personal-Output.html")));
+	                new StreamResult(new File("xmls" + File.separator + "Personal-Output.html")));
 
 			file.delete();
 		} catch (Exception e) {
@@ -195,10 +193,6 @@ public class XMLManagerImpl implements XMLManager {
 		Personal person = null;
 		Donor donor = null;
 
-		manager = new JDBCManager();
-		personalManager = new JDBCPersonalManager(manager);
-		donorManager = new JDBCDonorManager(manager);
-		donationManager = new JDBCDonationManager(manager);
 		try {
 			donationsToHtml = donationManager.getDonationsByBloodType(bloodType);
 

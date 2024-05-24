@@ -250,7 +250,7 @@ public class PersonalMenu {
 				LocalDate dob = Utilities.getDateFromKeyboard();
 				Date dobSql = Date.valueOf(dob);
 
-				// Date dobSQL=date(dobSql/1000, 'unixepoch','localtime');
+				
 
 				String bloodType = Utilities.askBloodType("Donor´s blood type modification");
 
@@ -444,7 +444,7 @@ public class PersonalMenu {
 		String fileName = "PersonID" + loggedInPersonal.getId() + ".xml";
 		File file = new File(dir, fileName);
 		
-		//File file = new File("/Users/mariavivasarias/Desktop/BASES DE DATOS/xsl_AND_dtd/External-Personal.xml");
+		
 		person = xmlManager.xml2Personal(file);
 		System.out.println(person);
 
@@ -488,7 +488,6 @@ public class PersonalMenu {
 		String fileName = "DonationBloodType" + bloodType + ".xml";
 		File file = new File(dir, fileName);
 		
-		//File file = new File("/Users/mariavivasarias/Desktop/BASES DE DATOS/xsl_AND_dtd/External-Donation.xml");
 		donation = xmlManager.xml2Donation(file);
 		System.out.println(donation);
 	}
