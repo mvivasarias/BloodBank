@@ -59,7 +59,7 @@ public class PersonalMenu {
 				System.out.println("12. Get list of blood remaining");
 				System.out.println("13. Save you as personal to file");
 				System.out.println("14. Load you as personal from xml");
-				System.out.println("15. Savea a list of donations to file");
+				System.out.println("15. Save a list of donations to file");
 				System.out.println("16. Load a donation from xml");
 
 				System.out.println("0. Return.");

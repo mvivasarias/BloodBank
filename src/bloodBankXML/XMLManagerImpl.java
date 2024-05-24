@@ -170,7 +170,9 @@ public class XMLManagerImpl implements XMLManager {
 
 			JAXBContext jaxbContext = JAXBContext.newInstance(Personal.class);
 			Marshaller marshaller = jaxbContext.createMarshaller();
-			File file = File.createTempFile("temp", ".xml");
+			String fileName = "PersonID" + id + ".xml";
+
+			File file = new File("xmls" + File.separator + fileName);
 			marshaller.marshal(person, file);
 
 			// Load XSLT file
@@ -220,12 +222,13 @@ public class XMLManagerImpl implements XMLManager {
 			JAXBContext jaxbContext = JAXBContext.newInstance(DonationsWrapper.class);
 			Marshaller marshaller = jaxbContext.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true); // To format the XML
-			File tempXmlFile = File.createTempFile("temp", ".xml");
+			String fileName = "DonationBloodType" + bloodType + ".xml";
+
+			File tempXmlFile = new File("xmls" + File.separator + fileName);
 			marshaller.marshal(wrapper, tempXmlFile);
 
 			// Transforming XML to HTML
-			transformer.transform(new StreamSource(tempXmlFile),
-					new StreamResult(new File("./xmls/Donation-Output.html")));
+			transformer.transform(new StreamSource(tempXmlFile),new StreamResult(new File("./xmls/Donation-Output.html")));
 
 			// Clean up temporary XML file
 			tempXmlFile.delete();
