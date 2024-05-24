@@ -90,7 +90,7 @@ public class JDBCPersonalManager implements PersonalManager {
 
 	@Override
 	public void modifyPersonal(Personal personalToModify, String newName, String newSurname, String newEmail,
-			String newPhoto) {
+			byte [] newPhoto) {
 		// not modifying neither the id nor the contract
 		
 		try {
@@ -104,9 +104,9 @@ public class JDBCPersonalManager implements PersonalManager {
 			if (newEmail != null && !newEmail.isEmpty()) {
 				personalToModify.setEmail(newEmail);
 			}
-			if (newPhoto != null && !newPhoto.isEmpty()) { // CONVERT TO BYTES IF PHOTO IS INTRODUCED IN A STRING FORMAT
+			if (newPhoto != null && (newPhoto.length)>0) { // CONVERT TO BYTES IF PHOTO IS INTRODUCED IN A STRING FORMAT
 
-				personalToModify.setPhoto(newPhoto.getBytes());
+				personalToModify.setPhoto(newPhoto);
 			}
 
 			String sql = "UPDATE personal SET name = ?, surname = ?, email = ?, foto = ? WHERE id = ?";

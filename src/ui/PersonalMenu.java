@@ -147,7 +147,7 @@ public class PersonalMenu {
 		Contract contract = Utilities.makeAContract();
 		Contract contractAdded = contractManager.addContract(contract); // SQL DONE
 
-		System.out.println("Please introduce a photo(file path");
+		System.out.println("Please introduce a photo  by typing the file path");
 		String photoPath=Utilities.readString();
 		byte[] photo = Utilities.readImage(photoPath);
 
@@ -173,8 +173,10 @@ public class PersonalMenu {
 			String newEmail = Utilities.readString();
 			this.email = newEmail;
 
-			System.out.println("Enter new photo :");
-			String newPhoto = Utilities.readString();
+			System.out.println("Please introduce a new photo  by typing the file path");
+			String photoPath=Utilities.readString();
+			byte[] newPhoto = Utilities.readImage(photoPath);
+
 
 			
 			personalManager.modifyPersonal(nurseModifying, newName, newSurname, this.email, newPhoto);
@@ -424,7 +426,7 @@ public class PersonalMenu {
 
 	private void loadPersonal(JDBCPersonalManager personalManager, XMLManager xmlManager) {
 		Personal person = null;
-		File file = new File("/Users/mariavivasarias/Desktop/BASES DE DATOS/External-Personon.xml");
+		File file = new File("/xmls/Person.xml");
 		person = xmlManager.xml2Personal(file);
 		System.out.println(person);
 
@@ -432,7 +434,7 @@ public class PersonalMenu {
 
 	private void loadDonations(JDBCPersonalManager personalManager, XMLManager xmlManager) {
 		Donation donation = null;
-		File file = new File("/Users/mariavivasarias/Desktop/BASES DE DATOS/External-Donations.xml");
+		File file = new File("/xmls/Donations.xml");
 
 		donation = xmlManager.xml2Donation(file);
 		System.out.println(donation);
