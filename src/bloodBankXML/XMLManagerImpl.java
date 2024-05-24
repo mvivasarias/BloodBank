@@ -42,7 +42,7 @@ public class XMLManagerImpl implements XMLManager {
 			Marshaller marshaller = jaxbContext.createMarshaller();
 
 			// set the object and the name of the file
-			File file = new File("Person.xml");
+			File file = new File("/xmls/PersonID"+id+".xml");
 			marshaller.marshal(person, file);
 
 			System.out.println("Printed personal class to an XML file!");
@@ -82,7 +82,7 @@ public class XMLManagerImpl implements XMLManager {
 			wrapper.setDonations(donationsToXml);
 
 			// Set the object and the name of the file
-			File file = new File("Donations.xml");
+			File file = new File("/xmls/Donations"+bloodType+".xml");
 			marshaller.marshal(wrapper, file);
 			// set the object and the name of the file
 
