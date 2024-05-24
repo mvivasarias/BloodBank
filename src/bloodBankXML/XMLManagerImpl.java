@@ -43,8 +43,8 @@ public class XMLManagerImpl implements XMLManager {
 
 			// set the object and the name of the file
 			String fileName = "PersonID" + id + ".xml";
-			
-			File file = new File("xmls"+File.separator+fileName);
+
+			File file = new File("xmls" + File.separator + fileName);
 			marshaller.marshal(person, file);
 
 			System.out.println("\nPrinted personal class to an XML file!");
@@ -68,14 +68,14 @@ public class XMLManagerImpl implements XMLManager {
 			// search for all the donations with a blood type
 			donationsToXml = donationManager.getDonationsByBloodType(bloodType);
 
-			// search for the person with the given id to have the object not only the id
+			//Search for the person associated with each donation
 			for (Donation donation : donationsToXml) {
 				person = personalManager.searchPersonalByID(donation.getPersonal().getId());
 				donation.setPersonal(person);
 			}
 
 			// export the person to an xml file
-			JAXBContext jaxbContext = JAXBContext.newInstance(Donation.class);
+			JAXBContext jaxbContext = JAXBContext.newInstance(DonationsWrapper.class);
 			Marshaller marshaller = jaxbContext.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true); // To format the XML
 
@@ -84,9 +84,11 @@ public class XMLManagerImpl implements XMLManager {
 			wrapper.setDonations(donationsToXml);
 
 			// Set the object and the name of the file
-			File file = new File("/xmls/Donations"+bloodType+".xml");
+			String fileName = "DonationBloodType" + bloodType + ".xml";
+
+			File file = new File("xmls" + File.separator + fileName);
 			marshaller.marshal(wrapper, file);
-			// set the object and the name of the file
+			
 
 			System.out.println("Printed  donation class to an XML file!");
 
@@ -94,7 +96,6 @@ public class XMLManagerImpl implements XMLManager {
 			e.printStackTrace();
 		}
 
-		
 	}
 
 	@Override
@@ -125,7 +126,7 @@ public class XMLManagerImpl implements XMLManager {
 		personalManager = new JDBCPersonalManager(manager);
 
 		try {
-			
+
 			JAXBContext jaxbContext = JAXBContext.newInstance(Donation.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			person = (Personal) unmarshaller.unmarshal(xml);
