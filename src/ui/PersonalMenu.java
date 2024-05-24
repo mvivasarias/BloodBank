@@ -417,7 +417,7 @@ public class PersonalMenu {
 
 	private void printMe(JDBCPersonalManager personalManager, XMLManager xmlManager) {
 		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
-
+	
 		if (loggedInPersonal != null) {
 			xmlManager.personal2xml(loggedInPersonal.getId());
 		}
@@ -426,7 +426,13 @@ public class PersonalMenu {
 
 	private void loadPersonal(JDBCPersonalManager personalManager, XMLManager xmlManager) {
 		Personal person = null;
-		File file = new File("/xmls/Person.xml");
+		System.out.println("Introduce an id to print that list to an xml");
+		Integer id=Utilities.readInteger("ID");
+		
+		File dir = new File("xmls");
+		String fileName = "PersonID" + id + ".xml";
+		File file = new File(dir, fileName);
+		
 		person = xmlManager.xml2Personal(file);
 		System.out.println(person);
 
@@ -434,12 +440,16 @@ public class PersonalMenu {
 
 	private void loadDonations(JDBCPersonalManager personalManager, XMLManager xmlManager) {
 		Donation donation = null;
+		
+		System.out.println("Introduce the blood type list you want to load");
+		String bloodType = Utilities.askBloodType("blood type");
+		
 		File dir = new File("xmls");
-		String fileName = "Donations.xml";
+		String fileName = "DonationBloodType" + bloodType + ".xml";
 		File file = new File(dir, fileName);
+		
 		donation = xmlManager.xml2Donation(file);
 		System.out.println(donation);
-
 	}
 
 	private void printDonations(JDBCPersonalManager personalManager, XMLManager xmlManager) {

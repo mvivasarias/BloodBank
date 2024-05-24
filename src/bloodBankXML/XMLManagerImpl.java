@@ -8,9 +8,11 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import bloodBankIfaces.XMLManager;
 import bloodBankJDBC.JDBCDonationManager;
+import bloodBankJDBC.JDBCDonorManager;
 import bloodBankJDBC.JDBCManager;
 import bloodBankJDBC.JDBCPersonalManager;
 import bloodBankPOJOs.Donation;
+import bloodBankPOJOs.Donor;
 import bloodBankPOJOs.Personal;
 import bloodBankXMLutils.DonationsWrapper;
 
@@ -18,6 +20,7 @@ public class XMLManagerImpl implements XMLManager {
 	JDBCManager manager;
 	JDBCPersonalManager personalManager;
 	JDBCDonationManager donationManager;
+	JDBCDonorManager donorManager;
 
 	@Override
 	public void personal2xml(Integer id) {
@@ -59,10 +62,13 @@ public class XMLManagerImpl implements XMLManager {
 	public void donation2xml(String bloodType) {
 		List<Donation> donationsToXml = null;
 		Personal person = null;
+		Donor donor=null;
 
 		manager = new JDBCManager();
 		personalManager = new JDBCPersonalManager(manager);
+		donorManager= new JDBCDonorManager(manager);
 		donationManager = new JDBCDonationManager(manager);
+	
 
 		try {
 			// search for all the donations with a blood type
@@ -72,6 +78,9 @@ public class XMLManagerImpl implements XMLManager {
 			for (Donation donation : donationsToXml) {
 				person = personalManager.searchPersonalByID(donation.getPersonal().getId());
 				donation.setPersonal(person);
+				donor= donorManager.getDonorByID(donation.getDonor().getId());
+				donation.setDonor(donor);
+				
 			}
 
 			// export the person to an xml file
