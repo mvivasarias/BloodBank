@@ -65,6 +65,7 @@ public class XMLManagerImpl implements XMLManager {
 
 			System.out.println("\nPrinted personal class to an XML file!");
 
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
