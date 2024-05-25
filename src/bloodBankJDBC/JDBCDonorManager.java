@@ -142,7 +142,8 @@ public class JDBCDonorManager implements DonorManager {
 		return donor;
 
 	}
-
+	
+	@Override
 	public void incrementDonorTimes(Donor donorDonating) {
 
 		try {
@@ -150,7 +151,6 @@ public class JDBCDonorManager implements DonorManager {
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 
 			prep.setInt(1, donorDonating.getId());
-			prep.executeUpdate();
 			int rowsAffected = prep.executeUpdate();
 
 			if (rowsAffected > 0) {

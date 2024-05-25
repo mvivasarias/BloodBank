@@ -3,8 +3,6 @@ package ui;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -64,9 +62,10 @@ public class HospitalMenu {
 
 			System.out.println("Type the liters needed");
 			float litersNeeded = Utilities.readfloat();
-			System.out.println("Type the date of the request ");
-			LocalDate dateOfRequest = Utilities.getDateFromKeyboard();
-			Date dateRequestSQL = Date.valueOf(dateOfRequest);
+			System.out.println("Date of the request ");
+			LocalDate currentDate = LocalDate.now();
+			System.out.println(currentDate);
+			Date dateRequestSQL = Date.valueOf(currentDate);
 
 			System.out.println("Type the blood type needed");
 			String bloodType = Utilities.askBloodType("Introduce blood type:");
