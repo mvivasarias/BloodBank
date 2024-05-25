@@ -56,7 +56,7 @@ public class JDBCDonationManager implements DonationManager {
 					int generatedId = generatedKeys.getInt(1); // Retrieve the generated ID
 					newDonation = new Donation(generatedId, donation.getDate(), donation.getAmount(),
 							donation.getDonor(), donation.getPersonal());
-					System.out.println("Generated ID for donation record: " + generatedId);
+					
 				} else {
 					throw new SQLException("Creating donation record failed, no ID obtained.");
 				}

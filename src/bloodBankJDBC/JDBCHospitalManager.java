@@ -19,14 +19,12 @@ public class JDBCHospitalManager implements HospitalManager {
 	public JDBCHospitalManager(JDBCManager m) {
 		this.manager = m;
 	}
-	
 
 	public JDBCHospitalManager(JDBCManager manager, JDBCBloodManager bloodManager) {
 		super();
 		this.manager = manager;
 		this.bloodManager = bloodManager;
 	}
-
 
 	@Override
 	public void addHospital(Hospital hospitalToAdd) { // ADD TO THE TABLE THE HOSPITAL WITH ALL THAT VALUES
@@ -122,49 +120,26 @@ public class JDBCHospitalManager implements HospitalManager {
 		return hospital;
 	}
 
-	public void addRequest(Integer hospital_id, Integer blood_id, float liters, Date date) {
-	    try {
-	        String sql = "INSERT INTO hospital_blood (hospital_id, blood_id, liters, date) VALUES (?, ?, ?, ?)";
-	        PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-	        prep.setInt(1, hospital_id);
-	        prep.setInt(2, blood_id);
-	        prep.setFloat(3, liters);
-	        prep.setDate(4, new java.sql.Date(date.getTime()));
-
-	        int rowsAffected = prep.executeUpdate();
-
-	        if (rowsAffected > 0) {
-	            System.out.println("Request added successfully to hospital_blood table.");
-	        } else {
-	            System.out.println("Failed to add request to hospital_blood table.");
-	        }
-
-	        prep.close();
-	    } catch (SQLException e) {
-	        System.err.println("Error adding request to hospital_blood table: " + e.getMessage());
-	    }
-	}
-
 	@Override
 	public Hospital searchHospitalByEmail(String email) {
 		Hospital hospital = null;
 
 		try {
-			
+
 			String sql = "SELECT * FROM hospital WHERE email = ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, email);
 
 			ResultSet rs = prep.executeQuery();
-			
-			if(rs.next()) {
 
-			Integer hospital_id = rs.getInt("id");
-			String name = rs.getString("name");
-			String address = rs.getString("address");
-			String email_hosp = rs.getString("email");
+			if (rs.next()) {
 
-			hospital = new Hospital(hospital_id, name, address, email_hosp);
+				Integer hospital_id = rs.getInt("id");
+				String name = rs.getString("name");
+				String address = rs.getString("address");
+				String email_hosp = rs.getString("email");
+
+				hospital = new Hospital(hospital_id, name, address, email_hosp);
 			}
 			rs.close();
 			prep.close();
@@ -176,7 +151,29 @@ public class JDBCHospitalManager implements HospitalManager {
 		return hospital;
 
 	}
+
+	@Override
+	public void addRequest(Integer hospital_id, Integer blood_id, float liters, Date date) {
+		try {
+			String sql = "INSERT INTO hospital_blood (hospital_id, blood_id, liters, date) VALUES (?, ?, ?, ?)";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setInt(1, hospital_id);
+			prep.setInt(2, blood_id);
+			prep.setFloat(3, liters);
+			prep.setDate(4, new java.sql.Date(date.getTime()));
+
+			int rowsAffected = prep.executeUpdate();
+
+			if (rowsAffected > 0) {
+				System.out.println("Request added successfully to hospital_blood table.");
+			} else {
+				System.out.println("Failed to add request to hospital_blood table.");
+			}
+
+			prep.close();
+		} catch (SQLException e) {
+			System.err.println("Error adding request to hospital_blood table: " + e.getMessage());
+		}
+	}
+
 }
-
-
-

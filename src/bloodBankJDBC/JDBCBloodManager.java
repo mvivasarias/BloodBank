@@ -111,7 +111,7 @@ public class JDBCBloodManager implements BloodManager {
 				if (generatedKeys.next()) {
 					int generatedId = generatedKeys.getInt(1); // Retrieve the generated ID
 					blood= new Blood(generatedId,newBlood.getBloodType(), newBlood.getLiters(), newBlood.getDate()); // Set the generated ID in the Blood object
-					System.out.println("Generated ID for blood record: " + generatedId);
+					
 				} else {
 					throw new SQLException("Creating blood record failed, no ID obtained.");
 				}

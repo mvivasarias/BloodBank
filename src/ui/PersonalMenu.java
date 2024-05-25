@@ -46,22 +46,10 @@ public class PersonalMenu {
 				System.out.println("\nHELLO user!\nWelcome to the personal menu of the blood bank database\n"
 						+ "Select an option (REGISTER FIRST!)\n");
 				System.out.println("1. REGISTER as personal in the  blood bank database to perform any action");
-				System.out.println("2. Modify your information ");
-				System.out.println("3. Delete personal");
-				System.out.println("4. List personal");
-				System.out.println("5. Register a donor ");
-				System.out.println("6. Modify information of a donor");
-				System.out.println("7. Delete donor");
-				System.out.println("8. List donors");
-				System.out.println("9. Add donation");
-				System.out.println("10. Delete donation");
-				System.out.println("11. List donations");
-				System.out.println("12. Get list of blood remaining");
-				System.out.println("13. Save you as personal to file");
-				System.out.println("14. Load you as personal from xml");
-				System.out.println("15. Save a list of donations to file");
-				System.out.println("16. Load a donation from xml");
-
+				System.out.println("2. Personal options ");
+				System.out.println("3. Donor options");
+				System.out.println("4. Donations options");
+				System.out.println("5. Get list of blood remaining");
 				System.out.println("0. Return.");
 
 				choice = Integer.parseInt(reader.readLine());
@@ -71,52 +59,17 @@ public class PersonalMenu {
 					registerNurse(personalManager, contractManager);
 					break;
 				case 2:
-					modifyNurse(personalManager);
+					personalOption( personalManager,contractManager, xmlManager);
 					break;
 				case 3:
-					deleteNurse(personalManager);
+					 DonorOption(personalManager, donorManager);
 					break;
 				case 4:
-					listPersonal(personalManager);
+					 DonationOption(personalManager,donorManager,donationManager,bloodManager, contractManager,xmlManager);
 					break;
 				case 5:
-					registerDonor(personalManager, donorManager);
-					break;
-				case 6:
-					modifyDonor(personalManager, donorManager);
-					break;
-				case 7:
-					deleteDonor(personalManager, donorManager);
-					break;
-				case 8:
-					listDonors(personalManager, donorManager);
-					break;
-				case 9:
-					addDonation(personalManager, donorManager, donationManager, bloodManager, contractManager,
-							xmlManager);
-					break;
-				case 10:
-					deleteDonation(personalManager, donationManager);
-					break;
-				case 11:
-					listDonations(personalManager, donationManager);
-					break;
-				case 12:
 					listOfBloodExtractions(personalManager, bloodManager);
 					break;
-				case 13:
-					printMe(personalManager, xmlManager);
-					break;
-				case 14:
-					loadPersonal(personalManager, xmlManager);
-					break;
-				case 15:
-					printDonations(personalManager, xmlManager);
-					break;
-				case 16:
-					loadDonations(personalManager, xmlManager);
-					break;
-
 				case 0:
 					System.out.println("Back to main menu");
 
@@ -129,13 +82,136 @@ public class PersonalMenu {
 		}
 	}
 
+	private void personalOption(JDBCPersonalManager personalManager, JDBCContractManager contractManager, XMLManager xmlManager) {
+		try {
+			int choice;
+			do {
+				System.out.println("1. Modify your information ");
+				System.out.println("2. Delete personal");
+				System.out.println("3. List personal");
+				System.out.println("4. Save you as personal to file");
+				System.out.println("5. Load you as personal from xml");
+				System.out.println("0. Return to main Personal menu.");
+				choice = Integer.parseInt(reader.readLine());
+
+				switch (choice) {
+				case 1:
+					modifyNurse(personalManager);
+					break;
+				case 2:
+					deleteNurse(personalManager);
+					break;
+				case 3:
+					listPersonal(personalManager);
+					break;
+				case 4:
+					printMe(personalManager, xmlManager);
+					break;
+				case 5:
+					loadPersonal(personalManager, xmlManager);
+					break;
+				case 0:
+					System.out.println("Back to main personal menu");
+
+				}
+
+			} while (choice != 0);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	private void DonorOption(JDBCPersonalManager personalManager, JDBCDonorManager donorManager) {
+		try {
+			int choice;
+			do {
+				System.out.println("1. Register a donor ");
+				System.out.println("2. Modify information of a donor");
+				System.out.println("3. Delete donor");
+				System.out.println("4. List donors");
+				System.out.println("0. Return to main Personal menu.");
+				choice = Integer.parseInt(reader.readLine());
+
+				switch (choice) {
+				case 1:
+					registerDonor(personalManager, donorManager);
+					break;
+				case 2:
+					modifyDonor(personalManager, donorManager);
+					break;
+				case 3:
+					deleteDonor(personalManager, donorManager);
+					break;
+				case 4:
+					listDonors(personalManager, donorManager);
+					break;
+				case 0:
+					System.out.println("Back to main personal menu");
+
+				}
+
+			} while (choice != 0);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	private void DonationOption(JDBCPersonalManager personalManager, JDBCDonorManager donorManager,
+			JDBCDonationManager donationManager, JDBCBloodManager bloodManager, JDBCContractManager contractManager,
+			XMLManager xmlManager) {
+		try {
+			int choice;
+			do {
+				System.out.println("1. Add donation");
+				System.out.println("2. Delete donation");
+				System.out.println("3. List donations");
+				System.out.println("4. Save a list of donations to file");
+				System.out.println("5. Load a donation from xml");
+				System.out.println("0. Return to main Personal menu.");
+				
+				choice = Integer.parseInt(reader.readLine());
+
+				switch (choice) {
+				
+				case 1:
+					addDonation(personalManager, donorManager, donationManager, bloodManager, contractManager,
+							xmlManager);
+					break;
+				case 2:
+					deleteDonation(personalManager, donationManager);
+					break;
+				case 3:
+					listDonations(personalManager, donationManager);
+					break;
+				case 4:
+					printDonations(personalManager, xmlManager);
+					break;
+				case 5:
+					loadDonations(personalManager, xmlManager);
+					break;
+				case 0:
+					System.out.println("Back to main personal menu");
+					break;
+
+				}
+
+			} while (choice != 0);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
 	private void registerNurse(JDBCPersonalManager personalManager, JDBCContractManager contractManager) {
 
 		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
+	
 		if (loggedInPersonal != null) {
 			return;
 
 		}
+		System.out.println("\nYOU ARE IN OPTION 1, REGISTER PLEASE:");
 
 		System.out.println("Type your name");
 		String name = Utilities.readString();
@@ -251,8 +327,6 @@ public class PersonalMenu {
 				LocalDate dob = Utilities.getDateFromKeyboard();
 				Date dobSql = Date.valueOf(dob);
 
-				
-
 				String bloodType = Utilities.askBloodType("Donor´s blood type modification");
 
 				int times = donorExisting.getTimes(); // not modified
@@ -277,7 +351,6 @@ public class PersonalMenu {
 			Integer idDonor = Utilities.readInteger("Enter the donor ID you want to delete :");
 			Donor donorExisting = donorManager.getDonorByID(idDonor);
 
-			
 			if (donorExisting != null) {
 				donorManager.deleteDonor(donorExisting.getId());
 			} else {
@@ -340,13 +413,13 @@ public class PersonalMenu {
 
 		Donation newDonation = new Donation(currentDate, amountDonating, donorDonating, nurseAttending);
 		Donation donationAdded = donationManager.addDonation(newDonation);
-		System.out.println("donation id" + donationAdded.getId());
+		
 		donorManager.incrementDonorTimes(donorDonating); // the donor´s times donating increment 1
 
 		Blood newBlood = new Blood(donorDonating.getBloodtype(), amountDonating, currentDate);
 
 		Blood bloodAdded = bloodManager.addBlood(newBlood);
-		System.out.println("blood" + bloodAdded.getId());
+
 
 		donationManager.addDonationBlood(donationAdded.getId(), bloodAdded.getId());
 
@@ -402,7 +475,7 @@ public class PersonalMenu {
 		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
 
 		if (loggedInPersonal != null) {
-			System.out.println("List of blood extractions ordered by blood type:");
+			System.out.println("List of blood stock ordered by blood type:");
 			List<Blood> bloods = bloodManager.getBloodListByType();
 			for (Blood blood : bloods) {
 				System.out.println(blood);
@@ -433,7 +506,6 @@ public class PersonalMenu {
 				System.out.println("Invalid option. Please choose xml or html.");
 			}
 
-			
 		}
 
 	}
@@ -445,8 +517,7 @@ public class PersonalMenu {
 		File dir = new File("xmls");
 		String fileName = "PersonID" + loggedInPersonal.getId() + ".xml";
 		File file = new File(dir, fileName);
-		
-		
+
 		person = xmlManager.xml2Personal(file);
 		System.out.println(person);
 
@@ -489,7 +560,7 @@ public class PersonalMenu {
 		File dir = new File("xmls");
 		String fileName = "DonationBloodType" + bloodType + ".xml";
 		File file = new File(dir, fileName);
-		
+
 		donation = xmlManager.xml2Donation(file);
 		System.out.println(donation);
 	}

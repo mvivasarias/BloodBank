@@ -3,7 +3,9 @@ package ui;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.Date;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import bloodBankJDBC.JDBCBloodManager;
@@ -62,20 +64,28 @@ public class HospitalMenu {
 
 			System.out.println("Type the liters needed");
 			float litersNeeded = Utilities.readfloat();
-			System.out.println("Date of the request ");
-			LocalDate currentDate = LocalDate.now();
-			System.out.println(currentDate);
-			Date dateRequestSQL = Date.valueOf(currentDate);
+			 
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            Timestamp timestamp = Timestamp.valueOf(currentDateTime);
 
-			System.out.println("Type the blood type needed");
+            
+            Date dateRequestSQL = new Date(timestamp.getTime());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            
+            System.out.println("Request date and time: " + currentDateTime.format(formatter));
+
+			System.out.println("\nType the blood type needed");
 			String bloodType = Utilities.askBloodType("Introduce blood type:");
 			
 			List<Blood> bloodRecords = bloodManager.searchBloodType(bloodType);
+			
+			if(!bloodRecords.isEmpty()) {
+			System.out.println("Blood stock of "+ bloodType+ " in the blood bank");
 			for (Blood blood: bloodRecords) {
-				System.out.println("Blood stock of "+ bloodType+ " in the blood bank");
-				System.out.println(blood.toString()+"\n");
-			}
-
+				
+				System.out.println(blood.toString());
+			} }
+			System.out.println("\n");
 			if (bloodRecords.isEmpty()) {
 				System.out.println("Blood type " + bloodType + " is not available.");
 			} else {
