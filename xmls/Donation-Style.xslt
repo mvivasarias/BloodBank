@@ -59,10 +59,18 @@
                     <tr>
                         <td><xsl:value-of select="@amount" /></td>
                         <td><xsl:value-of select="date" /></td>
-                        <td><xsl:value-of select="donor/@name" /> <xsl:value-of select="donor/@surname" /></td>
+                         <td>
+                            <xsl:value-of select="donor/@name" />
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="donor/@surname" />
+                        </td>
                         <td><xsl:value-of select="donor/dob" /></td>
                         <td><xsl:value-of select="donor/BloodType[1]" /></td>
-                        <td><xsl:value-of select="nurse/@name" /> <xsl:value-of select="nurse/@surname" /></td>
+                        <td>
+                            <xsl:value-of select="nurse/@name" />
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="nurse/@surname" />
+                        </td>
                         <td><xsl:value-of select="nurse/email" /></td>
                         <td><xsl:value-of select="nurse/contract/salary" /></td>
                         <td><xsl:value-of select="nurse/contract/hours" /></td>
