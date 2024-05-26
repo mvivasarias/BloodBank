@@ -12,8 +12,9 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+
 @Entity
-@Table( name= "users")
+@Table(name = "users")
 public class User implements Serializable {
 
 	/**
@@ -26,7 +27,7 @@ public class User implements Serializable {
 	private Integer id;
 	private String email;
 	@Lob
-	private byte[] password; // lo ponemos como byte[] para la encriptacion
+	private byte[] password; 
 	@ManyToOne
 	@JoinColumn(name = "role_id")
 	private Role role;

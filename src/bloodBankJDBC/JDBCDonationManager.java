@@ -1,13 +1,11 @@
 package bloodBankJDBC;
 
-import java.beans.Statement;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import bloodBankIfaces.DonationManager;
 import bloodBankPOJOs.Donation;
 import bloodBankPOJOs.Donor;
@@ -24,13 +22,13 @@ public class JDBCDonationManager implements DonationManager {
 		this.personalManager = new JDBCPersonalManager(m);
 	}
 
-	/*public JDBCDonationManager(JDBCManager manager, JDBCDonorManager donorManager,
-			JDBCPersonalManager personalManager) {
-
-		this.manager = manager;
-		this.donorManager = donorManager;
-		this.personalManager = personalManager;
-	}*/
+	/*
+	 * public JDBCDonationManager(JDBCManager manager, JDBCDonorManager
+	 * donorManager, JDBCPersonalManager personalManager) {
+	 * 
+	 * this.manager = manager; this.donorManager = donorManager;
+	 * this.personalManager = personalManager; }
+	 */
 
 	@Override
 	public Donation addDonation(Donation donation) {
@@ -56,7 +54,7 @@ public class JDBCDonationManager implements DonationManager {
 					int generatedId = generatedKeys.getInt(1); // Retrieve the generated ID
 					newDonation = new Donation(generatedId, donation.getDate(), donation.getAmount(),
 							donation.getDonor(), donation.getPersonal());
-					
+
 				} else {
 					throw new SQLException("Creating donation record failed, no ID obtained.");
 				}

@@ -4,8 +4,8 @@ import bloodBankPOJOs.Contract;
 
 public interface ContractManager {
 	
-	public Contract addContract(Contract addContract); //sql done
-	public Contract searchContractById(Integer contractId); //sql done
+	public Contract addContract(Contract addContract);
+	public Contract searchContractById(Integer contractId);
 	
 
 }

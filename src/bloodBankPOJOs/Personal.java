@@ -14,29 +14,26 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="Personal")
+@XmlRootElement(name = "Personal")
 
 public class Personal implements Serializable {
-	
-	
+
 	private static final long serialVersionUID = 6714833338820944413L;
-	
+
 	@XmlTransient
 	private Integer id;
 	@XmlAttribute
 	private String name;
 	@XmlAttribute
 	private String surname;
-	@XmlElement  //required by default attribute name of the pojo
+	@XmlElement // required by default attribute name of the pojo
 	private String email;
-	@XmlElement //required
+	@XmlElement // required
 	private Contract contract;
 	@XmlElement
 	private byte[] photo;
-	@XmlElement (name = "Donation")
+	@XmlElement(name = "Donation")
 	@XmlElementWrapper(name = "Donations")
 	private List<Donation> donations;
 
@@ -44,18 +41,6 @@ public class Personal implements Serializable {
 		super();
 		donations = new ArrayList<Donation>();
 
-	}
-
-	// constructor sin el id
-	public Personal(String name, String surname, String email, List<Donation> donations, Contract contract,
-			byte[] photo) {
-		super();
-		this.name = name;
-		this.surname = surname;
-		this.email = email;
-		this.donations = donations;
-		this.contract = contract;
-		this.photo = photo;
 	}
 
 	public Personal(String name, String surname, String email, Contract contract, byte[] foto) {

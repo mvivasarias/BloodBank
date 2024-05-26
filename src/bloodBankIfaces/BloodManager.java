@@ -6,18 +6,18 @@ import bloodBankPOJOs.Blood;
 
 public interface BloodManager {
 	
-	public void deleteBloodById(Integer bloodId);//sql done
+	public void deleteBloodById(Integer bloodId);
 	
-	public Blood searchBloodById(Integer bloodId); //sql done
+	public Blood searchBloodById(Integer bloodId);
 	
-	public List<Blood> searchBloodType(String bloodType);//sql done
+	public List<Blood> searchBloodType(String bloodType);
 	
-	public Blood addBlood(Blood newBlood);//sql done
+	public Blood addBlood(Blood newBlood);
 	
-	public float getTotalLitersAvailable(String bloodType); //Sql done
+	public float getTotalLitersAvailable(String bloodType); 
 	
-	public void updateStockLitersById(Integer blood_id, float newLiters);//sql done
+	public void updateStockLitersById(Integer blood_id, float newLiters);
 	
-	public List<Blood> getBloodListByType(); //sql done
+	public List<Blood> getBloodListByType(); 
 
 }

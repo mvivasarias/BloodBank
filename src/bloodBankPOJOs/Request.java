@@ -4,23 +4,18 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-public class Request implements Serializable{
+public class Request implements Serializable {
 
-	
 	private static final long serialVersionUID = 6714833338820944413L;
-	
+
 	private Hospital hospital;
 	private Blood blood;
 	private float liters;
 	private Date date;
-	
-	
+
 	public Request() {
 		super();
 	}
-	
-	
-	
 
 	public Request(Hospital hospital, Blood blood, float liters, Date date) {
 		super();
@@ -29,9 +24,6 @@ public class Request implements Serializable{
 		this.liters = liters;
 		this.date = date;
 	}
-
-
-
 
 	public float getLiters() {
 		return liters;
@@ -49,8 +41,6 @@ public class Request implements Serializable{
 		this.date = date;
 	}
 
-	
-
 	public Blood getBlood() {
 		return blood;
 	}
@@ -58,7 +48,6 @@ public class Request implements Serializable{
 	public void setBlood(Blood blood) {
 		this.blood = blood;
 	}
-	
 
 	public Hospital getHospital() {
 		return hospital;
@@ -67,7 +56,6 @@ public class Request implements Serializable{
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -88,14 +76,10 @@ public class Request implements Serializable{
 				&& Float.floatToIntBits(liters) == Float.floatToIntBits(other.liters);
 	}
 
-
 	@Override
 	public String toString() {
-		return "Request [Hospital=" + this.hospital  + ", date=" + this.date + ",liters=" + this.liters + ", blood type=" + blood.getBloodType() + "]";
+		return "Request [Hospital=" + this.hospital + ", date=" + this.date + ",liters=" + this.liters + ", blood type="
+				+ blood.getBloodType() + "]";
 	}
 
-	
-	
-	
-	
 }

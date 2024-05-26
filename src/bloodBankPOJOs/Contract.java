@@ -9,9 +9,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="Contract")
+@XmlRootElement(name = "Contract")
 public class Contract implements Serializable {
 
 	/**
@@ -24,21 +23,13 @@ public class Contract implements Serializable {
 	private Integer salary;
 	@XmlElement
 	private Integer hours;
-	
+
 	@XmlTransient
-	private Personal personal;   
-	
+	private Personal personal;
+
 	public Contract() {
 		super();
-	
-	}
 
-	
-	public Contract(Integer salary, Integer hours, Personal personal) {
-		super();
-		this.salary = salary;
-		this.hours = hours;
-		this.personal = personal;
 	}
 
 	public Contract(Integer id, Integer salary, Integer hours) {
@@ -48,7 +39,6 @@ public class Contract implements Serializable {
 		this.hours = hours;
 		this.personal = new Personal();
 	}
-	
 
 	public Contract(Integer salary, Integer hours) {
 		super();
@@ -56,8 +46,6 @@ public class Contract implements Serializable {
 		this.hours = hours;
 		this.personal = new Personal();
 	}
-
-	
 
 	public Integer getId() {
 		return id;
@@ -83,8 +71,6 @@ public class Contract implements Serializable {
 		this.hours = hours;
 	}
 
-	
-
 	public Personal getPersonal() {
 		return personal;
 	}
@@ -92,7 +78,6 @@ public class Contract implements Serializable {
 	public void setPersonal(Personal personal) {
 		this.personal = personal;
 	}
-	
 
 	@Override
 	public int hashCode() {
@@ -114,11 +99,7 @@ public class Contract implements Serializable {
 
 	@Override
 	public String toString() {
-		return " [id=" + id + ", salary=" + salary + ", hours=" + hours +"]";
+		return " [id=" + id + ", salary=" + salary + ", hours=" + hours + "]";
 	}
-
-	
-
-	
 
 }

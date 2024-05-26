@@ -15,9 +15,10 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import bloodBankXMLutils.SQLDateAdapter;
+
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="Donation")
-public class Donation  implements Serializable {
+@XmlRootElement(name = "Donation")
+public class Donation implements Serializable {
 
 	/**
 	 * 
@@ -32,37 +33,17 @@ public class Donation  implements Serializable {
 	private float amount;
 	@XmlElement
 	private Donor donor;
-	@XmlElement (name="nurse")
+	@XmlElement(name = "nurse")
 	private Personal personal;
 	@XmlTransient
 	private List<Blood> bloods;
-	
+
 	public Donation() {
 		super();
 		bloods = new ArrayList<Blood>();
 	}
-	
-	public Donation(Date date, Integer amount, Donor donor, Personal personal, List<Blood> bloods) {
-		super();
-		this.date = date;
-		this.amount = amount;
-		this.donor = donor;
-		this.personal = personal;
-		this.bloods = bloods;
-	}
 
-	public Donation(Integer id, Date date, float amount, Donor donor, Personal personal, List<Blood> bloods) {
-		super();
-		this.id = id;
-		this.date = date;
-		this.amount = amount;
-		this.donor = donor;
-		this.personal = personal;
-		this.bloods = bloods;
-	}
-	
-
-	public Donation( Date date, float amount, Donor donor, Personal personal) {
+	public Donation(Date date, float amount, Donor donor, Personal personal) {
 		super();
 		this.date = date;
 		this.amount = amount;
@@ -70,7 +51,6 @@ public class Donation  implements Serializable {
 		this.personal = personal;
 		bloods = new ArrayList<Blood>();
 	}
-	
 
 	public Donation(Integer id, Date date, float amount, Donor donor, Personal personal) {
 		super();
@@ -98,9 +78,6 @@ public class Donation  implements Serializable {
 		this.date = date;
 	}
 
-	
-	
-
 	public float getAmount() {
 		return amount;
 	}
@@ -113,12 +90,9 @@ public class Donation  implements Serializable {
 		return donor;
 	}
 
-
-
 	public void setDonor(Donor donor) {
 		this.donor = donor;
 	}
-
 
 	public Personal getPersonal() {
 		return personal;
@@ -135,7 +109,6 @@ public class Donation  implements Serializable {
 	public void setBloods(List<Blood> bloods) {
 		this.bloods = bloods;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -162,10 +135,4 @@ public class Donation  implements Serializable {
 				+ personal + ", bloods=" + bloods + "]";
 	}
 
-	
-
-	
 }
-
-
-

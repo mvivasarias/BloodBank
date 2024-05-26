@@ -21,8 +21,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="Donor")
-public class Donor implements Serializable{
+@XmlRootElement(name = "Donor")
+public class Donor implements Serializable {
 
 	/**
 	 * 
@@ -37,26 +37,16 @@ public class Donor implements Serializable{
 	@XmlElement
 	@XmlJavaTypeAdapter(SQLDateAdapter.class)
 	private Date dob;
-	@XmlElement (name="BloodType")
+	@XmlElement(name = "BloodType")
 	private String bloodtype;
-	@XmlElement (name="BloodType")
+	@XmlElement(name = "BloodType")
 	private Integer times;
 	@XmlTransient
 	private List<Donation> donations;
-	
+
 	public Donor() {
 		super();
 		donations = new ArrayList<Donation>();
-	}
-
-	public Donor(String name, String surname, Date dob, String bloodtype, Integer times, List<Donation> donations) {
-		super();
-		this.name = name;
-		this.surname = surname;
-		this.dob = dob;
-		this.bloodtype = bloodtype;
-		this.times = times;
-		this.donations = donations;
 	}
 
 	public Donor(Integer id, String name, String surname, Date dob, String bloodtype, Integer times) {
@@ -70,17 +60,6 @@ public class Donor implements Serializable{
 		this.donations = new ArrayList<Donation>();
 
 	}
-	
-	
-
-	public Donor(String name, String surname, Date dob, String bloodtype) {
-		super();
-		this.name = name;
-		this.surname = surname;
-		this.dob = dob;
-		this.bloodtype = bloodtype;
-		this.donations=new ArrayList<Donation>();
-	}
 
 	public Donor(String name, String surname, Date dob, String bloodtype, Integer times) {
 		super();
@@ -89,10 +68,9 @@ public class Donor implements Serializable{
 		this.dob = dob;
 		this.bloodtype = bloodtype;
 		this.times = times;
-		this.donations=new ArrayList<Donation>();
+		this.donations = new ArrayList<Donation>();
 	}
 
-	
 	public Integer getId() {
 		return id;
 	}
@@ -172,11 +150,9 @@ public class Donor implements Serializable{
 	@Override
 	public String toString() {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String dobStr = df.format(dob);
+		String dobStr = df.format(dob);
 		return "Donor [id=" + id + ", name=" + name + ", surname=" + surname + ", dob=" + dobStr + ", bloodtype="
 				+ bloodtype + ", times=" + times + "]";
 	}
-	
-	
 
 }

@@ -165,13 +165,13 @@ public class JPAuserManager implements UserManager {
 
 			em.remove(user);
 			em.getTransaction().commit();
-			
-			 System.out.println("User deleted successfully");
+
+			System.out.println("User deleted successfully");
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			
-			 System.out.println("User failed to be deleted");
+
+			System.out.println("User failed to be deleted");
 
 		}
 

@@ -11,11 +11,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="Hospital")
+@XmlRootElement(name = "Hospital")
 
 public class Hospital implements Serializable {
-	
+
 	/**
 	 * 
 	 */
@@ -30,29 +31,11 @@ public class Hospital implements Serializable {
 	private String email;
 	@XmlTransient
 	private List<Blood> bloods;
-	
+
 	public Hospital() {
 		super();
-		this.bloods = new ArrayList<Blood>();	
+		this.bloods = new ArrayList<Blood>();
 	}
-
-	public Hospital(String name, String address, String email,List<Blood> bloods) {
-		super();
-		this.name = name;
-		this.address = address;
-		this.email=email;
-		this.bloods = bloods;
-	}
-
-	public Hospital(Integer id, String name, String address,String email, List<Blood> bloods) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.address = address;
-		this.email=email;
-		this.bloods = bloods;
-	}
-	
 
 	public Hospital(String name, String address, String email) {
 		super();
@@ -60,7 +43,6 @@ public class Hospital implements Serializable {
 		this.address = address;
 		this.email = email;
 	}
-	
 
 	public Hospital(Integer id, String name, String address, String email) {
 		super();
@@ -68,7 +50,7 @@ public class Hospital implements Serializable {
 		this.name = name;
 		this.address = address;
 		this.email = email;
-		this.bloods= new ArrayList<Blood>();
+		this.bloods = new ArrayList<Blood>();
 	}
 
 	public Integer getId() {
@@ -94,7 +76,6 @@ public class Hospital implements Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
 
 	public String getEmail() {
 		return email;
@@ -126,15 +107,14 @@ public class Hospital implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Hospital other = (Hospital) obj;
-		return Objects.equals(address, other.address) &&Objects.equals(email, other.email) && Objects.equals(bloods, other.bloods)
-				&& Objects.equals(id, other.id) && Objects.equals(name, other.name);
+		return Objects.equals(address, other.address) && Objects.equals(email, other.email)
+				&& Objects.equals(bloods, other.bloods) && Objects.equals(id, other.id)
+				&& Objects.equals(name, other.name);
 	}
 
 	@Override
 	public String toString() {
-		return "Hospital [id=" + id + ", name=" + name + ", address=" + address + ", email=" + email +"]";
+		return "Hospital [id=" + id + ", name=" + name + ", address=" + address + ", email=" + email + "]";
 	}
-	
-	
-	
+
 }

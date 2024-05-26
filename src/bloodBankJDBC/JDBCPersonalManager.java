@@ -72,7 +72,8 @@ public class JDBCPersonalManager implements PersonalManager {
 
 				person = new Personal(person_id, name, surname, email, contract, photo);
 
-				System.out.println("You are successfuly registered as personal with email: "+ emailSearch + " contiue with your action\n");
+				System.out.println("You are successfuly registered as personal with email: " + emailSearch
+						+ " contiue with your action\n");
 			} else {
 				System.out.println("You have entered the personal menu as a user with the email:  " + emailSearch
 						+ " \nbut you are not registered in the blood bank database, \nPlease register first-> OPTION 1");
@@ -89,9 +90,9 @@ public class JDBCPersonalManager implements PersonalManager {
 
 	@Override
 	public void modifyPersonal(Personal personalToModify, String newName, String newSurname, String newEmail,
-			byte [] newPhoto) {
+			byte[] newPhoto) {
 		// not modifying neither the id nor the contract
-		
+
 		try {
 
 			if (newName != null && !newName.isEmpty()) {
@@ -103,7 +104,8 @@ public class JDBCPersonalManager implements PersonalManager {
 			if (newEmail != null && !newEmail.isEmpty()) {
 				personalToModify.setEmail(newEmail);
 			}
-			if (newPhoto != null && (newPhoto.length)>0) { // CONVERT TO BYTES IF PHOTO IS INTRODUCED IN A STRING FORMAT
+			if (newPhoto != null && (newPhoto.length) > 0) { // CONVERT TO BYTES IF PHOTO IS INTRODUCED IN A STRING
+																// FORMAT
 
 				personalToModify.setPhoto(newPhoto);
 			}
@@ -116,7 +118,6 @@ public class JDBCPersonalManager implements PersonalManager {
 			prep.setString(3, personalToModify.getEmail());
 			prep.setBytes(4, personalToModify.getPhoto());
 			prep.setInt(5, personalToModify.getId()); // Set the id in the WHERE clause
-
 
 			int rowsUpdated = prep.executeUpdate();
 			prep.close();

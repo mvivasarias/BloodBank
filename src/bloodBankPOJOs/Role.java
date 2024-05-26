@@ -12,15 +12,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 public class Role implements Serializable {
 
-	
 	private static final long serialVersionUID = 7778496238707742044L;
 	@Id
 	@GeneratedValue(generator = "roles")
-	@TableGenerator(name = "roles", table = "sqlite_sequence", pkColumnName = "name", valueColumnName="seq", pkColumnValue = "roles")
+	@TableGenerator(name = "roles", table = "sqlite_sequence", pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "roles")
 	private Integer id;
 	private String name;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
@@ -59,6 +59,7 @@ public class Role implements Serializable {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+
 	public void addUser(User user) {
 		if (!users.contains(user)) {
 			users.add(user);
@@ -69,7 +70,6 @@ public class Role implements Serializable {
 	public int hashCode() {
 		return Objects.hash(id, name, users);
 	}
-	
 
 	@Override
 	public boolean equals(Object obj) {
