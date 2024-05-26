@@ -105,7 +105,8 @@ public class JDBCDonorManager implements DonorManager {
 
 				donor = new Donor(id, name, surname, dob, bloodType, times);
 			}
-
+			rs.close();
+			prep.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -161,7 +162,6 @@ public class JDBCDonorManager implements DonorManager {
 						+ donorDonating.getSurname());
 			}
 
-			prep.close();
 			prep.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
