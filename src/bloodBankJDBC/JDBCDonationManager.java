@@ -22,14 +22,7 @@ public class JDBCDonationManager implements DonationManager {
 		this.personalManager = new JDBCPersonalManager(m);
 	}
 
-	/*
-	 * public JDBCDonationManager(JDBCManager manager, JDBCDonorManager
-	 * donorManager, JDBCPersonalManager personalManager) {
-	 * 
-	 * this.manager = manager; this.donorManager = donorManager;
-	 * this.personalManager = personalManager; }
-	 */
-
+	
 	@Override
 	public Donation addDonation(Donation donation) {
 		Donation newDonation = null;
@@ -61,17 +54,9 @@ public class JDBCDonationManager implements DonationManager {
 			}
 
 			System.out.println("Donation added successfully.");
+			prep.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			// Close the PreparedStatement in a finally block to ensure it's always closed
-			if (prep != null) {
-				try {
-					prep.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 		return newDonation;
 	}
