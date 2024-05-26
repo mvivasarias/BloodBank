@@ -2,9 +2,10 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:output method="html" indent="yes" /> 
     <xsl:template match="/">
+     <xsl:param name="bloodType" />
         <html>
         <head>
-            <title>Donations</title>
+             <title>Donations </title>
             <style>
                 body {
                     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -41,7 +42,7 @@
             </style>
         </head>
         <body>
-            <h2>Donations</h2>
+            <h2>Donations - Blood Type: <xsl:value-of select="$bloodType" /></h2>
             <table border="1">
                 <tr>
                     <th>Amount</th>
