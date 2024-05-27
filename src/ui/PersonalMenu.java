@@ -232,7 +232,7 @@ public class PersonalMenu {
 
 	private void modifyNurse(JDBCPersonalManager personalManager) {
 
-		Personal nurseModifying = personalManager.searchPersonalByEmail(this.email); // sql done
+		Personal nurseModifying = personalManager.searchPersonalByEmail(this.email); 
 
 		if (nurseModifying != null) {
 
