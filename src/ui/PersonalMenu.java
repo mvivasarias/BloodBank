@@ -5,9 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,7 +20,6 @@ import bloodBankPOJOs.Contract;
 import bloodBankPOJOs.Donation;
 import bloodBankPOJOs.Donor;
 import bloodBankPOJOs.Personal;
-import bloodBankXML.XMLManagerImpl;
 
 public class PersonalMenu {
 
