@@ -136,7 +136,7 @@ public class XMLManagerImpl implements XMLManager {
 			JAXBContext jaxbContext = JAXBContext.newInstance(Personal.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			person = (Personal) unmarshaller.unmarshal(xml);
-			personalManager.addPersonal(person);
+			//personalManager.addPersonal(person);
 
 		} catch (Exception e) {
 			e.printStackTrace();

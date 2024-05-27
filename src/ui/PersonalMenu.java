@@ -306,7 +306,7 @@ public class PersonalMenu {
 		Personal loggedInPersonal = personalManager.searchPersonalByEmail(this.email);
 
 		if (loggedInPersonal != null) {
-			System.out.println("Enter the donor ID you want to delete :");
+			System.out.println("Enter the donor ID you want to modify :");
 			Integer idDonor = Utilities.readInteger("Enter the donor ID you want to modify :");
 
 			Donor donorExisting = donorManager.getDonorByID(idDonor);
@@ -331,7 +331,7 @@ public class PersonalMenu {
 				Donor donorModified = new Donor(idDonor, name, surname, dobSql, bloodType, times);
 				donorManager.modifyDonor(donorModified);
 
-				System.out.println("Donor modified successfully.");
+				
 
 			} else {
 				System.out.println("No donor existing with that id ");

@@ -71,6 +71,7 @@ public class JDBCDonorManager implements DonorManager {
 			prep.setString(2, donorModifying.getSurname());
 			prep.setDate(3, new java.sql.Date(donorModifying.getDob().getTime()));
 			prep.setString(4, donorModifying.getBloodtype());
+			prep.setInt(5, donorModifying.getId());
 
 			int rowsUpdated = prep.executeUpdate();
 			if (rowsUpdated > 0) {
